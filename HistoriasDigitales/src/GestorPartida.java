@@ -7,15 +7,24 @@ public class GestorPartida {
 	
 	private static int contZonas = 0;
 	private static int contJugadores = 0;
-	
+	private static int contObjetos = 0;
+	//Cuando una localizacion se instancia, se instancia tambien una localizacion en el array de localizacion del gestor
 	public static void rellenadorZonas(Localizaciones zona) {
 		zonas[contZonas] = zona;
 		contZonas++;
 	}
+	//Cuando un personaje se instancia, se instancia tambien un personaje en el array de personajes del gestor
 	public static void rellenadorJugadores(Personajes jugadoress) {
 		jugadores[contJugadores] = jugadoress;
 		contJugadores++;
 	}
+	
+	//Cuando un personaje se instancia, se instancia tambien un personaje en el array de personajes del gestor
+	public static void rellenadorObjetos(Objetos objeto) {
+		objects[contJugadores] = objeto;	
+		contObjetos++;
+	}
+	
 	
 	public static void mostarLocalizaciones() {
 		for(int i =0; zonas[i] != null; i++) {

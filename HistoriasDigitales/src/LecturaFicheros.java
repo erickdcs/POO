@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LecturaFicheros {
+	// AQUI LEEMOS LAS LOCALIZACIONES
 	public static void muestraLocalizaciones(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         String[] prueba;
@@ -20,16 +21,16 @@ public class LecturaFicheros {
         
         b.close();
     }
-	
+	//AQUI SEPARAMOS LAS STRING DE LAS LOCALIZACIONES, Y DE SUS VECINAS, Y LAS ALMACENAMOS EN LAS LOCALIZACIONES
 	public static void creadorLocalizaciones(String Localizacion) {
-		String aux = Localizacion.substring(0, Localizacion.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
+		String nombre = Localizacion.substring(0, Localizacion.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
 		String vecinos = Localizacion.substring(Localizacion.indexOf("(")+1,Localizacion.indexOf(")")); //saco un string con las localizaciones vecinas, leyendo desde el ( hasta el ) sin incluir
 		String vecinosArray[] = vecinos.split(", "); // los separo por cada ", " para sacar lsolo el nombre de las localizaciones
-		Localizaciones zona = new Localizaciones(aux, vecinosArray); //creo la localizacion, instaciandola en el gestor de partida
+		Localizaciones zona = new Localizaciones(nombre, vecinosArray); //creo la localizacion, instaciandola en el gestor de partida
 	}
 	
 	
-	
+	//LEEMOS LAS LINEAS DE LOS PERSONAJES
 	public static void muestraPersonajes(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
@@ -45,16 +46,16 @@ public class LecturaFicheros {
         }
         b.close();
     }
+	//SEPARAMOS LOS PERSONAJES DE SU LOCALIZACION, E INSTANCIAMOS PERSONAJES CON NOMBRE Y LOCALIZACION
 	public static void creadorPersonajes(String Personaje) {
-		String aux = Personaje.substring(0, Personaje.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
-		String vecinos = Personaje.substring(Personaje.indexOf("(")+1,Personaje.indexOf(")")); //saco un string con las localizaciones vecinas, leyendo desde el ( hasta el ) sin incluir
-		//String vecinosArray[] = vecinos.split(", "); // los separo por cada ", " para sacar lsolo el nombre de las localizaciones
-		Personajes persona = new Personajes(aux, vecinos); //creo la localizacion, instaciandola en el gestor de partida
+		String nombre = Personaje.substring(0, Personaje.indexOf("("));	
+		String vecinos = Personaje.substring(Personaje.indexOf("(")+1,Personaje.indexOf(")"));
+		Personajes persona = new Personajes(nombre, vecinos); 
 	}
 	
 	
 	
-	
+	//LEEMOS LAS LINEAS DE LOS OBJETOS
 	public static void muestraObjetos(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
@@ -70,16 +71,15 @@ public class LecturaFicheros {
         }
         b.close();
     }
-	
+	//SEPARAMOS LOS OBJETOS Y SU LOCALIZACION/PORTADOR 			PD: SE IDENTIFICARA SI ES LOCALIZACION O PORTADOR DENTRO DE LA CLASE OBJETO
 	public static void creadorObjetos(String Objeto) {
-		String aux = Objeto.substring(0, Objeto.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
-		String vecinos = Objeto.substring(Objeto.indexOf("(")+1,Objeto.indexOf(")")); //saco un string con las localizaciones vecinas, leyendo desde el ( hasta el ) sin incluir
-		//String vecinosArray[] = vecinos.split(", "); // los separo por cada ", " para sacar lsolo el nombre de las localizaciones
-		Objetos object = new Objetos(aux, vecinos); //creo la localizacion, instaciandola en el gestor de partida
+		String nombre = Objeto.substring(0, Objeto.indexOf("("));
+		String perLoc = Objeto.substring(Objeto.indexOf("(")+1,Objeto.indexOf(")")); 
+		Objetos object = new Objetos(nombre, perLoc);
 	}
 	
 	
-	
+	//LEEMOS LOS OBJETIVOS DE LOCALIZACION
 	public static void muestraObjetivoLocalizacion(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
@@ -96,13 +96,13 @@ public class LecturaFicheros {
         }
         b.close();
     }
-	
+	//SEPARAMOS AL PORTADOR DE LA LOCALIZACION
 	public static void crearObjetivosLocalizacion(String ObjetivoLocalizacion) {
-		String aux = ObjetivoLocalizacion.substring(0, ObjetivoLocalizacion.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
-		String portador = ObjetivoLocalizacion.substring(ObjetivoLocalizacion.indexOf("(")+1,ObjetivoLocalizacion.indexOf(")")); //saco un string con las localizaciones vecinas, leyendo desde el ( hasta el ) sin incluir
+		String nombre = ObjetivoLocalizacion.substring(0, ObjetivoLocalizacion.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
+		String localizacion = ObjetivoLocalizacion.substring(ObjetivoLocalizacion.indexOf("(")+1,ObjetivoLocalizacion.indexOf(")")); //saco un string con las localizaciones vecinas, leyendo desde el ( hasta el ) sin incluir
 		for(int i = 0; GestorPartida.jugadores[i] != null; i++) {
-			if(GestorPartida.jugadores[i].getNombre().equalsIgnoreCase(aux)) {
-				GestorPartida.jugadores[i].objetivo.setLocalizacion(portador);
+			if(GestorPartida.jugadores[i].getNombre().equalsIgnoreCase(nombre)) {
+				GestorPartida.jugadores[i].objetivo.setLocalizacion(localizacion);
 			}
 		}
 		
@@ -110,7 +110,7 @@ public class LecturaFicheros {
 	}
 	
 	
-	
+	//LEEMOS LOS OBJETIVOS DE OBJETOS
 	public static void muestraObjetivosObjetos(String archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
@@ -127,21 +127,24 @@ public class LecturaFicheros {
         }
         b.close();
     }
+	//SEPARAMOS LOS OBJETOS DE SU PORTADOR (EN LOS OBJETIVOS)
 	public static void crearObjetivosObjetos(String ObjetivoObjeto) {
 		if(ObjetivoObjeto.indexOf("(")!= -1) {
-			String aux = ObjetivoObjeto.substring(0, ObjetivoObjeto.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
+			String objeto = ObjetivoObjeto.substring(0, ObjetivoObjeto.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
 			String portador = ObjetivoObjeto.substring(ObjetivoObjeto.indexOf("(")+1,ObjetivoObjeto.indexOf(")")); //saco un string con las localizaciones vecinas, leyendo desde el ( hasta el ) sin incluir
 			for(int i = 0; GestorPartida.jugadores[i] != null; i++) {
 				if(GestorPartida.jugadores[i].getNombre().equalsIgnoreCase(portador)) {
-					GestorPartida.jugadores[i].objetivo.setObjeto(aux);
+					GestorPartida.jugadores[i].objetivo.setObjeto(objeto);
 				}
 			}
 		}
 		
 		
 	}
+	//LLAMAMOS A LA FUNCION QUE LEE TODAS LAS PARTES
+	
 	public static void AllLecture(String route) throws FileNotFoundException, IOException {
-		muestraLocalizaciones(route);
+		muestraLocalizaciones(route);	
 		muestraPersonajes(route);
 		muestraObjetos(route);
 		muestraObjetivoLocalizacion(route);

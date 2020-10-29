@@ -8,9 +8,10 @@ public class Objetos {
 		this.setNombre(nombre);
 		this.setJugadorLocalizacion(jugadorLocalizacion);
 		asignarObjeto(jugadorLocalizacion);
+		GestorPartida.rellenadorObjetos(this);
 	}
 	
-	//Nombre
+	//LEEMOS LA LOCALIZACION O EL PORTADOR INICIAL DEL OBJETO 
 	public void asignarObjeto(String jugadorLocalizacion) {
 		if(comprobarJug(jugadorLocalizacion) == false) {
 			this.localizacion = jugadorLocalizacion;
@@ -23,7 +24,7 @@ public class Objetos {
 	}
 	
 	
-	
+	//ASIGNAMOS EL OBJETO A UN PERSONAJE
 	public void asiganrObjetoaPersonaje(String jugadorLocalizacion) {
 		for(int i = 0; GestorPartida.jugadores[i] != null; i++) {
 			if(GestorPartida.jugadores[i].getNombre().equalsIgnoreCase(jugadorLocalizacion)){
@@ -31,7 +32,7 @@ public class Objetos {
 			}
 		}
 	}
-	
+	//ASIGANMOS EL OBJETO A UNA LOCALIZACION
 	public void asiganrObjetoaLocalizacion(String jugadorLocalizacion) {
 		for(int i = 0; GestorPartida.jugadores[i] != null; i++) {
 			if(GestorPartida.zonas[i].getNombre().equalsIgnoreCase(jugadorLocalizacion)){
@@ -39,7 +40,7 @@ public class Objetos {
 			}
 		}
 	}
-	
+	//COMPROBAMOS SI EL OBJETO LE PERTENECE A UN JUGADOR
 	public boolean comprobarJug(String jugadorLocalizacion) {
 		boolean retorno = false;
 		for(int i = 0; GestorPartida.jugadores[i] != null; i++) {

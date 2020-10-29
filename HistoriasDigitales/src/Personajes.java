@@ -84,42 +84,38 @@ public class Personajes {
 		}
 		
 	}
-	public void darObjeto(Personajes allPlayers[]) {
-		int posName = posJugadorSeleccionado()-1;
+	public void darObjeto() {
+		String nombreSeleccionado = nombreJugadorSeleccionado();
 		String objectName = nombreObjetoSeleccionado();
-		int contadorPosObjeto = 0;
-		int contadorPosObjeto2 = 0;
-		if(allPlayers[posName] != null) {
-			if(allPlayers[posName].pos == this.pos) {
-				if(comprobarSiTienexObjeto(objectName) == true) {
-					for (int i = 0; allPlayers[posName].petitions[i] != null;i++) {
-						if(allPlayers[posName].petitions[i].getObjeto().equalsIgnoreCase(objectName) && allPlayers[posName].petitions[i].getNumJugador() == this.characterNumber) {
-							for(;allPlayers[posName].objects[contadorPosObjeto] != null; contadorPosObjeto++) {
-							}
-							for(;!this.objects[contadorPosObjeto2].getNombre().equalsIgnoreCase(objectName);contadorPosObjeto2++) {
-								
-							}		
-							allPlayers[posName].objects[contadorPosObjeto] = this.objects[contadorPosObjeto2];
-							EliminarUnaPosArray(contadorPosObjeto2, this.objects);
-							EliminarPeticiones(i,this.petitions);
+		int contadorPersonajes = 0;
+		if(this.objeto != null) {
+			if(this.objeto.getNombre().equalsIgnoreCase(objectName)) {
+				for(; GestorPartida.jugadores[contadorPersonajes] != null && !GestorPartida.jugadores[contadorPersonajes].getNombre().equalsIgnoreCase(nombreSeleccionado); contadorPersonajes++) {
+				}
+				if(GestorPartida.jugadores[contadorPersonajes] != null) {
+					if(GestorPartida.jugadores[contadorPersonajes].Localizacion.equalsIgnoreCase(this.Localizacion)) {
+						if(GestorPartida.jugadores[contadorPersonajes].objeto == null) {
+							GestorPartida.jugadores[contadorPersonajes].objeto = this.objeto;
+							this.objeto = null;
 						}
-						else if(petitions[i+1] == null) {
-							System.out.println("No existe una peticion de este objeto");
+						else {
+							System.out.println("El jugador ya tiene un objeto");
 						}
-						
+					}
+					else {
+						System.out.println("No estais en la misma posicion");
 					}
 				}
 				else {
-					System.out.println("No posees ese objeto");
+					System.out.println("Ese jugador no existe");
 				}
 			}
 			else {
-				System.out.println("No estais en la misma posicion");
+				System.out.println("No tienes ese objeto");
 			}
-			
 		}
 		else {
-			System.out.println("Este numero de usuario no existe en esta partida");
+			System.out.println("No tienes ningun objeto");
 		}
 		int a =0;
 	}
@@ -251,3 +247,47 @@ public class Personajes {
 		this.objetivo = objetivos;
 	}
 }
+/*
+ * public void darObjeto(Personajes allPlayers[]) {
+		int posName = posJugadorSeleccionado()-1;
+		String objectName = nombreObjetoSeleccionado();
+		int contadorPosObjeto = 0;
+		int contadorPosObjeto2 = 0;
+		if(allPlayers[posName] != null) {
+			if(allPlayers[posName].pos == this.pos) {
+				if(comprobarSiTienexObjeto(objectName) == true) {
+					for (int i = 0; allPlayers[posName].petitions[i] != null;i++) {
+						if(allPlayers[posName].petitions[i].getObjeto().equalsIgnoreCase(objectName) && allPlayers[posName].petitions[i].getNumJugador() == this.characterNumber) {
+							
+							for(;allPlayers[posName].objects[contadorPosObjeto] != null; contadorPosObjeto++) {
+							}
+							for(;!this.objects[contadorPosObjeto2].getNombre().equalsIgnoreCase(objectName);contadorPosObjeto2++) {
+								
+							}		
+							allPlayers[posName].objects[contadorPosObjeto] = this.objects[contadorPosObjeto2];
+							EliminarUnaPosArray(contadorPosObjeto2, this.objects);
+							EliminarPeticiones(i,this.petitions);
+						}
+						else if(petitions[i+1] == null) {
+							System.out.println("No existe una peticion de este objeto");
+						}
+						
+					}
+				}
+				else {
+					System.out.println("No posees ese objeto");
+				}
+			}
+			else {
+				System.out.println("No estais en la misma posicion");
+			}
+			
+		}
+		else {
+			System.out.println("Este numero de usuario no existe en esta partida");
+		}
+		int a =0;
+	}
+ */
+
+

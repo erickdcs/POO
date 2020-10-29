@@ -7,9 +7,17 @@ public class mainAuxiliar {
 		int a;
 		GestorPartida.mostarJugadores();
 		GestorPartida.mostarLocalizaciones();
+		
+		GestorPartida.jugadores[1].setLocalizacion("Comedor");
+		GestorPartida.jugadores[0].darObjeto();
+		
+		
+		System.out.println(GestorPartida.jugadores[1].getObjeto().getNombre());
 	}
 	
 }
+
+
 /*
 	jardin ------
 	|		      \
