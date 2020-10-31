@@ -9,6 +9,11 @@ public class Objetos {
 		this.setJugadorLocalizacion(jugadorLocalizacion);
 		asignarObjeto(jugadorLocalizacion);
 		GestorPartida.rellenadorObjetos(this);
+		int cont = 0;
+		for(; GestorPartida.objects[cont] != null; cont++) {
+			
+		}
+		GestorPartida.objects[cont] = this;
 	}
 	
 	//LEEMOS LA LOCALIZACION O EL PORTADOR INICIAL DEL OBJETO 
@@ -29,6 +34,7 @@ public class Objetos {
 		for(int i = 0; GestorPartida.jugadores[i] != null; i++) {
 			if(GestorPartida.jugadores[i].getNombre().equalsIgnoreCase(jugadorLocalizacion)){
 				GestorPartida.jugadores[i].objeto = this;
+				
 			}
 		}
 	}

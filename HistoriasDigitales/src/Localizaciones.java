@@ -1,7 +1,6 @@
 
 public class Localizaciones {
 	private String nombre;
-	private int pos;
 	private String salasVecinas[];
 	
 	public Objetos objeto;
@@ -21,13 +20,6 @@ public class Localizaciones {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	//Pos
-	public int getPos() {
-		return pos;
-	}
-	public void setInt(int pos) {
-		this.pos = pos;
 	}
 	//Objetos
 	public Objetos getObject() {

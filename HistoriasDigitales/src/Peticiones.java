@@ -1,9 +1,9 @@
 
 public class Peticiones {
 	private String objeto;
-	private int numJugador;
+	private String numJugador;
 	
-	public Peticiones(String objeto, int numJugador) {
+	public Peticiones(String objeto, String numJugador) {
 		this.objeto = objeto;
 		this.numJugador = numJugador;
 	}
@@ -18,11 +18,11 @@ public class Peticiones {
 		this.objeto = objeto;
 	}
 	
-	public int getNumJugador() {
+	public String getNumJugador() {
 		return numJugador;
 	}
 
-	public void setNumJugador(int numJugador) {
+	public void setNumJugador(String numJugador) {
 		this.numJugador = numJugador;
 	}
 	

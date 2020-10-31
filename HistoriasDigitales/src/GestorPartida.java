@@ -36,6 +36,12 @@ public class GestorPartida {
 		}
 		
 	}
+	
+	
+	
+	//FUNCIONES INNECESARIAS ACTUALMENTE, UNICAMENTE CREADAS PARA VER QUE LOS DATOS SE HAN LEIDO ADECUADAMENTE
+	
+	
 	public static void mostarVecinos() {
 		String[] aux = null;
 		for(int i =0; zonas[i] != null; i++) {

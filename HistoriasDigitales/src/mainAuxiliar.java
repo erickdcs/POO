@@ -7,41 +7,11 @@ public class mainAuxiliar {
 		int a;
 		GestorPartida.mostarJugadores();
 		GestorPartida.mostarLocalizaciones();
-		
 		GestorPartida.jugadores[1].setLocalizacion("Comedor");
-		GestorPartida.jugadores[0].darObjeto();
-		
-		
-		System.out.println(GestorPartida.jugadores[1].getObjeto().getNombre());
+		//GestorPartida.jugadores[0].PedirObjecto();
+		for(int i = 0; GestorPartida.objects[i]!= null; i++) {
+			System.out.println(GestorPartida.objects[i].getNombre());
+		}
 	}
 	
 }
-
-
-/*
-	jardin ------
-	|		      \
-	|				comedor ----- cocina
-	|             /
-	dormitorio --
-
-
-
-
-
-*/
-/*
-Objetos pan[] = {new Objetos("Pan")};
-int array[] = {1,2};
-
-Localizaciones local1 = new Localizaciones("city", 1, pan);
-Personajes Erick = new Personajes ("Erick", 1);
-Personajes Jorge = new Personajes ("Jorge", 1, 2, array);
-Jorge.objects[0] = pan[0];
-Personajes allPlayers[] = {Erick, Jorge};
-
-allPlayers[0].PedirObjecto(allPlayers);
-allPlayers[1].darObjeto(allPlayers);
-System.out.println("Hola");
-System.out.println(allPlayers[0].objects[0].getNombre());
-*/
