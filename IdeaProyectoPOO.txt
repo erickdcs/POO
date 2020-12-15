@@ -1,0 +1,37 @@
+funciones
+
+Erick
+
+Intercambiar objetos
+
+Comprobar si hay objeto en la sala
+
+
+Jorge
+
+
+Comprobar si un jugado en la sala tiene objeto
+
+Coger Objeto
+
+Dejar Objeto
+
+
+Quique
+
+Movernos entre salas (Salas deben ser vecinas)
+
+Comprobar Victoria
+
+Rondas
+
+
+
+JUNTOS
+
+JugadorPersona
+
+Creencias
+
+IA
+

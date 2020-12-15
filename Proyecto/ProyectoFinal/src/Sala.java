@@ -1,15 +1,17 @@
 
-public class Localizaciones {
+public class Sala{
 	private String nombre;
 	private String salasVecinas[];
 	
-	public Objetos objeto;
-	
-	public Localizaciones(String nombre, String salasVecinas[]) {
+	public Sala(String nombre, String salasVecinas[]) {
 		this.setNombre(nombre);
 		this.setSalasVecinas(salasVecinas);
-		GestorPartida.rellenadorZonas(this);
+		GestorPartida.instanciarSala(this);
 	}
+	
+	
+	
+	
 	
 	
 	//Devolver 1 String
@@ -22,17 +24,7 @@ public class Localizaciones {
 		this.nombre = nombre;
 	}
 	//Objetos
-	public Objetos getObject() {
-		return objeto;
-	}
-	public String getObjectNom() {
-		return this.objeto.getNombre();
-	}
-	public void setObject(Objetos object) {
-		this.objeto = object;
-	}
-
-
+	
 	public String[] getSalasVecinas() {
 		return salasVecinas;
 	}
