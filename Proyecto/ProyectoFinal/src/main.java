@@ -15,14 +15,19 @@ public class main {
 			System.out.println(GestorPartida.getJugadores()[i].getObjetivoSala());
 			System.out.printf("\n\n\n");
 		}
-		
+		GestorPartida.getJugadores()[1].verObjetosEnSala();
 		//System.out.println(GestorPartida.getContObjetosJugador());
-		GestorPartida.getJugadores()[1].hacerPeticion();
-		GestorPartida.getJugadores()[0].cambiarObjeto();
+		//GestorPartida.getJugadores()[1].hacerPeticion();
+		//GestorPartida.getJugadores()[0].cambiarObjeto();
 		for(int i =0; i < GestorPartida.getContObjetosJugador(); i++) {
 			System.out.println(GestorPartida.getObjetoJugador()[i].getNombreObjeto());
 			System.out.println(GestorPartida.getObjetoJugador()[i].getNombre());
+			System.out.println(GestorPartida.getObjetoJugador()[i].getSala());
 		}
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		for(int i =0; i < GestorPartida.getContObjetosSala(); i++) {
 			System.out.println(GestorPartida.getObjetoSala()[i].getNombreObjeto());
 			System.out.println(GestorPartida.getObjetoSala()[i].getNombre());

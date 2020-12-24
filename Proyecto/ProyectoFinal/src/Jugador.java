@@ -96,20 +96,35 @@ public class Jugador {
 				System.out.println(GestorPartida.getObjetoSala()[i].getNombreObjeto());
 			}
 		}
-		
+		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
+			if(GestorPartida.getObjetoJugador()[i].getSala().equalsIgnoreCase(this.sala)) {
+				System.out.println("el jugador "+ GestorPartida.getObjetoJugador()[i].getNombre() + " tiene el objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() );
+			}
+		}
 		
 	}
 
 	public boolean comprobarObjetoenSala(String objeto) {
 		boolean objetoenSala = false;
 		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-			if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(objeto)) {
-				System.out.println(GestorPartida.getObjetoSala()[i].getNombreObjeto());
+			if(GestorPartida.getObjetoSala()[i].getNombre().equalsIgnoreCase(this.sala)) {
+				System.out.println("El objeto " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " esta en tu sala");
 				objetoenSala = true;
 			}
 		}
 		return objetoenSala;
 	}
+	public boolean comprobarObjetoenJugador(String objeto) {
+		boolean objetoenJugador = false;
+		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
+			if(GestorPartida.getObjetoJugador()[i].getSala().equalsIgnoreCase(this.sala)) {
+				System.out.println("el jugador "+ GestorPartida.getObjetoJugador()[i].getNombre() + " tiene el objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() );
+				objetoenJugador = true;
+			}
+		}
+		return objetoenJugador;
+	}
+
 	
 	
 	
