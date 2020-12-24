@@ -24,7 +24,6 @@ public class GestorPartida {
 	
 	
 	
-	
 	public static Sala[] getSalas() {
 		return salas;
 	}

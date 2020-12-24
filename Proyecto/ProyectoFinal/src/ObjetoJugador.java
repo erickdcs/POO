@@ -5,7 +5,7 @@ public class ObjetoJugador extends Jugador{
 	
 	public ObjetoJugador(String nombre, Jugador jugador) {
 		super(jugador.getNombre(), jugador.getSala());
-		
+		GestorPartida.setContJugadores(GestorPartida.getContJugadores()-1);
 		setNombreObjeto(nombre);
 	}
 
