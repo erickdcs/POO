@@ -135,14 +135,30 @@ public class Jugador {
 		String nombreJugador = nombre.nextLine();
 		int jugador;
 		for( jugador =0; jugador < GestorPartida.getContJugadores(); jugador++) {
-			if(GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(nombreJugador) ) {
-				break;
+			if(GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(nombreJugador) && !GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(this.nombre) ) {
+				if(!GestorPartida.getJugadores()[jugador].getSala().equalsIgnoreCase(this.sala)){
+					System.out.println("No puede seleccionar a alguien que no esta en la misma sala, seleccione a otro");
+					nombreJugador = nombre.nextLine();
+					jugador =-1;
+				}
+				else {
+					break;
+				}
+				
 			}
-			if(jugador == GestorPartida.getContJugadores()-1) {
+			if(nombreJugador.equalsIgnoreCase(this.nombre)) {
+				System.out.println("No puede seleccionarse a si mismo/a, seleccione otro");
+				nombreJugador = nombre.nextLine();
+				jugador =-1;
+			}
+			else if(jugador == GestorPartida.getContJugadores()-1) {
+				
 				System.out.println("Ese jugador no existe, seleccione otro");
 				nombreJugador = nombre.nextLine();
-				jugador =0;
+				jugador =-1;
+				
 			}
+			
 		}
 		return nombreJugador;
 	}
@@ -185,7 +201,7 @@ public class Jugador {
 				}
 			}
 			if(salida ==0) {
-				System.out.println("No existe un objeto con ese nombre, eleige uno nuevo");
+				System.out.println("No existe un objeto con ese nombre, elige uno nuevo");
 				nombreObjeto = objetos.nextLine();
 			}
 			
