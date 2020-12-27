@@ -22,33 +22,88 @@ public class GestorPartida {
 	public static void gestorRondas() {
 		//int turnos =0;
 		Scanner eleccion = new Scanner(System.in);
+		int opcion =0;
+		int seguridad = 0;
+		boolean pasarTurno = false;
 		while(true) {
 			for(int i =0; i < GestorPartida.getContJugadores(); i++) {
-				System.out.println("Turno del jugador: " + GestorPartida.getJugadores()[i]);
-				
-				System.out.println("Elige una accion: ");
-				//Moverse
-				System.out.println("1- Cambiar de Sala");
-				
-				//Coger objeto
-				if(objetosEnSala(GestorPartida.getJugadores()[i]) && !objetosEnJugador(GestorPartida.getJugadores()[i])) {
+				pasarTurno = false;
+				while (pasarTurno = false)
+					System.out.println("Turno del jugador: " + GestorPartida.getJugadores()[i]);
 					
-				}
-				//Dejar objeto
-				if(objetosEnJugador(GestorPartida.getJugadores()[i])) {
+					System.out.println("Elige una accion: ");
+					//Moverse
+					System.out.println("1- Cambiar de Sala");
 					
-				}
-				//Pedir objeto
-				if(jugadorEnSala(GestorPartida.getJugadores()[i])) {
-					
-				}
-				//Dar objeto
-				if(dar(GestorPartida.getJugadores()[i])) {
-					
-				}
-				//Nada
-				System.out.println("6- Pasar");
-				
+					//Coger objeto
+					if(objetosEnSala(GestorPartida.getJugadores()[i]) && !objetosEnJugador(GestorPartida.getJugadores()[i])) {
+						
+						
+					}
+					//Dejar objeto
+					if(objetosEnJugador(GestorPartida.getJugadores()[i])) {
+						
+					}
+					//Pedir objeto
+					if(jugadorEnSala(GestorPartida.getJugadores()[i])) {
+						
+					}
+					//Dar objeto
+					if(dar(GestorPartida.getJugadores()[i])) {
+						imprimirPeticiones(GestorPartida.getJugadores()[i]);
+						imprimirJugadores(GestorPartida.getJugadores()[i]);
+					}
+					//Nada
+					System.out.println("6- Pasar");
+					opcion = eleccion.nextInt();
+					switch(opcion) {
+						//Moverse
+						case 1: imprimirSalasVecinas(GestorPartida.getJugadores()[i]);
+								System.out.printf("Seguro que quieres moverte de sala?\n1- Moverse\n2-Menu de acciones");
+								seguridad = eleccion.nextInt();
+								while(seguridad !=1 && seguridad !=2) {
+									System.out.println("Numero no valido, introduzca uno nuevo\n1- Moverse\\n2-Menu de acciones");
+								}
+						//Coger objeto
+						case 2: imprimirObjetosEnSala(GestorPartida.getJugadores()[i]);
+								System.out.printf("Seguro que quieres coger un objeto?\n1- Coger objeto\n2-Menu de acciones");
+								seguridad = eleccion.nextInt();
+								while(seguridad !=1 && seguridad !=2) {
+									System.out.println("Numero no valido, introduzca uno nuevo\n1- Coger objeto\\n2-Menu de acciones");
+								}
+						//Dejar objeto
+						case 3: imprimirObjetos(GestorPartida.getJugadores()[i]);
+								System.out.printf("Seguro que quieres dejar un objeto?\n1- Dejar objeto\n2-Menu de acciones");
+								seguridad = eleccion.nextInt();
+								while(seguridad !=1 && seguridad !=2) {
+									System.out.println("Numero no valido, introduzca uno nuevo\n1- Dejar objeto\\n2-Menu de acciones");
+								}
+						//Pedir objeto
+						case 4: imprimirJugadores(GestorPartida.getJugadores()[i]);
+								System.out.printf("Seguro que quieres pedir un objeto?\n1- Pedir objeto \n2-Menu de acciones");
+								seguridad = eleccion.nextInt();
+								while(seguridad !=1 && seguridad !=2) {
+									System.out.println("Numero no valido, introduzca uno nuevo\n1- Pedir objeto\\n2-Menu de acciones");
+								}
+						//Dar objeto
+						case 5: imprimirPeticiones(GestorPartida.getJugadores()[i]);
+								imprimirJugadores(GestorPartida.getJugadores()[i]);
+								System.out.println("Seguro que quieres dar un objeto?\n1- Dar objeto\n2-Menu de acciones");
+								seguridad = eleccion.nextInt();
+								while(seguridad !=1 && seguridad !=2) {
+									System.out.println("Numero no valido, introduzca uno nuevo\n1- Dar objeto\\n2-Menu de acciones");
+								}
+								
+						case 6: hud(GestorPartida.getJugadores()[i]);
+						
+						//Pasar turno
+						case 7: System.out.println("Seguro que quieres pasar, perderas el turno \n1- Pasarn2-Menu de acciones");
+								seguridad = eleccion.nextInt();
+								while(seguridad !=1 && seguridad !=2) {
+									System.out.println("Numero no valido, introduzca uno nuevo\n1- Pasar turno\\n2-Menu de acciones");
+								}
+								
+					}
 			}
 			
 		}
@@ -97,6 +152,14 @@ public class GestorPartida {
 			
 		}
 		return hayJugador;
+	}
+	public static void imprimirObjetosEnSala(Jugador jugador) {
+		System.out.printf("Objetos en la sala: ");
+		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
+			if(GestorPartida.getObjetoSala()[i].getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getSala())) {
+				System.out.printf("%s  ", GestorPartida.getObjetoSala()[i].getNombreObjeto());
+			}
+		}
 	}
 	public static boolean dar(Jugador jugador) {
 		boolean puedeDar = false;
