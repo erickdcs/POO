@@ -35,6 +35,7 @@ public class Jugador {
 				break;
 			}
 			if(posPeticion == 9) {
+				posPeticion =0;
 				break;
 			}
 		}
@@ -82,10 +83,87 @@ public class Jugador {
 		
 	}
 	
+	/*
+	public int comprobarObjetoOtroJugador(Jugador jugador) {
+        for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
+            if(GestorPartida.getObjetoJugador()[i].getSala().equals(/*Sala del Jugador)) {
+                if()
+            }
+        }
+    } */
+    
+    public void cogerObjeto(Jugador jugador, ObjetoSala objeto){
+        GestorPartida.getObjetoJugador()[GestorPartida.getContObjetosJugador()] = new ObjetoJugador(objeto.getNombreObjeto(), jugador);
+        GestorPartida.setContObjetosJugador(GestorPartida.getContObjetosJugador()+1);
+        for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
+            if(GestorPartida.getObjetoSala()[i] == objeto) {
+                for(int j = i; j < (GestorPartida.getContObjetosSala()-1); j++) {
+                    GestorPartida.getObjetoSala()[j] = GestorPartida.getObjetoSala()[j+1];                    
+                }
+                GestorPartida.getObjetoSala()[GestorPartida.getContObjetosSala()] = null;
+                GestorPartida.setContObjetosSala(GestorPartida.getContObjetosSala()-1);
+                break;
+            }
+        }
+    }
+    public void dejarObjeto(Sala sala, ObjetoJugador objeto) {
+        GestorPartida.getObjetoSala()[GestorPartida.getContObjetosSala()] = new ObjetoSala(objeto.getNombreObjeto(), sala);
+        GestorPartida.setContObjetosSala(GestorPartida.getContObjetosSala()+1);
+        for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
+            if(GestorPartida.getObjetoJugador()[i] == objeto) {
+                for(int j = i; j < (GestorPartida.getContObjetosJugador()-1); j++) {
+                    GestorPartida.getObjetoJugador()[j] = GestorPartida.getObjetoJugador()[j+1];                    
+                }
+                GestorPartida.getObjetoJugador()[GestorPartida.getContObjetosJugador()] = null;
+                GestorPartida.setContObjetosJugador(GestorPartida.getContObjetosJugador()-1);
+                break;
+            }
+        }
+    }
+    
+    
+	public static void cambiarSala() {
+		String[] salasVecinas;
+		Scanner entrada = new Scanner(System.in);
+		System.out.printf("Personajes disponibles:\n");
+		for(int i =0; GestorPartida.getJugadores()[i]!=null; i++) {
+			System.out.println(i+1+" " + GestorPartida.getJugadores()[i].getNombre());
+		}
+		int menu;
+		System.out.println("Escriba el numero del jugador");
+		menu = entrada.nextInt()-1;
+		salasVecinas= GestorPartida.verSalasVecinas(menu);
+		int contVecinas;
+		contVecinas=salasVecinas.length;
+		System.out.printf("Sus salas vecinas son:\n");
+		for(int i=0;i<contVecinas;i++) {
+			System.out.println(i+1+" " + salasVecinas[i]);
+		}
+		int menu1;
+		System.out.println("Escriba el numero de la sala destino ");
+		menu1 = entrada.nextInt()-1;
+		entrada.close();
+		GestorPartida.getJugadores()[menu].setSala(salasVecinas[menu1]);
+		System.out.println("Ahora " +GestorPartida.getJugadores()[menu].getNombre()+" está en "+ GestorPartida.getJugadores()[menu].getSala());
+	}
 	
-	
-	public void comprobarObjetivos() {
-		
+	public static void comprobarVictoria() {
+		int puntoSala=0;
+		int puntoObjeto=0;
+		for(int i=0; GestorPartida.getJugadores()[i]!=null; i++) {
+			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoSala())) {
+				puntoSala++;
+			}
+			if(GestorPartida.getObjetoJugador()[i]!=null) {
+				if(GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoObjeto())){
+					puntoObjeto++;
+				}
+			}
+			if(puntoSala>=1&&puntoObjeto>=1) {
+				System.out.println("Ha ganado"+ GestorPartida.getJugadores()[i].getNombre());
+				break;
+			}
+		}	
 	}
 	
 	public void verObjetosEnSala() {
@@ -186,7 +264,6 @@ public class Jugador {
 			{
 				if(GestorPartida.getObjetoJugador()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
 					salida = 1;
-					System.out.println("hola");
 					break;
 				}
 			}
