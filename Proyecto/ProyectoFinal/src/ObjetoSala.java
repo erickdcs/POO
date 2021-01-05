@@ -1,24 +1,25 @@
 
-public class ObjetoSala extends Sala{
-	private String nombre;
+public class ObjetoSala extends Objetos{
+	private Sala sala;
 	
 	
 	public ObjetoSala(String nombre, Sala salas) {
-		super(salas.getNombre(), salas.getSalasVecinas());
-		setNombreObjeto(nombre);
+		super(nombre);
+		setSala(salas);
+		
+		
 	}
 
-	
-	
-	
-	
-	public String getNombreObjeto() {
-		return nombre;
+
+	public Sala getSala() {
+		return sala;
 	}
 
-	public void setNombreObjeto(String nombre) {
-		this.nombre = nombre;
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
 	}
+
 
 	
 }

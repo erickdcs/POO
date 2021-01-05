@@ -22,7 +22,6 @@ public class Jugador {
 		contId++;
 		GestorPartida.instanciarJugador(this);
 	}
-	
 	public void hacerPeticion() {
 		String jugadorSeleccionado = jugadorObjetivo();//Pedimos el nombre del jugador al que vamos a realizar la peticion
 		int jugador = posJugadorObjetivo(jugadorSeleccionado);//COnseguimos la posicion del jugador seleccionado dentro del array de GestorPartida
@@ -122,29 +121,25 @@ public class Jugador {
     }
     
     
-	public static void cambiarSala() {
+	public void cambiarSala(Jugador jugador) {
 		String[] salasVecinas;
 		Scanner entrada = new Scanner(System.in);
-		System.out.printf("Personajes disponibles:\n");
-		for(int i =0; GestorPartida.getJugadores()[i]!=null; i++) {
-			System.out.println(i+1+" " + GestorPartida.getJugadores()[i].getNombre());
-		}
-		int menu;
-		System.out.println("Escriba el numero del jugador");
-		menu = entrada.nextInt()-1;
-		salasVecinas= GestorPartida.verSalasVecinas(menu);
+		
+		
+		salasVecinas= GestorPartida.verSalasVecinas(jugador.getId());
 		int contVecinas;
 		contVecinas=salasVecinas.length;
 		System.out.printf("Sus salas vecinas son:\n");
 		for(int i=0;i<contVecinas;i++) {
 			System.out.println(i+1+" " + salasVecinas[i]);
 		}
-		int menu1;
+		int menu1 =0;
 		System.out.println("Escriba el numero de la sala destino ");
 		menu1 = entrada.nextInt()-1;
+		
 		entrada.close();
-		GestorPartida.getJugadores()[menu].setSala(salasVecinas[menu1]);
-		System.out.println("Ahora " +GestorPartida.getJugadores()[menu].getNombre()+" está en "+ GestorPartida.getJugadores()[menu].getSala());
+		GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[menu1]);
+		System.out.println("Ahora " +GestorPartida.getJugadores()[jugador.getId()].getNombre()+" está en "+ GestorPartida.getJugadores()[jugador.getId()].getSala());
 	}
 	
 	public static void comprobarVictoria() {

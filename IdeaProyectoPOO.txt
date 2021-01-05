@@ -1,40 +1,17 @@
-funciones
+5/1
+Objetos
 
-Erick
+6/1
+Creencias	//
+IA		//
 
-Intercambiar objetos
-
-Comprobar si hay objeto en la sala
-
-
-Jorge
-
-
-Comprobar si un jugado en la sala tiene objeto
-
-Coger Objeto
-
-Dejar Objeto
-
-
-Quique
-
-Movernos entre salas (Salas deben ser vecinas)
-
-Comprobar Victoria
+7/1 
+terminar IA
+Interfaz
 
 
 
 
 
 
-Rondas
-
-JUNTOS
-
-JugadorPersona
-
-Creencias
-
-IA
 
