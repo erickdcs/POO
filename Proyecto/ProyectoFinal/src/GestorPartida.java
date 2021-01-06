@@ -149,7 +149,7 @@ public class GestorPartida {
 	public static boolean objetosEnSala(Jugador jugador) {
 		boolean hayObjetos =false;
 		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-			if(GestorPartida.getObjetoSala()[i].getNombre().equalsIgnoreCase(jugador.getSala())) {
+			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(jugador.getSala())) {
 				hayObjetos =true;
 			}
 		}
@@ -158,7 +158,7 @@ public class GestorPartida {
 	public static boolean objetosEnJugador(Jugador jugador) {
 		boolean hayObjetos =false;
 		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
-			if(GestorPartida.getObjetoJugador()[i].getNombre().equalsIgnoreCase(jugador.getNombre())) {
+			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(jugador.getNombre())) {
 				hayObjetos =true;
 			}
 		}
@@ -177,7 +177,7 @@ public class GestorPartida {
 	public static void imprimirObjetosEnSala(Jugador jugador) {
 		System.out.printf("Objetos en la sala: ");
 		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-			if(GestorPartida.getObjetoSala()[i].getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getSala())) {
+			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getSala())) {
 				System.out.printf("%s  ", GestorPartida.getObjetoSala()[i].getNombreObjeto());
 			}
 		}
@@ -217,7 +217,7 @@ public class GestorPartida {
 	public static String objetoDelJugador(Jugador jugador) {
 		
 		for(int i =0; i < GestorPartida.getContObjetosJugador(); i++) {
-			if(GestorPartida.getObjetoJugador()[i].getNombre().equalsIgnoreCase(jugador.getNombre())) {
+			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(jugador.getNombre())) {
 				return GestorPartida.getObjetoJugador()[i].getNombreObjeto();
 			}
 		}
@@ -229,7 +229,7 @@ public class GestorPartida {
 		System.out.println("Sala: " + jugador.getSala());
 		System.out.printf("Objetos en la sala: ");
 		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-			if(GestorPartida.getObjetoSala()[i].getNombre().equalsIgnoreCase(jugador.getSala())) {
+			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(jugador.getSala())) {
 				System.out.printf("%s  ", GestorPartida.getObjetoSala()[i].getNombreObjeto());
 			}
 		}
@@ -246,7 +246,7 @@ public class GestorPartida {
 	public static void imprimirObjetos(Jugador jugador) {
 		System.out.printf("Objeto: ");
 		for(int i =0; i < GestorPartida.contObjetosJugador; i++) {
-			if(GestorPartida.getObjetoJugador()[i].getNombre().equalsIgnoreCase(jugador.getNombre())) {
+			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(jugador.getNombre())) {
 				System.out.printf("%s\t",GestorPartida.getObjetoJugador()[i].getNombreObjeto());
 			}
 		}
@@ -258,7 +258,7 @@ public class GestorPartida {
 			if(GestorPartida.getJugadores()[i].getId() != jugador.getId() && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(jugador.getSala())) {
 				System.out.printf("%s\t\tObjetos: ",GestorPartida.getJugadores()[i].getNombre());
 				for(int j =0; j< GestorPartida.getContObjetosJugador();j++) {
-					if(GestorPartida.getObjetoJugador()[j].getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre())) {
+					if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre())) {
 						System.out.printf("%s", GestorPartida.getObjetoJugador()[j].getNombreObjeto());
 					}
 				}
