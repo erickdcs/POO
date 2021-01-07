@@ -1,5 +1,6 @@
 
-public class Objetos {
+public class  Objetos {
+	
 	private String nombreObjeto;
 	public Objetos(String nombre){
 		setNombreObjeto(nombre);

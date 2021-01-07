@@ -5,10 +5,14 @@ public class GestorPartida {
 	private static Jugador jugadores[] = new Jugador[10];
 	private static int contJugadores;
 	
+	
 	private static ObjetoSala objetoSala[] = new ObjetoSala[10];
 	private static int contObjetosSala;
 	private static ObjetoJugador objetoJugador[] = new ObjetoJugador[10];
 	private static int contObjetosJugador;
+	
+	
+	private static int contPasarTurnos = 0;
 	
 	private static int rondas;
 	public static void instanciarSala(Sala sala) {
@@ -27,7 +31,9 @@ public class GestorPartida {
 		int opcion =0;
 		int seguridad = 0;
 		boolean pasarTurno = false;
-		while(true) {
+		boolean victoria = false;
+		while(victoria = false && contPasarTurnos != GestorPartida.contJugadores) {
+			contPasarTurnos =0;
 			for(int i =0; i < GestorPartida.getContJugadores(); i++) {
 				pasarTurno = false;
 				while (pasarTurno = false)
@@ -122,6 +128,7 @@ public class GestorPartida {
 								while(seguridad !=1 && seguridad !=2) {
 									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Pasar turno\n2-Menu de acciones\n");
 								}
+								contPasarTurnos++;
 								break;
 					}
 					eleccion.close();
@@ -129,6 +136,16 @@ public class GestorPartida {
 			
 		}
 	}
+	
+	public static void actualizarCreencias(int id) {
+		for(int i =0; i < GestorPartida.getContJugadores();i++) {
+			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[i].getId() != id) {
+				
+			}
+		}
+	}
+	
+	
 	public static void hud(Jugador jugador) {
 		imprimirObjetos(jugador);
 		imprimirSala(jugador);
