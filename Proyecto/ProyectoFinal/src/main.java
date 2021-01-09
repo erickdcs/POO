@@ -4,8 +4,14 @@ import java.io.IOException;
 public class main {
 	public static void main(String argv[]) throws FileNotFoundException, IOException{
 		LecturaFicheros.AllLecture("C:\\Users\\erick\\pruebaPOO.txt");
-		GestorPartida.getJugadores()[1].setSala("Comedor");
+		GestorPartida.instanciarCreencias();
+		//GestorPartida.getJugadores()[0].setSala("Jardin");
+		//GestorPartida.getJugadores()[1].setSala("Jardin");
+		GestorPartida.actualizarCreencias(0);
+		GUI interfaz = new GUI(0);
+		interfaz.estadoJugador(0);
 		
-		
+		System.out.println(GestorPartida.getSalas()[1].getSalasVecinas().length);
+	
 	}
 }

@@ -25,7 +25,7 @@ public class Jugador {
 	
 	public void darAccion() {
 		Scanner eleccion = new Scanner(System.in);
-		int opcion =0;
+		int opcion = 0;
 		int seguridad = 0;
 		boolean pasarTurno = false;
 		while(true) {
@@ -59,7 +59,6 @@ public class Jugador {
 				}
 			}
 		}			
-					
 	}
 	
 	
@@ -164,7 +163,7 @@ public class Jugador {
     }
     
     
-	public void cambiarSala(Jugador jugador) {
+	/*public void cambiarSala(Jugador jugador) {
 		String[] salasVecinas;
 		Scanner entrada = new Scanner(System.in);
 		
@@ -172,17 +171,20 @@ public class Jugador {
 		salasVecinas= GestorPartida.verSalasVecinas(jugador.getId());
 		int contVecinas;
 		contVecinas=salasVecinas.length;
-		System.out.printf("Sus salas vecinas son:\n");
+		//System.out.printf("Sus salas vecinas son:\n");
 		for(int i=0;i<contVecinas;i++) {
 			System.out.println(i+1+" " + salasVecinas[i]);
 		}
 		int menu1 =0;
-		System.out.println("Escriba el numero de la sala destino ");
+		//System.out.println("Escriba el numero de la sala destino ");
 		menu1 = entrada.nextInt()-1;
 		
 		entrada.close();
 		GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[menu1]);
 		System.out.println("Ahora " +GestorPartida.getJugadores()[jugador.getId()].getNombre()+" está en "+ GestorPartida.getJugadores()[jugador.getId()].getSala());
+	}*/
+	public void cambiarSala(String salaVecina) {
+		this.setSala(salaVecina);
 	}
 	
 	public static void comprobarVictoria() {
@@ -376,5 +378,13 @@ public class Jugador {
 	}
 	public void setPeticiones(Peticiones[] peticiones) {
 		this.peticiones = peticiones;
+	}
+
+	public Creencias getCreencias() {
+		return creencias;
+	}
+
+	public void setCreencias(Creencias creencias) {
+		this.creencias = creencias;
 	}
 }

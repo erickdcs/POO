@@ -11,19 +11,55 @@ public class Creencias {
 		int i =0;
 		int j = 0;
 		
-		for(i =0; i < personas.length; i++) {
+		for(i =0; i < GestorPartida.getContJugadores(); i++) {
 			if(personas[i].getId() != jugadorId) {
 				nombrePersona[j] = personas[i].getNombre();
 				j++;
 			}
 		}
 		
-		for(i =0; i < objetosJugador.length; i++) {
-			nombreObjeto[i] = objetosJugador[i].getNombreObjeto();
+		for(i =0; i < GestorPartida.getContObjetosJugador(); i++) {
+			if(objetosJugador[i].getNombreObjeto()!= null) {
+				nombreObjeto[i] = objetosJugador[i].getNombreObjeto();
+			}
+			
 		}
-		for(j = 0; j <  objetosSala.length; j++) {			
-			nombreObjeto[i] = objetosSala[j].getNombreObjeto();
-			i++;
+		for(j = 0; j <  GestorPartida.getContObjetosSala(); j++) {		
+			if(objetosSala[j].getNombreObjeto() != null) {
+				nombreObjeto[i] = objetosSala[j].getNombreObjeto();
+				i++;
+			}
+			
 		}
+	}
+	public String[] getNombrePersona() {
+		return nombrePersona;
+	}
+	
+	public void setNombrePersona(String nombrePersona, int pos) {
+		this.nombrePersona[pos] = nombrePersona;
+	}
+	public String[] getSalaPersona() {
+		return salaPersona;
+	}
+	
+	public void setSalaPersona(String SalaPersona, int pos) {
+		this.salaPersona[pos] = SalaPersona;
+	}
+	
+	
+	public String[] getNombreObjeto() {
+		return nombreObjeto;
+	}
+	
+	public void setNombreObjeto(String nombreObjeto, int pos) {
+		this.nombreObjeto[pos] = nombreObjeto;
+	}
+	public String[] getLugarObjeto() {
+		return lugarObjeto;
+	}
+	
+	public void setLugarObjeto(String lugarObjeto, int pos) {
+		this.lugarObjeto[pos] = lugarObjeto;
 	}
 }

@@ -9,8 +9,7 @@ public class GestorPartida {
 	private static ObjetoSala objetoSala[] = new ObjetoSala[10];
 	private static int contObjetosSala;
 	private static ObjetoJugador objetoJugador[] = new ObjetoJugador[10];
-	private static int contObjetosJugador;
-	
+	private static int contObjetosJugador; 
 	
 	private static int contPasarTurnos = 0;
 	
@@ -82,7 +81,7 @@ public class GestorPartida {
 									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Moverse\n2-Menu de acciones\n");
 								}
 								if(seguridad == 1) {
-									GestorPartida.getJugadores()[i].cambiarSala(GestorPartida.getJugadores()[i]);
+									//GestorPartida.getJugadores()[i].cambiarSala(GestorPartida.getJugadores()[i]);
 									pasarTurno = true;
 								}
 								
@@ -138,14 +137,60 @@ public class GestorPartida {
 	}
 	
 	public static void actualizarCreencias(int id) {
-		for(int i =0; i < GestorPartida.getContJugadores();i++) {
-			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[i].getId() != id) {
-				
+		int j =0;
+		//Hacemos la accion pasando por todos los jugadores
+		
+	
+		
+		
+		//Actualizamos las creecias del jugador 
+		
+		for(j =0; j < GestorPartida.getContJugadores();j++) {
+			
+			//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias
+			
+			if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
+				//Actualizamos la sala por si el jugador se acaba de mover
+				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), j);
 			}
 		}
+		
+		
+		
+		for(j = 0;  j < GestorPartida.getContObjetosJugador();j++) {
+			//Comprobamos que el jugador coincida con un poseedor de un objeto
+			if(GestorPartida.getObjetoJugador()[j].getJugador().getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
+				for(int x =0; GestorPartida.getJugadores()[id].getCreencias().getNombreObjeto()[x]!=null ; x++) {
+					//Cogemos la posicion del objeto donde esta el objeto dentro de las creencias
+					if(GestorPartida.getJugadores()[id].getCreencias().getNombreObjeto()[x].equalsIgnoreCase(GestorPartida.getObjetoJugador()[j].getNombreObjeto())) {
+						GestorPartida.getJugadores()[id].getCreencias().setLugarObjeto(GestorPartida.getObjetoJugador()[j].getJugador().getNombre(), x);
+					}
+					
+				}
+			}
+		}
+		
+		for(j = 0;  j < GestorPartida.getContObjetosSala();j++) {
+			//Comprobamos si hay objetos en la sala del jugador
+			if(GestorPartida.getObjetoSala()[j].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
+				for(int x =0; GestorPartida.getJugadores()[id].getCreencias().getNombreObjeto()[x]!=null ; x++) {
+					//Cogemos la posicion del objeto donde esta el objeto dentro de las creencias
+					if(GestorPartida.getJugadores()[id].getCreencias().getNombreObjeto()[x].equalsIgnoreCase(GestorPartida.getObjetoSala()[j].getNombreObjeto())) {
+						GestorPartida.getJugadores()[id].getCreencias().setLugarObjeto(GestorPartida.getObjetoSala()[j].getSala().getNombre(), x);
+					}
+						
+				}
+			}
+		}
+		
+		
 	}
 	
-	
+	public static void instanciarCreencias() {
+		for(int i =0; i < GestorPartida.getContJugadores(); i++) {
+			GestorPartida.jugadores[i].setCreencias(new  Creencias(GestorPartida.jugadores,  GestorPartida.objetoJugador, GestorPartida.objetoSala, i)); 
+		}
+	}
 	public static void hud(Jugador jugador) {
 		imprimirObjetos(jugador);
 		imprimirSala(jugador);
@@ -286,13 +331,12 @@ public class GestorPartida {
 	}
 	public static String[] verSalasVecinas(int a) {
 		int sala =0;
-		int b =a;
 		String[] salasVecinas;
 		//System.out.println(GestorPartida.getJugadores()[b].getNombre());
 		//System.out.printf("Esta en:\n");
 		//System.out.println(GestorPartida.getJugadores()[b].getSala());
 		for( sala = 0;sala< GestorPartida.getContSalas(); sala++) {
-			if(GestorPartida.getJugadores()[b].getSala().equalsIgnoreCase(GestorPartida.getSalas()[sala].getNombre() )) {
+			if(GestorPartida.getJugadores()[a].getSala().equalsIgnoreCase(GestorPartida.getSalas()[sala].getNombre() )) {
 				break;
 			}
 		}
@@ -367,3 +411,27 @@ public class GestorPartida {
 	
 
 }
+/*for(int i =0; i < GestorPartida.getContJugadores();i++) {
+
+//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias
+
+if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[i].getId() != id) {
+	//Actualizamos la sala por si el jugador se acaba de mover
+	GestorPartida.getJugadores()[i].getCreencias().setSalaPersona(GestorPartida.getJugadores()[id].getSala(), id);
+	
+	//Actualizamos la creencis de los objetos jugador por si el jugador se ha movido con un objeto/ ha dejadado un objeto o ha dado un objeto
+	for(j = 0;  j < GestorPartida.getContObjetosJugador();j++) {
+		//Comprobamos que el jugador coincida con un poseedor de un objeto
+		if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
+			for(int x =0; GestorPartida.getJugadores()[i].getCreencias().getNombreObjeto()[x]!=null ; x++) {
+				//Cogemos la posicion del objeto donde esta el objeto dentro de las creencias
+				if(GestorPartida.getJugadores()[i].getCreencias().getNombreObjeto()[x].equalsIgnoreCase(GestorPartida.getObjetoJugador()[j].getNombreObjeto())) {
+					GestorPartida.getJugadores()[i].getCreencias().setLugarObjeto(GestorPartida.getObjetoJugador()[j].getJugador().getNombre(), x);
+				}
+				
+			}
+		}
+	}
+}
+}
+*/
