@@ -3,7 +3,7 @@ import java.io.IOException;
 
 public class main {
 	public static void main(String argv[]) throws FileNotFoundException, IOException{
-		LecturaFicheros.AllLecture("C:\\Users\\jorge\\pruebaPOO.txt");
+		LecturaFicheros.AllLecture("C:\\Users\\erick\\pruebaPOO.txt");
 		GestorPartida.instanciarCreencias();
 		//GestorPartida.getJugadores()[0].setSala("Jardin");
 		//GestorPartida.getJugadores()[1].setSala("Jardin");
