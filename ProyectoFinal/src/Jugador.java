@@ -64,8 +64,7 @@ public class Jugador {
 	
 	
 	
-	public void hacerPeticion() {
-		String jugadorSeleccionado = jugadorObjetivo();//Pedimos el nombre del jugador al que vamos a realizar la peticion
+	public void hacerPeticion(String jugadorSeleccionado, String objetoSeleccionado) {
 		int jugador = posJugadorObjetivo(jugadorSeleccionado);//COnseguimos la posicion del jugador seleccionado dentro del array de GestorPartida
 		int posPeticion = 0;
 		
@@ -81,7 +80,7 @@ public class Jugador {
 			}
 		}
 		//Ya encontrando una posicon vacia, o una peticion anterior de este jugador, la modificamos o la anadimos
-		String objetoSeleccionado = objetoObjetivo();
+		
 		GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion] =  new Peticiones(objetoSeleccionado,this.nombre);
 		
 	}

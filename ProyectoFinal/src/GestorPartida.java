@@ -53,7 +53,7 @@ public class GestorPartida {
 						System.out.println("3- Dejar un objeto");
 					}
 					//Pedir objeto
-					if(jugadorEnSala(GestorPartida.getJugadores()[i])) {
+					if(jugadorEnSala(GestorPartida.getJugadores()[i].getId())) {
 						System.out.println("4- Pedir un objeto");
 					}
 					
@@ -226,10 +226,10 @@ public class GestorPartida {
 		}
 		return hayObjetos;		
 	}
-	public static boolean jugadorEnSala(Jugador jugador) {
+	public static boolean jugadorEnSala(int id) {
 		boolean hayJugador = false;
 		for (int i =0; i < GestorPartida.getContJugadores(); i++) {
-			if(GestorPartida.getJugadores()[i].getId() != jugador.getId() && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(jugador.getSala())) {
+			if(GestorPartida.getJugadores()[i].getId() != id && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
 				hayJugador = true;
 			}
 			
@@ -246,7 +246,7 @@ public class GestorPartida {
 	}
 	public static boolean dar(Jugador jugador) {
 		boolean puedeDar = false;
-		boolean hayJugador = jugadorEnSala(jugador);
+		boolean hayJugador = jugadorEnSala(jugador.getId());
 		
 		
 		if(hayJugador) {

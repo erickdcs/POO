@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Scanner;
 import javax.swing.*;
 
 public class GUI extends JFrame implements ActionListener,  KeyListener{
 	int idJugador = 0;
 	int action = 0;
-	
+	int var =0;
+	String nombre;
 	JPanel container;
     JPanel panel1;
     JPanel panel1_1;
@@ -16,6 +18,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
     JTextArea rondaActual;
     JTextArea rondasAnteriores;
     JTextField respuesta;
+    JTextField respuesta2;
     JScrollPane rondaActualScroll;
     JScrollPane rondasAnterioresScroll;
     
@@ -43,6 +46,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         panel2 = new JPanel();
         panel2_1 = new JPanel();
         respuesta = new JTextField();
+        respuesta2 = new JTextField();
         rondaActual = new JTextArea(13,28);
         rondasAnteriores = new JTextArea(15,30);
         rondaActualScroll = new JScrollPane(rondaActual);
@@ -84,10 +88,12 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         
         respuesta.setPreferredSize(new Dimension(323, 20));
         respuesta.addKeyListener(this);     
+        respuesta2.setPreferredSize(new Dimension(323, 20));
+        respuesta2.addKeyListener(this); 
         
         panel1_1.add(rondaActualScroll);
         panel1_2.add(rondasAnterioresScroll);
-        panel1_1.add(respuesta);     
+        panel1_1.add(respuesta2);     
         panel2_1.setPreferredSize(new Dimension(300, 525));
         panel2.add(panel2_1);
 
@@ -142,8 +148,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 		}
 		if(e.getSource()==boton4) {
-			action = 4;
 			rondaActual.setText(null);
+			if(GestorPartida.jugadorEnSala(idJugador)) {
+				action = 4;
+				objetosEnJugador(idJugador);
+				rondaActual.append("\nIndica el nombre del jugador que quieres seleccionar:");
+	    		
+			}
+			else {
+				rondaActual.append("No hay jugadores en tu sala");
+			}
+			
 		}
 		if(e.getSource()==boton5) {
 			action = 5;
@@ -181,6 +196,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		       		rondaActual.setText("**Por favor, escriba una entrada valida**\n");
 		       		cogerObjetoEnSalaImprimir(idJugador);
 		       		respuesta.setText(null);
+		       		
 		       	}
 	       	}
 	       	if(action == 3) {
@@ -202,11 +218,68 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       		   respuesta.setText(null);
 	       	   }
 	       	}
+	    	if(action == 4) {
+	    		boolean entradaValida = false;
+	    		boolean objeto = false;
+	    		
+	    		
+	    		if(var == 0) {
+	    			for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
+		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText())){
+		        			entradaValida = true;
+		        			rondaActual.append("\nNombre valido");
+		        			
+		        			nombre = respuesta.getText();
+		        			respuesta.setText(null);
+		        			var = 1;
+		        			break;
+		        			
+			        	}
+		        		
+			    	}
+		    		if(!entradaValida) {
+			       		rondaActual.setText("**Por favor, escriba una entrada valida**\n");
+			       		objetosEnJugador(idJugador);
+						rondaActual.append("\nIndica el nombre del jugador que quieres seleccionar:");
+						respuesta.setText(null);
+		    		}
+	    		}
+	    		
+	    		else {
+	    			
+	    			rondaActual.setText("\nIndica el nombre del objeto que quieres seleccionar:");
+	    			
+	    			for(int j = 0; j < GestorPartida.getContObjetosSala(); j++) {
+	    				if(GestorPartida.getObjetoSala()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
+	    					objeto = true;
+	    				}
+	    			}
+	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
+	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
+	    					objeto = true;
+	    				}
+	    			}
+	    			if(!objeto) {
+			       		rondaActual.setText("**Por favor, escriba una entrada validas**\n");
+			       		respuesta.setText(null);
+			       		
+			       	}
+	    		}
+	    		action = 0;
+	    		
+	    	}
+	    	
 	       	if(action == 0) {
         		respuesta.setText(null);
 	       	}
 	     }
 	}
+	
+	
+	
+	
+	
+	
 	
 	public boolean comprobarSiJugadorTieneObjeto(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
@@ -288,10 +361,11 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		if(!comprobarSiHayObjetoEnSala(id)) {
 			rondaActual.append("Ninguno");
 		}
+		rondaActual.append("\n\n");
 	}
 	
 	public void objetosEnJugador(int id) {
-		rondaActual.append("\n\nJugadores en la misma sala:\n");
+		rondaActual.append("Jugadores en la misma sala:\n");
 		boolean tiene = false;
 		boolean hayJugadores = false;
 		for (int i =0; i < GestorPartida.getContJugadores(); i++) {
@@ -341,7 +415,81 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 		}
 	}
-
+	
+	
+	
+	
+	
+	
+	/*
+	private String jugadorObjetivo(int id) {
+		
+		
+		int jugador;
+		for( jugador =0; jugador < GestorPartida.getContJugadores(); jugador++) {
+			if(GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(respuesta.getText()) && !GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre()) ) {
+				if(!GestorPartida.getJugadores()[jugador].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())){
+					rondaActual.append("No puede seleccionar a alguien que no esta en la misma sala, seleccione a otro");
+					respuesta.setText(null);
+					respuesta.getText();
+					jugador =-1;
+				}
+				else {
+					break;
+				}
+				
+			}
+			if(respuesta.getText().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
+				rondaActual.append("No puede seleccionarse a si mismo/a, seleccione otro");
+				respuesta.setText(null);
+				respuesta.getText();
+				jugador =-1;
+			}
+			else if(jugador == GestorPartida.getContJugadores()-1) {
+				
+				rondaActual.append("Ese jugador no existe, seleccione otro");
+				respuesta.setText(null);
+				respuesta.getText();
+				jugador = -1;
+				
+			}
+			
+		}
+		
+		return respuesta.getText();
+	}
+	private String objetoObjetivo() {
+		rondaActual.append("Indica el nombre del objeto que quieres seleccionar");
+		String nombreObjeto = respuesta.getText();
+		int objeto =0;
+		
+		for( int salida = 0; salida == 0;) {
+			for(objeto=0; objeto < GestorPartida.getContObjetosJugador(); objeto++)
+			{
+				if(GestorPartida.getObjetoJugador()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
+					salida = 1;
+					break;
+				}
+			}
+			if(salida == 0) {
+				for(objeto=0; objeto < GestorPartida.getContObjetosSala(); objeto++)
+				{
+					if(GestorPartida.getObjetoSala()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
+						salida = 1;
+						rondaActual.append("hola1");
+						break;
+					}
+				}
+			}
+			if(salida ==0) {
+				rondaActual.append("No existe un objeto con ese nombre, elige uno nuevo");
+				respuesta.setText(null);
+				nombreObjeto = respuesta.getText();
+			}
+			
+		}
+		return nombreObjeto;
+	}*/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
