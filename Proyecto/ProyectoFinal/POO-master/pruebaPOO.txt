@@ -1,0 +1,23 @@
+<Localizaciones>
+Jardin(Comedor, Dormitorio)
+Comedor(Jardin, Cocina, Dormitorio)
+Cocina(Comedor)
+Dormitorio(Comedor, Jardin)
+<Personajes>
+Jorge(Comedor)
+Esther(Dormitorio)
+Maria(Jardin)
+<Objetos>
+Llave(Cocina)
+Ordenador(Comedor)
+Cartera(Jardin)
+Pan(Jorge)
+<Localizacion Personajes>
+Jorge(Jardin)
+Esther(Comedor)
+Maria(Comedor)
+<Posesion Objetos>
+Llave(Esther)
+Ordenador
+Cartera(Jorge)
+Pan(Maria) 
