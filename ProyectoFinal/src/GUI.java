@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Scanner;
 import javax.swing.*;
 
 public class GUI extends JFrame implements ActionListener,  KeyListener{
@@ -219,8 +218,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    	if(action == 4) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
-	    		
-	    		
+	    		int primeraVuelta = 0;
+	    		  		
 	    		if(var == 0) {
 	    			for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText())){
@@ -230,6 +229,10 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		        			nombre = respuesta.getText();
 		        			respuesta.setText(null);
 		        			var = 1;
+		        			primeraVuelta = 1;
+		        			rondaActual.setText(null);
+		        			objetosEnJugador(idJugador);
+		        			rondaActual.append("\nIndica el nombre del objeto que quieres seleccionar:");
 		        			break;
 		        			
 			        	}
@@ -243,10 +246,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    		}
 	    		}
 	    		
-	    		else {
-	    			
-	    			rondaActual.setText("\nIndica el nombre del objeto que quieres seleccionar:");
-	    			
+	    		if(var == 1 && primeraVuelta == 0) {	    		   			
+	    			rondaActual.setText(nombre);
 	    			for(int j = 0; j < GestorPartida.getContObjetosSala(); j++) {
 	    				if(GestorPartida.getObjetoSala()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
 	    					objeto = true;
@@ -262,8 +263,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			       		respuesta.setText(null);
 			       		
 			       	}
+	    			action = 0;
 	    		}
-	    		action = 0;
 	    		
 	    	}
 	    	
@@ -272,12 +273,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       	}
 	     }
 	}
-	
-	
-	
-	
-	
-	
 	
 	public boolean comprobarSiJugadorTieneObjeto(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
