@@ -18,7 +18,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
     JTextArea rondaActual;
     JTextArea rondasAnteriores;
     JTextField respuesta;
-    JTextField respuesta2;
     JScrollPane rondaActualScroll;
     JScrollPane rondasAnterioresScroll;
     
@@ -46,7 +45,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         panel2 = new JPanel();
         panel2_1 = new JPanel();
         respuesta = new JTextField();
-        respuesta2 = new JTextField();
+        
         rondaActual = new JTextArea(13,28);
         rondasAnteriores = new JTextArea(15,30);
         rondaActualScroll = new JScrollPane(rondaActual);
@@ -88,12 +87,11 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         
         respuesta.setPreferredSize(new Dimension(323, 20));
         respuesta.addKeyListener(this);     
-        respuesta2.setPreferredSize(new Dimension(323, 20));
-        respuesta2.addKeyListener(this); 
+        
         
         panel1_1.add(rondaActualScroll);
         panel1_2.add(rondasAnterioresScroll);
-        panel1_1.add(respuesta2);     
+        panel1_1.add(respuesta);     
         panel2_1.setPreferredSize(new Dimension(300, 525));
         panel2.add(panel2_1);
 
