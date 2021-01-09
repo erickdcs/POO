@@ -254,6 +254,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		objetosEnJugador(id);
 		objetivosJugador(id);
 		creenciasJugador(id);
+		rondaActual.setCaretPosition(0);
+		rondasAnteriores.setCaretPosition(0);
 	}
 	
 	public void salasVecinas(int id) {
