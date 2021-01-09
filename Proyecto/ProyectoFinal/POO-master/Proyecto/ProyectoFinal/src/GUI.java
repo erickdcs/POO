@@ -35,7 +35,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         this.setResizable(false);
         this.setTitle("Videojuego");
         this.setLocationRelativeTo(null);
-        this.addKeyListener(this);
         
         container = new JPanel();
         panel1 = new JPanel();
@@ -164,10 +163,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	
 	public void keyPressed(KeyEvent e) {
 		 int key = e.getKeyCode();
-		 if (action == -1) {
-			 estadoJugador(idJugador);
-			 action = 0;
-		 }
 	     if (key == KeyEvent.VK_ENTER) {
 	       	if(action == 2) {
 	        	boolean entradaValida = false;
@@ -177,9 +172,9 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    			rondaActual.setText("Objeto " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " cogido de la Sala correctamente.");
 		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);	    				
 		        		respuesta.setText(null);
-		        		rondaActual.append("\n\nPulsa cualquier Tecla para pasar de Ronda...");
-		        		action = -1;
-		        		break;		    			}
+		        		action = 0;
+		        		break;		    			
+		        	}
 		    	}
 		       	if(!entradaValida) {
 		       		rondaActual.setText("**Por favor, escriba una entrada valida**\n");
@@ -194,8 +189,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       					rondaActual.setText("Objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " dejado en la Sala correctamente.");
 	       					Jugador.dejarObjeto(idJugador, GestorPartida.getObjetoJugador()[i]);
      	        		    respuesta.setText(null);
-     	        		    rondaActual.append("\n\nPulsa cualquier Tecla para pasar de Ronda...");
-	     	        	    action = -1;
+	     	        	    action = 0;
 	     	       		    break;
 	        			}
 	        		}
