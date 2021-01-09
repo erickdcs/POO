@@ -133,9 +133,11 @@ public class Jugador {
         }
     } */
     
-    public void cogerObjeto(Jugador jugador, ObjetoSala objeto){
-        GestorPartida.getObjetoJugador()[GestorPartida.getContObjetosJugador()] = new ObjetoJugador(objeto.getNombreObjeto(), jugador);
+    public static void cogerObjeto(int id, ObjetoSala objeto){
+    	
+    	GestorPartida.getObjetoJugador()[GestorPartida.getContObjetosJugador()] = new ObjetoJugador(objeto.getNombreObjeto(), GestorPartida.getJugadores()[id]);
         GestorPartida.setContObjetosJugador(GestorPartida.getContObjetosJugador()+1);
+        
         for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
             if(GestorPartida.getObjetoSala()[i] == objeto) {
                 for(int j = i; j < (GestorPartida.getContObjetosSala()-1); j++) {
@@ -147,9 +149,17 @@ public class Jugador {
             }
         }
     }
-    public void dejarObjeto(Sala sala, ObjetoJugador objeto) {
-        GestorPartida.getObjetoSala()[GestorPartida.getContObjetosSala()] = new ObjetoSala(objeto.getNombreObjeto(), sala);
+    public static void dejarObjeto(int id, ObjetoJugador objeto) {
+    	
+	  	for(int i = 0; i < GestorPartida.getContSalas(); i++) {
+	    	if(GestorPartida.getJugadores()[id].getSala().equalsIgnoreCase(GestorPartida.getSalas()[i].getNombre())) {
+	    		GestorPartida.getObjetoSala()[GestorPartida.getContObjetosSala()] = new ObjetoSala(objeto.getNombreObjeto(), GestorPartida.getSalas()[i]);
+	    		break;
+	    	}
+
+    	}        
         GestorPartida.setContObjetosSala(GestorPartida.getContObjetosSala()+1);
+        
         for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
             if(GestorPartida.getObjetoJugador()[i] == objeto) {
                 for(int j = i; j < (GestorPartida.getContObjetosJugador()-1); j++) {
