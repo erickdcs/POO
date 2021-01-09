@@ -168,10 +168,11 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	        	boolean entradaValida = false;
 	        	for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
-		    			entradaValida = true;
-		    			rondaActual.setText("Objeto " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " cogido de la Sala correctamente.");
-		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);	    				
-		        		respuesta.setText(null);
+		    			entradaValida = true;		   				
+		   				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
+		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);
+		   				respuesta.setText(null);
+		        		estadoJugador(idJugador);
 		        		action = 0;
 		        		break;		    			
 		        	}
@@ -185,12 +186,13 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       	if(action == 3) {
 	       	   if(respuesta.getText().equalsIgnoreCase("Si")) {
 	       		   for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
-	       				if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == idJugador) {
-	       					rondaActual.setText("Objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " dejado en la Sala correctamente.");
+	       				if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == idJugador) {       					
+	       					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 	       					Jugador.dejarObjeto(idJugador, GestorPartida.getObjetoJugador()[i]);
-     	        		    respuesta.setText(null);
-	     	        	    action = 0;
-	     	       		    break;
+	       					respuesta.setText(null);
+			        		estadoJugador(idJugador);
+			        		action = 0;
+			        		break;
 	        			}
 	        		}
 	       	   }
@@ -243,6 +245,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	}
 
 	public void estadoJugador(int id) {
+		rondaActual.setText(null);
 		rondaActual.append("Nombre del Jugador: " + GestorPartida.getJugadores()[id].getNombre());
 		objetoJugador(id);
 		rondaActual.append("\n\nSala: " + GestorPartida.getJugadores()[id].getSala());
