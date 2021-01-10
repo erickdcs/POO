@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 public class GestorPartida {
 	private static Sala salas[] = new Sala [10];
@@ -16,6 +18,16 @@ public class GestorPartida {
 	private static int jugadorActivo;
 	private static int rondas;
 	
+	private static GUI interfaz;
+	
+	public static void crearPartida() throws FileNotFoundException, IOException {
+		LecturaFicheros.AllLecture("C:\\Users\\jorge\\pruebaPOO.txt");
+		int jugadorPersona = 0;
+				//(int) (Math.random()*GestorPartida.getContJugadores());		
+		GestorPartida.getJugadores()[jugadorPersona].setIA(false);	
+		interfaz = new GUI(jugadorPersona);		
+	}
+	
 	public static void instanciarSala(Sala sala) {
 		salas[contSalas] = sala;
 		contSalas++;
@@ -25,116 +37,10 @@ public class GestorPartida {
 		jugadores[contSalas] = jugador;
 		contJugadores++;
 	}
-
-	public static void gestorRondas() {
-		//int turnos =0;
-		Scanner eleccion = new Scanner(System.in);
-		int opcion =0;
-		int seguridad = 0;
-		boolean pasarTurno = false;
-		boolean victoria = false;
-		while(victoria = false && contPasarTurnos != GestorPartida.contJugadores) {
-			contPasarTurnos =0;
-			for(int i =0; i < GestorPartida.getContJugadores(); i++) {
-				pasarTurno = false;
-				while (pasarTurno = false)
-					eleccion = new Scanner(System.in);
-					System.out.println("Turno del jugador: " + GestorPartida.getJugadores()[i].getNombre());
-					
-					System.out.println("Elige una accion: ");
-					//Moverse
-					System.out.println("1- Cambiar de Sala");
-					
-					//Coger objeto
-					if(objetosEnSala(GestorPartida.getJugadores()[i]) && !objetosEnJugador(GestorPartida.getJugadores()[i])) {
-						System.out.println("2- Coger un objeto");
-						
-					}
-					//Dejar objeto
-					if(objetosEnJugador(GestorPartida.getJugadores()[i])) {
-						System.out.println("3- Dejar un objeto");
-					}
-					//Pedir objeto
-					if(jugadorEnSala(GestorPartida.getJugadores()[i].getId())) {
-						System.out.println("4- Pedir un objeto");
-					}
-					
-					
-					//Dar objeto
-					if(dar(GestorPartida.getJugadores()[i])) {
-						imprimirPeticiones(GestorPartida.getJugadores()[i]);
-						imprimirJugadores(GestorPartida.getJugadores()[i]);
-						System.out.println("5- Dar un objeto");
-					}
-					//Nada
-					System.out.println("6- Mostrar toda la informacion actual");
-					System.out.println("7- Pasar turno");
-					//if(eleccion.hasNextInt() )
-					//	opcion = eleccion.nextInt(); // if there is another number
-					opcion = eleccion.nextInt();
-					switch(opcion) {
-						//Moverse
-						case 1: 
-								imprimirSalasVecinas(GestorPartida.getJugadores()[i]);
-								System.out.printf("Seguro que quieres moverte de sala?\n1- Moverse\n2-Menu de acciones\n");
-								
-								seguridad = eleccion.nextInt();
-								while(seguridad !=1 && seguridad !=2) {
-									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Moverse\n2-Menu de acciones\n");
-								}
-								if(seguridad == 1) {
-									//GestorPartida.getJugadores()[i].cambiarSala(GestorPartida.getJugadores()[i]);
-									pasarTurno = true;
-								}
-								
-								break;
-						//Coger objeto
-						case 2: imprimirObjetosEnSala(GestorPartida.getJugadores()[i]);
-								System.out.printf("Seguro que quieres coger un objeto?\n1- Coger objeto\n2-Menu de acciones\n");
-								seguridad = eleccion.nextInt();
-								while(seguridad !=1 && seguridad !=2) {
-									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Coger objeto\n2-Menu de acciones\n");
-								}
-								break;
-						//Dejar objeto
-						case 3: imprimirObjetos(GestorPartida.getJugadores()[i]);
-								System.out.printf("Seguro que quieres dejar un objeto?\n1- Dejar objeto\n2-Menu de acciones\n");
-								seguridad = eleccion.nextInt();
-								while(seguridad !=1 && seguridad !=2) {
-									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Dejar objeto\n2-Menu de acciones\n");
-								}
-								break;
-						//Pedir objeto
-						case 4: imprimirJugadores(GestorPartida.getJugadores()[i]);
-								System.out.printf("Seguro que quieres pedir un objeto?\n1- Pedir objeto \n2-Menu de acciones\n");
-								seguridad = eleccion.nextInt();
-								while(seguridad !=1 && seguridad !=2) {
-									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Pedir objeto\n2-Menu de acciones\n");
-								}
-								break;
-						//Dar objeto
-						case 5: imprimirPeticiones(GestorPartida.getJugadores()[i]);
-								imprimirJugadores(GestorPartida.getJugadores()[i]);
-								System.out.printf("Seguro que quieres dar un objeto?\n1- Dar objeto\n2-Menu de acciones\n");
-								seguridad = eleccion.nextInt();
-								while(seguridad !=1 && seguridad !=2) {
-									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Dar objeto\n2-Menu de acciones\n");
-								}
-								break;
-						case 6: hud(GestorPartida.getJugadores()[i]);
-								break;
-						//Pasar turno
-						case 7: System.out.printf("Seguro que quieres pasar, perderas el turno \n1- Pasarn2-Menu de acciones\n");
-								seguridad = eleccion.nextInt();
-								while(seguridad !=1 && seguridad !=2) {
-									System.out.printf("Numero no valido, introduzca uno nuevo\n1- Pasar turno\n2-Menu de acciones\n");
-								}
-								contPasarTurnos++;
-								break;
-					}
-					eleccion.close();
-			}
-			
+	
+	public static void instanciarCreencias() {
+		for(int i =0; i < GestorPartida.getContJugadores(); i++) {
+			GestorPartida.jugadores[i].setCreencias(new  Creencias(GestorPartida.jugadores,  GestorPartida.objetoJugador, GestorPartida.objetoSala, i)); 
 		}
 	}
 	
@@ -187,12 +93,7 @@ public class GestorPartida {
 		
 		
 	}
-	
-	public static void instanciarCreencias() {
-		for(int i =0; i < GestorPartida.getContJugadores(); i++) {
-			GestorPartida.jugadores[i].setCreencias(new  Creencias(GestorPartida.jugadores,  GestorPartida.objetoJugador, GestorPartida.objetoSala, i)); 
-		}
-	}
+
 	public static void hud(Jugador jugador) {
 		imprimirObjetos(jugador);
 		imprimirSala(jugador);
@@ -206,10 +107,7 @@ public class GestorPartida {
 		}
 		System.out.printf("\n");
 	}
-	
-	
-	
-	
+		
 	public static boolean objetosEnSala(Jugador jugador) {
 		boolean hayObjetos =false;
 		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
@@ -422,21 +320,12 @@ public class GestorPartida {
 	public static void setRondas(int rondas) {
 		GestorPartida.rondas = rondas;
 	}
-	
-	
 
+	public static GUI getInterfaz() {
+		return interfaz;
+	}
+
+	public void setInterfaz(GUI interfaz) {
+		GestorPartida.interfaz = interfaz;
+	}
 }
-/*
-if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
-				//Actualizamos la sala por si el jugador se acaba de mover
-				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), i);
-				
-				
-			}
-			if(GestorPartida.getJugadores()[j].getId() != id) {
-				i++;
-			}
-
-
-
-*/
