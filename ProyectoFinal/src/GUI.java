@@ -146,20 +146,47 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		if(e.getSource()==boton4) {
 			rondaActual.setText(null);
-			if(GestorPartida.jugadorEnSala(idJugador)) {
+			//GestorPartida.jugadorEnSala(idJugador);
+			if(comprobarJugadoresConObjetosEnSala(idJugador)) {
 				action = 4;
 				objetosEnJugador(idJugador);
 				rondaActual.append("\nIndica el nombre del jugador que quieres seleccionar:");
 	    		
 			}
+			else if(!GestorPartida.jugadorEnSala(idJugador)){
+				rondaActual.append("No hay jugadores en la misma sala que tu");
+			}
 			else {
-				rondaActual.append("No hay jugadores en tu sala");
+				rondaActual.append("Ningun jugador de la sala tiene objetos");
 			}
 			
 		}
 		if(e.getSource()==boton5) {
-			action = 5;
-			rondaActual.setText(null);
+			
+			if(comprobarSiJugadorTieneObjeto(idJugador)) {
+				rondaActual.setText(null);
+				if(comprobarSiExistePeticionJugadorEnSala(idJugador)) {
+					if(comprobarJugadoresSinObjetosEnSala(idJugador)) {
+						action = 5;
+						objetosEnJugador(idJugador);
+						rondaActual.append("\nIndica el nombre del jugador que quieres seleccionar:");
+			    		
+					}
+					else if(!GestorPartida.jugadorEnSala(idJugador)){
+						rondaActual.append("No hay jugadores en la misma sala que tu");
+					}
+					else {
+						rondaActual.append("No hay jugadores en la sala sin objetos");
+					}
+				}
+				else {
+					rondaActual.append("No tienes peticiones accesibles ahora mismo");
+				}
+			}
+			else {
+				rondaActual.append("No tienes objetos");
+			}
+			
 		}
 		if(e.getSource()==boton6) {
 			action = 0;
@@ -179,7 +206,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       	if(action == 2) {
 	        	boolean entradaValida = false;
 	        	for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
-	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
+	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())&& i != idJugador){
 		    			entradaValida = true;		   				
 		   				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);
@@ -218,18 +245,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    	if(action == 4) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
-	    		int primeraVuelta = 0;
+	    		String object;
 	    		  		
 	    		if(var == 0) {
 	    			for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
-		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText())){
+		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText())&& GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala()) && i != idJugador){
 		        			entradaValida = true;
 		        			rondaActual.append("\nNombre valido");
 		        			
 		        			nombre = respuesta.getText();
 		        			respuesta.setText(null);
 		        			var = 1;
-		        			primeraVuelta = 1;
 		        			rondaActual.setText(null);
 		        			objetosEnJugador(idJugador);
 		        			rondaActual.append("\nIndica el nombre del objeto que quieres seleccionar:");
@@ -246,34 +272,163 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    		}
 	    		}
 	    		
-	    		if(var == 1 && primeraVuelta == 0) {	    		   			
+	    		else if(var == 1 ) {	    		   			
 	    			rondaActual.setText(nombre);
+	    			
 	    			for(int j = 0; j < GestorPartida.getContObjetosSala(); j++) {
 	    				if(GestorPartida.getObjetoSala()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
 	    					objeto = true;
+	    					
+	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
+	    					idJugador = 0;
+	    					var = 0;
+	    					respuesta.setText(null);
+	    					break;
 	    				}
 	    			}
 	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
 	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
+	    					
 	    					objeto = true;
+	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
+	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el objeto " +respuesta.getText()  + " a " + nombre + "\n");
+	    					idJugador = 0;
+	    					var =0;
+	    					respuesta.setText(null);
+	    					break;
 	    				}
 	    			}
 	    			if(!objeto) {
+	    				
 			       		rondaActual.setText("**Por favor, escriba una entrada validas**\n");
+			       		objetosEnJugador(idJugador);
+			       		rondaActual.append("\nIndica el nombre del objeto que quieres seleccionar:");
 			       		respuesta.setText(null);
 			       		
+			       	}else {
+			       		estadoJugador(idJugador);
 			       	}
-	    			action = 0;
+	    			
 	    		}
 	    		
 	    	}
-	    	
+	    	if(action == 5) {
+	    		boolean entradaValida = false;
+	    		boolean objeto = false;
+	    		boolean peticionValida = false;
+	    		String objetoPosee = nombreDelObjetoQuePosee(idJugador);
+	    		rondaActual.append(objetoPosee + "\n");
+	    		String object;
+	    		int i = 0;
+	    		int peticion = 0;
+	    		if(var == 0) {
+	    			peticionValida = false;
+	    			
+	    			
+	    			for(i = 0; i < GestorPartida.getContJugadores(); i++) {
+			        	if(!GestorPartida.getJugadores()[idJugador].getNombre().equalsIgnoreCase(respuesta.getText()) &&GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
+			        		
+			       			for(peticion = 0; peticion < 10 && GestorPartida.getJugadores()[idJugador].getPeticiones()[peticion] != null; peticion++) {
+				   				if(GestorPartida.getJugadores()[idJugador].getPeticiones()[peticion].getJugadorPide().equalsIgnoreCase(respuesta.getText()) && objetoPosee.equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getPeticiones()[peticion].getObjeto())) {
+				   					peticionValida = true;
+				   					break;
+			    				}
+			    			}
+		        			if(peticionValida) {
+		        				entradaValida = true;
+				        		rondaActual.append("\nNombre valido");
+				        		
+				       			nombre = respuesta.getText();
+				       			
+				       			respuesta.setText(null);
+				       			var = 1;
+				       			//rondaActual.setText(null);
+				       			objetosEnJugador(idJugador);
+				       			rondaActual.append("\nIndica el nombre del objeto que quieres seleccionar:");
+				       			
+				       			break;	
+		        			}
+			        		
+			        			
+				        }
+			        		
+				    }
+	    			
+	    			
+	    			if(!entradaValida) {
+			       		rondaActual.setText("**Por favor, escriba una entrada valida**\n");
+			       		objetosEnJugador(idJugador);
+						rondaActual.append("\nIndica el nombre del jugador que quieres seleccionar:" + nombre);
+						respuesta.setText(null);
+						var = 0;
+		    		}
+	    			else if(!peticionValida) {
+	    				rondaActual.setText("Entrada no valida, no posees el objeto que te pidio ese jugador\n");
+			       		objetosEnJugador(idJugador);
+						rondaActual.append("\nIndica el nombre del jugador que quieres seleccionar:");
+						var =0;
+						respuesta.setText(null);
+	    			}
+	    		}
+	    		
+	    		else if(var == 1 ) {	    		   			
+	    			//rondaActual.setText(nombre);
+	    			
+	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
+	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getNombre())) {
+	    					rondaActual.append("\nObjeto valido");
+	    					objeto = true;
+	    					
+	    					GestorPartida.getJugadores()[idJugador].darObjeto(nombre, respuesta.getText());
+	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dado el objeto " +respuesta.getText()  + " a " + nombre + "\n");
+	    					idJugador = 0;
+	    					respuesta.setText(null);
+	    					break;
+	    				}
+	    			}
+	    			if(!objeto) {
+	    				
+			       		rondaActual.setText("**Por favor, escriba una entrada validas**\n" + respuesta.getText() + "\n");
+			       		rondaActual.append("Nombre del Jugador: " + GestorPartida.getJugadores()[idJugador].getNombre());
+			    		objetoJugador(idJugador);
+			       		rondaActual.append("\nIndica el nombre del objeto que quieres seleccionar:");
+			       		respuesta.setText(null);
+			       		
+			       	}else {
+			       		estadoJugador(idJugador);
+			       	}
+	    			
+	    		}
+	    	}
 	       	if(action == 0) {
         		respuesta.setText(null);
 	       	}
 	     }
 	}
-	
+	public boolean comprobarSiExistePeticionJugadorEnSala(int id) {
+		String nombreObjeto = null;
+		if(GestorPartida.getJugadores()[id].getPeticiones()[0] ==null) {
+			return false;
+		}
+		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
+			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
+				nombreObjeto = GestorPartida.getObjetoJugador()[i].getNombreObjeto();
+			}
+		}
+		
+		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
+			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
+				rondaActual.append("\n" + GestorPartida.getJugadores()[i].getNombre() + "    " + nombreObjeto);
+				for(int j =0;GestorPartida.getJugadores()[id].getPeticiones()[j]!=null && j < 10; j++) {
+					if(GestorPartida.getJugadores()[id].getPeticiones()[j].getJugadorPide().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre()) && GestorPartida.getJugadores()[id].getPeticiones()[j].getObjeto().equalsIgnoreCase(nombreObjeto)) {
+						
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 	public boolean comprobarSiJugadorTieneObjeto(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
@@ -282,7 +437,28 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
-	
+	public boolean comprobarJugadoresConObjetosEnSala(int id) {
+		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
+			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
+				if(comprobarSiJugadorTieneObjeto(GestorPartida.getJugadores()[i].getId())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean comprobarJugadoresSinObjetosEnSala(int id) {
+		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
+			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
+				for(int j =0; j < GestorPartida.getContObjetosJugador(); j++) {
+					if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre())){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 	public boolean comprobarSiHayObjetoEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
@@ -291,7 +467,14 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
-	
+	public String nombreDelObjetoQuePosee(int id) {
+		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
+			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
+				return GestorPartida.getObjetoJugador()[i].getNombreObjeto();
+			}
+		}
+		return null;
+	}
 	public void cogerObjetoEnSalaImprimir(int id) {
 		rondaActual.append("Escribe el Objeto que deseas coger:");
 		for(int i =0; i< GestorPartida.getContObjetosSala(); i++) {
@@ -309,6 +492,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 		}
 	}
+	
 
 	public void estadoJugador(int id) {
 		rondaActual.setText(null);
@@ -319,9 +503,20 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		objetosEnSala(id);
 		objetosEnJugador(id);
 		objetivosJugador(id);
+		mostrarPeticiones(id);
 		creenciasJugador(id);
+		
 		rondaActual.setCaretPosition(0);
 		rondasAnteriores.setCaretPosition(0);
+	}
+	public void mostrarPeticiones(int id) {
+		rondaActual.append("\n\nPeticiones: ");
+		for(int i =0; i < 10 && GestorPartida.getJugadores()[id].getPeticiones()[i]!= null; i++) {
+			rondaActual.append("\n"+GestorPartida.getJugadores()[id].getPeticiones()[i].getJugadorPide() + " te ha pedido el objeto " +GestorPartida.getJugadores()[id].getPeticiones()[i].getObjeto() );
+		}
+		if(GestorPartida.getJugadores()[id].getPeticiones()[0] ==null) {
+			rondaActual.append("Ninguna");
+		}
 	}
 	
 	public void salasVecinas(int id) {
@@ -365,15 +560,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			tiene = false;
 			if(GestorPartida.getJugadores()[i].getId() != id && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
 				rondaActual.append(GestorPartida.getJugadores()[i].getNombre() + ": ");
+				hayJugadores = true;
 				for(int j =0; j< GestorPartida.getContObjetosJugador();j++) {
 					if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre())) {
 						rondaActual.append(GestorPartida.getObjetoJugador()[j].getNombreObjeto());
 						tiene = true;
-						hayJugadores = true;
 					}
 				}
+				
 				if(tiene ==false) {
 					rondaActual.append("Ninguno");
+					
 				}
 				rondaActual.append("\n");
 			}
@@ -385,7 +582,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	}
 	
 	public void objetivosJugador(int id) {
-		rondaActual.append("\n\nObjeto objetivo: " + GestorPartida.getJugadores()[id].getObjetivoObjeto());
+		rondaActual.append("\nObjeto objetivo: " + GestorPartida.getJugadores()[id].getObjetivoObjeto());
 		rondaActual.append("\nSala objetivo: " + GestorPartida.getJugadores()[id].getObjetivoSala());
 	}
 	
@@ -409,80 +606,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
-	
-	
-	
-	
-	
-	/*
-	private String jugadorObjetivo(int id) {
-		
-		
-		int jugador;
-		for( jugador =0; jugador < GestorPartida.getContJugadores(); jugador++) {
-			if(GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(respuesta.getText()) && !GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre()) ) {
-				if(!GestorPartida.getJugadores()[jugador].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())){
-					rondaActual.append("No puede seleccionar a alguien que no esta en la misma sala, seleccione a otro");
-					respuesta.setText(null);
-					respuesta.getText();
-					jugador =-1;
-				}
-				else {
-					break;
-				}
-				
-			}
-			if(respuesta.getText().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
-				rondaActual.append("No puede seleccionarse a si mismo/a, seleccione otro");
-				respuesta.setText(null);
-				respuesta.getText();
-				jugador =-1;
-			}
-			else if(jugador == GestorPartida.getContJugadores()-1) {
-				
-				rondaActual.append("Ese jugador no existe, seleccione otro");
-				respuesta.setText(null);
-				respuesta.getText();
-				jugador = -1;
-				
-			}
-			
-		}
-		
-		return respuesta.getText();
-	}
-	private String objetoObjetivo() {
-		rondaActual.append("Indica el nombre del objeto que quieres seleccionar");
-		String nombreObjeto = respuesta.getText();
-		int objeto =0;
-		
-		for( int salida = 0; salida == 0;) {
-			for(objeto=0; objeto < GestorPartida.getContObjetosJugador(); objeto++)
-			{
-				if(GestorPartida.getObjetoJugador()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
-					salida = 1;
-					break;
-				}
-			}
-			if(salida == 0) {
-				for(objeto=0; objeto < GestorPartida.getContObjetosSala(); objeto++)
-				{
-					if(GestorPartida.getObjetoSala()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
-						salida = 1;
-						rondaActual.append("hola1");
-						break;
-					}
-				}
-			}
-			if(salida ==0) {
-				rondaActual.append("No existe un objeto con ese nombre, elige uno nuevo");
-				respuesta.setText(null);
-				nombreObjeto = respuesta.getText();
-			}
-			
-		}
-		return nombreObjeto;
-	}*/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub

@@ -84,7 +84,34 @@ public class Jugador {
 		GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion] =  new Peticiones(objetoSeleccionado,this.nombre);
 		
 	}
-	public void cambiarObjeto() {
+	public void darObjeto(String nombre, String objeto) {
+		int idJugador =0;
+		for(idJugador =0; idJugador < GestorPartida.getContJugadores(); idJugador++) {
+			if(GestorPartida.getJugadores()[idJugador].getNombre().equalsIgnoreCase(nombre)) {
+				break;
+			}
+		}
+		for(int i =0; i < GestorPartida.getContObjetosJugador(); i++) {
+			
+			if(GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(objeto)) {
+				GestorPartida.getObjetoJugador()[i].setJugador(GestorPartida.getJugadores()[idJugador]);
+				
+			}
+			
+		}
+		int peticion = 0;
+		for(peticion =0; peticion <10 && this.peticiones[peticion] != null; peticion++) {
+			if(this.peticiones[peticion].getJugadorPide().equalsIgnoreCase(nombre)) {
+				this.peticiones[peticion] = null;
+			}
+		}
+		for(int i =peticion+1; i<10 && this.peticiones[i] !=null; i++) {
+			this.peticiones[i] = this.peticiones[i-1];
+		}
+	}
+	/*
+	public void darObjeto(int id, String objeto) {
+		GestorPartida.getObjetoJugador()[i].getJugador().setNombre(jugadorSeleccionado);
 		String jugadorSeleccionado = jugadorObjetivo();//Pedimos el nombre del jugador al que vamos a realizar la peticion
 		String objetoSeleccionado = objetoObjetivo();
 		boolean existePeticion = false;
@@ -122,7 +149,7 @@ public class Jugador {
 		
 		
 	}
-	
+	*/
 	/*
 	public int comprobarObjetoOtroJugador(Jugador jugador) {
         for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
