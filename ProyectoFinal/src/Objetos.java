@@ -1,5 +1,5 @@
 
-public class  Objetos {
+public abstract class  Objetos {
 	
 	private String nombreObjeto;
 	public Objetos(String nombre){
