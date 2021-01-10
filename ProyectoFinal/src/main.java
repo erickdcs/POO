@@ -6,8 +6,7 @@ public class main {
 		LecturaFicheros.AllLecture("C:\\Users\\erick\\pruebaPOO.txt");
 		GestorPartida.getJugadores()[0].setSala("dormitorio");
 		//GestorPartida.getJugadores()[0].getPeticiones()[0] = new Peticiones("pan", "Esther");
-		GestorPartida.instanciarCreencias();
-		GestorPartida.actualizarCreencias(1);
+		
 		GUI interfaz = new GUI(1);
 
 	}

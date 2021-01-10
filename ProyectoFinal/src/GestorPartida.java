@@ -13,7 +13,9 @@ public class GestorPartida {
 	
 	private static int contPasarTurnos = 0;
 	
+	private static int jugadorActivo;
 	private static int rondas;
+	
 	public static void instanciarSala(Sala sala) {
 		salas[contSalas] = sala;
 		contSalas++;
@@ -406,6 +408,22 @@ public class GestorPartida {
 
 	public static void setContObjetosJugador(int contObjetosJugador) {
 		GestorPartida.contObjetosJugador = contObjetosJugador;
+	}
+
+	public static int getJugadorActivo() {
+		return jugadorActivo;
+	}
+
+	public static void setJugadorActivo(int jugadorActivo) {
+		GestorPartida.jugadorActivo = jugadorActivo;
+	}
+
+	public static int getRondas() {
+		return rondas;
+	}
+
+	public static void setRondas(int rondas) {
+		GestorPartida.rondas = rondas;
 	}
 	
 	
