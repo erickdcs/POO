@@ -130,8 +130,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			cambioDeJugador();
     		estadoJugador(idJugador);
     		action = 0;
-			//action = 1;
-			//rondaActual.setText(null);
 		}
 		if(e.getSource()==boton2) {
 			rondaActual.setText(null);
@@ -204,9 +202,9 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			estadoJugador(idJugador);
 		}
 		if(e.getSource()==boton7) {
-			action = 6;
-			rondaActual.setText(null);
-			System.exit(0);
+			cambioDeJugador();
+			action = 0;
+			estadoJugador(idJugador);
 		}	
 	}
 	
@@ -364,7 +362,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				       			rondaActual.setText(null);
 				       			mostrarPeticiones(idJugador);
 				       			rondaActual.append("\n\nIndica el nombre del Objeto que deseas dar:");
-				       			action = 0;
+				       			//action = 0;
 				       			break;	
 		        			}		        			
 				        }		        		
@@ -417,6 +415,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		
 	    	}
 	       	if(action == 0) {
+	       		
         		respuesta.setText(null);
 	       	}
 	     }
