@@ -272,30 +272,44 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    		}
 	    		}
 	    		
+<<<<<<< Updated upstream
 	    		else if(var == 1 ) {	    		   			
 	    			rondaActual.setText(nombre);
+=======
+	    		if(var ==1 ) {
+	    			
+	    			rondaActual.setText("\nIndica el nombre del objeto que quieres seleccionar:");
+>>>>>>> Stashed changes
 	    			
 	    			for(int j = 0; j < GestorPartida.getContObjetosSala(); j++) {
 	    				if(GestorPartida.getObjetoSala()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
 	    					objeto = true;
+<<<<<<< Updated upstream
 	    					
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
 	    					idJugador = 0;
 	    					var = 0;
 	    					respuesta.setText(null);
 	    					break;
+=======
+	    					action = 0;
+>>>>>>> Stashed changes
 	    				}
 	    			}
 	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
 	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
 	    					
 	    					objeto = true;
+<<<<<<< Updated upstream
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el objeto " +respuesta.getText()  + " a " + nombre + "\n");
 	    					idJugador = 0;
 	    					var =0;
 	    					respuesta.setText(null);
 	    					break;
+=======
+	    					action = 0;
+>>>>>>> Stashed changes
 	    				}
 	    			}
 	    			if(!objeto) {
@@ -370,6 +384,10 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 						respuesta.setText(null);
 	    			}
 	    		}
+<<<<<<< Updated upstream
+=======
+	    		
+>>>>>>> Stashed changes
 	    		
 	    		else if(var == 1 ) {	    		   			
 	    			//rondaActual.setText(nombre);
