@@ -5,8 +5,9 @@ import javax.swing.*;
 public class GUI extends JFrame implements ActionListener,  KeyListener{
 	
 	int idJugador = 0;
-	int action = 0;
+	int accion = 0;
 	int numeroDeEntrada = 0;
+	int turnosSaltados = 0;
 	
 	String historiaCompleta = "";
 	
@@ -126,115 +127,105 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
     }
 	
 	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource() == boton1) {
-			String[] salasVecinas;
-			action = 1;
-			
-			rondaActual.setText(null);
-			salasVecinas= GestorPartida.verSalasVecinas(idJugador);
-			int contVecinas;
-			contVecinas=salasVecinas.length;
-			rondaActual.append("Sus salas vecinas son:\n");
-			for(int j=0;j<contVecinas;j++) {
-				rondaActual.append(j+1+" " + salasVecinas[j] + "\n");
-			}
-
-			rondaActual.append("Escriba el nombre de la sala destino:\n");
-		}
-		
-		if(e.getSource() == boton2) {
-			rondaActual.setText(null);
-			if(comprobarSiHayObjetoEnSala(idJugador) && !comprobarSiJugadorTieneObjeto(idJugador)) {
-				action = 2;
-				cogerObjetoEnSalaImprimir(idJugador);
-			}
-			else if(comprobarSiJugadorTieneObjeto(idJugador)) {
-				rondaActual.append("Ya posees un Objeto, debes dejarlo primero en la Sala.");
-			}
-			else {
-				rondaActual.append("No hay ningun Objeto en la Sala para coger.");
-			}
-		}
-		
-		if(e.getSource() == boton3) {
-			rondaActual.setText(null);
-			if(comprobarSiJugadorTieneObjeto(idJugador)) {
-				action = 3;
-				dejarObjetoEnSalaImprimir(idJugador);
-			}
-			else {
-				rondaActual.append("No posees ningun Objeto.");
-			}
-		}
-		
-		if(e.getSource() == boton4) {
-			rondaActual.setText(null);
-			if(comprobarJugadoresConObjetosEnSala(idJugador)) {
-				action = 4;
-				objetosEnJugador(idJugador);
-				rondaActual.append("\nIndica el nombre del Jugador al que deseas pedir un Objeto:");
-	    		
-			}
-			else if(!GestorPartida.jugadorEnSala(idJugador)){
-				rondaActual.append("No hay ningun Jugador en la misma Sala que tu.");
-			}
-			else {
-				rondaActual.append("Ningun Jugador de la sala tiene un Objeto.");
+		if(accion != -1) {
+			if(e.getSource() == boton1) {
+				rondaActual.setText(null);
+				cambiarSalaImprimir(idJugador);
+				accion = 1;
 			}
 			
-		}
-		
-		if(e.getSource() == boton5) {
-			rondaActual.setText(null);
-			if(comprobarSiJugadorTieneObjeto(idJugador)) {
-				if(comprobarSiExistePeticionJugadorEnSala(idJugador)) {
-					if(comprobarJugadoresSinObjetosEnSala(idJugador)) {
-						action = 5;
-						mostrarPeticiones(idJugador);
-						rondaActual.append("\n\nIndica el nombre del Jugador al que deseas dar un Objeto:");
-			    		
-					}
-					else if(!GestorPartida.jugadorEnSala(idJugador)){
-						rondaActual.append("No hay ningun Jugador en la misma Sala que tu.");
+			if(e.getSource() == boton2) {
+				rondaActual.setText(null);
+				if(comprobarSiHayObjetoEnSala(idJugador) && !comprobarSiJugadorTieneObjeto(idJugador)) {
+					accion = 2;
+					cogerObjetoEnSalaImprimir(idJugador);
+				}
+				else if(comprobarSiJugadorTieneObjeto(idJugador)) {
+					rondaActual.append("Ya posees un Objeto, debes dejarlo primero en la Sala.");
+				}
+				else {
+					rondaActual.append("No hay ningun Objeto en la Sala para coger.");
+				}
+			}
+			
+			if(e.getSource() == boton3) {
+				rondaActual.setText(null);
+				if(comprobarSiJugadorTieneObjeto(idJugador)) {
+					accion = 3;
+					dejarObjetoEnSalaImprimir(idJugador);
+				}
+				else {
+					rondaActual.append("No posees ningun Objeto.");
+				}
+			}
+			
+			if(e.getSource() == boton4) {
+				rondaActual.setText(null);
+				if(comprobarJugadoresConObjetosEnSala(idJugador)) {
+					accion = 4;
+					objetosEnJugador(idJugador);
+					rondaActual.append("\nIndica el nombre del Jugador al que deseas pedir un Objeto:");
+		    		
+				}
+				else if(!GestorPartida.jugadorEnSala(idJugador)){
+					rondaActual.append("No hay ningun Jugador en la misma Sala que tu.");
+				}
+				else {
+					rondaActual.append("Ningun Jugador de la sala tiene un Objeto.");
+				}
+				
+			}
+			
+			if(e.getSource() == boton5) {
+				rondaActual.setText(null);
+				if(comprobarSiJugadorTieneObjeto(idJugador)) {
+					if(comprobarSiExistePeticionJugadorEnSala(idJugador)) {
+						if(comprobarJugadoresSinObjetosEnSala(idJugador)) {
+							accion = 5;
+							mostrarPeticiones(idJugador);
+							rondaActual.append("\n\nIndica el nombre del Jugador al que deseas dar un Objeto:");
+				    		
+						}
+						else if(!GestorPartida.jugadorEnSala(idJugador)){
+							rondaActual.append("No hay ningun Jugador en la misma Sala que tu.");
+						}
+						else {
+							rondaActual.append("No hay ningun Jugador en la misma Sala que no posea un Objeto.");
+						}
 					}
 					else {
-						rondaActual.append("No hay ningun Jugador en la misma Sala que no posea un Objeto.");
+						rondaActual.append("No posees Peticiones accesibles ahora mismo.");
 					}
 				}
 				else {
-					rondaActual.append("No posees Peticiones accesibles ahora mismo.");
+					rondaActual.append("No posees ningun Objeto.");
 				}
-			}
-			else {
-				rondaActual.append("No posees ningun Objeto.");
+				
 			}
 			
+			if(e.getSource() == boton6) {
+				accion = 0;
+				rondaActual.setText(null);
+				estadoJugador(idJugador);
+			}
+			
+			if(e.getSource( )== boton7) {
+				accion = 7;
+				rondaActual.setText("¿Seguro que deseas saltar tu Turno?");
+				rondaActual.append("\n\nEscribe Si para continuar.");
+			}
 		}
-		
-		if(e.getSource() == boton6) {
-			action = 0;
-			rondaActual.setText(null);
-			estadoJugador(idJugador);
-		}
-		
-		if(e.getSource( )== boton7) {
-			action = 7;
-			rondaActual.setText("¿Seguro que deseas saltar tu Turno?");
-			rondaActual.append("\n\nEscribe Si para continuar.");
-		}	
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		 int key = e.getKeyCode();
 	     if (key == KeyEvent.VK_ENTER) {
 	    	 
-	    	if(action == 1) {
-	    		cambiarSala(idJugador);
-	    		
+	    	if(accion == 1) {
+	    		cambiarSala(idJugador);	    		
 	    	}
 	    	
-	       	if(action == 2) {
+	       	if(accion == 2) {
 	        	boolean entradaValida = false;
 	        	for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
@@ -246,7 +237,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		        		
 		        		cambioDeJugador();
 		        		estadoJugador(idJugador);
-		        		action = 0;
+		        		accion = 0;
+		        		turnosSaltados = 0;
 		        		break;		    			
 		        	}
 		    	}
@@ -258,17 +250,19 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		       	}
 	       	}
 	       	
-	       	if(action == 3) {
+	       	if(accion == 3) {
 	       	   if(respuesta.getText().equalsIgnoreCase("Si")) {
 	       		   for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 	       				if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == idJugador) {       
 	       					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n";
 	       					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 	       					Jugador.dejarObjeto(idJugador, GestorPartida.getObjetoJugador()[i]);
-	       					respuesta.setText(null);			        		
+	       					respuesta.setText(null);	
+	       					
 			        		cambioDeJugador();
 			        		estadoJugador(idJugador);
-			        		action = 0;
+			        		accion = 0;
+			        		turnosSaltados = 0;
 			        		break;
 	        			}
 	        		}
@@ -280,7 +274,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       	   }
 	       	}
 	       	
-	    	if(action == 4) {
+	    	if(accion == 4) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
 	    		  		
@@ -317,7 +311,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
 	    					cambioDeJugador();	    					
-	    					action = 0;
+	    					accion = 0;
+	    					turnosSaltados = 0;
 				       		estadoJugador(idJugador);
 	    					break;
 	    				}
@@ -331,7 +326,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
 	    					cambioDeJugador();	    					
-	    					action = 0;
+	    					accion = 0;
+	    					turnosSaltados = 0;
 				       		estadoJugador(idJugador);
 	    					break;
 	    				}
@@ -345,7 +341,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		}	    		
 	    	}
 	    	
-	    	if(action == 5) {
+	    	if(accion == 5) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
 	    		boolean peticionValida = false;
@@ -391,7 +387,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    				rondaActual.setText("Entrada no valida, no posees el Objeto que te pidio ese Jugador");
 	    				mostrarPeticiones(idJugador);
 	    				rondaActual.append("\n\nIndica el nombre del Jugador al que deseas dar un Objeto:");
-						numeroDeEntrada =0;
+						numeroDeEntrada = 0;
 						respuesta.setText(null);
 	    			}
 	    		}
@@ -408,7 +404,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					respuesta.setText(null);
 	    					numeroDeEntrada = 0;
 	    					cambioDeJugador();
-	    					action = 0;
+	    					accion = 0;
+	    					turnosSaltados = 0;
 	    					estadoJugador(idJugador);
 	    					break;
 	    				}
@@ -425,11 +422,18 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		}
 	    		
 	    	}
-	    	if(action == 7) {
+	    	if(accion == 7) {
 	    		if(respuesta.getText().equalsIgnoreCase("si")) {
 	    			cambioDeJugador();			
 					estadoJugador(idJugador);
-					action = 0;
+					turnosSaltados++;
+					if(turnosSaltados == GestorPartida.getContJugadores()) {
+						rondaActual.setText("**Todos los Jugadores han saltado su Turno**\n\n");
+						finDePartida();
+					}
+					else {
+						accion = 0;
+					}
 	    		}
 	    		else {
 	    			rondaActual.setText("**Por favor, escriba una entrada valida**\n");
@@ -438,7 +442,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		       		respuesta.setText(null);
 	    		}
 	    	}
-	       	if(action == 0) {	       		
+	       	if(accion == 0) {	       		
         		respuesta.setText(null);
 	       	}
 	     }
@@ -509,6 +513,21 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
+	
+	public void cambiarSalaImprimir(int id) {
+		String[] salasVecinas;
+					
+		salasVecinas= GestorPartida.verSalasVecinas(id);
+		int contVecinas;
+		contVecinas=salasVecinas.length;
+		rondaActual.append("Las Salas Vecinas son:\n");
+		for(int j=0;j<contVecinas;j++) {
+			rondaActual.append(salasVecinas[j] + "\n");
+		}
+
+		rondaActual.append("\nEscribe el nombre de la Sala a la que deseas desplazarte:\n");
+	}
+	
 	public void cambiarSala(int id) {
 		String[] salasVecinas;
 		String menu=new String();
@@ -528,14 +547,16 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		if (opcion!=0) {
 			GestorPartida.getJugadores()[id].setSala(salasVecinas[i]);
-			rondasAnteriores.append("Ahora " +GestorPartida.getJugadores()[id].getNombre()+" está en "+ GestorPartida.getJugadores()[id].getSala()+"\n");
-			historiaCompleta = historiaCompleta + "Ahora " +GestorPartida.getJugadores()[id].getNombre()+" está en "+ GestorPartida.getJugadores()[id].getSala()+"\n";
+			rondasAnteriores.append(GestorPartida.getJugadores()[id].getNombre()+" se ha desplazado a la Sala "+ GestorPartida.getJugadores()[id].getSala()+"\n");
+			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[id].getNombre()+" se ha desplazado a la Sala "+ GestorPartida.getJugadores()[id].getSala()+"\n";
 			cambioDeJugador();
-			action = 0;
+			accion = 0;
+			turnosSaltados = 0;
 			estadoJugador(idJugador);
 		}
 		else {
-			rondaActual.append("Nombre no valido\n");
+			rondaActual.setText("**Por favor, escriba una entrada valida**\n");
+			cambiarSalaImprimir(id);
 		}
 	}
 	
@@ -703,6 +724,13 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			GestorPartida.setJugadorActivo(GestorPartida.getJugadorActivo()+1);
 		}
 		
+	}
+	
+	public void finDePartida() {
+		respuesta.setText(null);
+		rondaActual.append("**Partida Finalizada**");
+		respuesta.setEditable(false);
+		accion = -1;
 	}
 	
 	@Override
