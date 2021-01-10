@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 public class Jugador {
 	
 	private String nombre;
@@ -20,6 +20,7 @@ public class Jugador {
 		GestorPartida.instanciarJugador(this);
 	}
 	
+	//Funcion que permite hacer peticiones
 	public void hacerPeticion(String jugadorSeleccionado, String objetoSeleccionado) {
 		int jugador = posJugadorObjetivo(jugadorSeleccionado);//COnseguimos la posicion del jugador seleccionado dentro del array de GestorPartida
 		int posPeticion = 0;
@@ -40,6 +41,8 @@ public class Jugador {
 		GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion] =  new Peticiones(objetoSeleccionado,this.nombre);
 		
 	}
+	
+	//Funcion que permite dar objetos (aceptar peticiones)
 	public void darObjeto(String nombre, String objeto) {
 		int idJugador =0;
 		for(idJugador =0; idJugador < GestorPartida.getContJugadores(); idJugador++) {
@@ -65,7 +68,8 @@ public class Jugador {
 			this.peticiones[i] = this.peticiones[i-1];
 		}
 	}
-    
+	
+    //Funcion que permite coger objetos
     public static void cogerObjeto(int id, ObjetoSala objeto){
     	
     	GestorPartida.getObjetoJugador()[GestorPartida.getContObjetosJugador()] = new ObjetoJugador(objeto.getNombreObjeto(), GestorPartida.getJugadores()[id]);
@@ -83,6 +87,7 @@ public class Jugador {
         }
     }
     
+    //Funcion que permite dejar objetos
     public static void dejarObjeto(int id, ObjetoJugador objeto) {
     	
 	  	for(int i = 0; i < GestorPartida.getContSalas(); i++) {
@@ -105,102 +110,7 @@ public class Jugador {
             }
         }
     }
-    
-	public void cambiarSala(String salaVecina) {
-		this.setSala(salaVecina);
-	}
-	
-	public static void comprobarVictoria() {
-		int puntoSala=0;
-		int puntoObjeto=0;
-		for(int i=0; GestorPartida.getJugadores()[i]!=null; i++) {
-			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoSala())) {
-				puntoSala++;
-			}
-			if(GestorPartida.getObjetoJugador()[i]!=null) {
-				if(GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoObjeto())){
-					puntoObjeto++;
-				}
-			}
-			if(puntoSala>=1&&puntoObjeto>=1) {
-				System.out.println("Ha ganado"+ GestorPartida.getJugadores()[i].getNombre());
-				break;
-			}
-		}	
-	}
-	
-	public void verObjetosEnSala() {
-		System.out.println("Los objetos disponibles de la sala son: ");
-		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(this.sala)) {
-				System.out.println(GestorPartida.getObjetoSala()[i].getNombreObjeto());
-			}
-		}
-		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
-			if(GestorPartida.getObjetoJugador()[i].getJugador().getSala().equalsIgnoreCase(this.sala)) {
-				System.out.println("el jugador "+ GestorPartida.getObjetoJugador()[i].getJugador().getNombre() + " tiene el objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() );
-			}
-		}
-		
-	}
-
-	public boolean comprobarObjetoenSala(String objeto) {
-		boolean objetoenSala = false;
-		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(this.sala)) {
-				System.out.println("El objeto " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " esta en tu sala");
-				objetoenSala = true;
-			}
-		}
-		return objetoenSala;
-	}
-	
-	public boolean comprobarObjetoenJugador(String objeto) {
-		boolean objetoenJugador = false;
-		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
-			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(this.sala)) {
-				System.out.println("el jugador "+ GestorPartida.getObjetoJugador()[i].getJugador().getNombre() + " tiene el objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() );
-				objetoenJugador = true;
-			}
-		}
-		return objetoenJugador;
-	}
-
-	//Funcion que pide un nombre para que sea objetivo de una accion,y ademas comprueba que existe un juador con ese nombre
-	private String jugadorObjetivo() {
-		Scanner nombre = new Scanner(System.in);
-		System.out.println("Indica el nombre del jugador que quieres seleccionar");
-		String nombreJugador = nombre.nextLine();
-		int jugador;
-		for( jugador =0; jugador < GestorPartida.getContJugadores(); jugador++) {
-			if(GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(nombreJugador) && !GestorPartida.getJugadores()[jugador].getNombre().equalsIgnoreCase(this.nombre) ) {
-				if(!GestorPartida.getJugadores()[jugador].getSala().equalsIgnoreCase(this.sala)){
-					System.out.println("No puede seleccionar a alguien que no esta en la misma sala, seleccione a otro");
-					nombreJugador = nombre.nextLine();
-					jugador =-1;
-				}
-				else {
-					break;
-				}
-				
-			}
-			if(nombreJugador.equalsIgnoreCase(this.nombre)) {
-				System.out.println("No puede seleccionarse a si mismo/a, seleccione otro");
-				nombreJugador = nombre.nextLine();
-				jugador =-1;
-			}
-			else if(jugador == GestorPartida.getContJugadores()-1) {
-				
-				System.out.println("Ese jugador no existe, seleccione otro");
-				nombreJugador = nombre.nextLine();
-				jugador =-1;
-				
-			}
-			
-		}
-		return nombreJugador;
-	}
-	
+ 
 	//Funcion que retorna la posion del array de GestorPartida en la que se encuentra el jugador seleccionado
 	private int posJugadorObjetivo(String jugadorSeleccionado) {
 		int jugador = 0;
@@ -214,7 +124,7 @@ public class Jugador {
 	}
 	
 	
-	
+	//Se elige la acción de la IA
 	public void accionIa(Jugador this){
 		boolean objetoPosesion=false;
 		boolean objetoObjetivoSala=false;
@@ -303,6 +213,7 @@ public class Jugador {
 		}
 	}
 	
+	//Devuelve un array con los objetos que hay en la sala
 	private String[] verObjetosEnSalaIa(Jugador jugador) {
 		int contObjetos;
 		contObjetos=GestorPartida.getContObjetosSala();
@@ -318,6 +229,7 @@ public class Jugador {
 		return objetosenSala;
 	}
 	
+	//Devuelve un array con los objetos que tienen los jugadores de la misma sala
 	private String[] verObjetosEnJugadoresIa(Jugador jugador) {
 		int contObjetos;
 		contObjetos=GestorPartida.getContObjetosJugador();
@@ -335,6 +247,7 @@ public class Jugador {
 		return objetosenJugadores;
 	}
 	
+	//Funcion que permite a la ia hacer peticiones
 	private void hacerPeticionIa(Jugador jugadorHace, String jugadorRecibe, String objeto) {
 		int jugador = posJugadorObjetivo(jugadorRecibe);
 		int posPeticion = 0;
@@ -353,6 +266,7 @@ public class Jugador {
 		GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + jugadorHace.getNombre() + " ha pedido el Objeto " + objeto  + " a " + GestorPartida.getJugadores()[jugador].getNombre() + ".\n");
 	}
 	
+	//Funcion que cambia a la de sala
 	private void cambiarSalaIa(Jugador jugador) {
 		String[] salasVecinas;
 		salasVecinas= GestorPartida.verSalasVecinas(jugador.getId());
