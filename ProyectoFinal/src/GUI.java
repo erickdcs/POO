@@ -725,6 +725,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 							rondaActual.setText("**" + GestorPartida.getJugadores()[i].getNombre() + " posee el Objeto " + GestorPartida.getJugadores()[i].getObjetivoObjeto() + 
 									" y se encuentra en la Sala " + GestorPartida.getJugadores()[i].getObjetivoSala() + "**\n\n");
 							finDePartida();
+							break;
 						}
 					}
 				}
