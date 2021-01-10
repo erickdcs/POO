@@ -140,20 +140,18 @@ public class GestorPartida {
 	
 	public static void actualizarCreencias(int id) {
 		int j =0;
-		//Hacemos la accion pasando por todos los jugadores
-		
-	
 		
 		
 		//Actualizamos las creecias del jugador 
-		
+		int i =0;
 		for(j =0; j < GestorPartida.getContJugadores();j++) {
 			
 			//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias
 			
 			if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
 				//Actualizamos la sala por si el jugador se acaba de mover
-				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), j);
+				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), i);
+				i++;
 			}
 		}
 		
