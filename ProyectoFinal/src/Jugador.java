@@ -220,6 +220,7 @@ public class Jugador {
 		boolean objetoObjetivoSala=false;
 		boolean objetoObjetivoJugador=false;
 		boolean turno=false;
+		int pasarTurno= (int) (Math.random()*10);
 		int j;
 		String[] objetosenSala;
 		String[] objetosenJugadores;
@@ -228,72 +229,77 @@ public class Jugador {
 		objetosenJugadores=verObjetosEnJugadoresIa(this);
 		turno=false;
 		
-		for(j=0;j < GestorPartida.getContObjetosJugador();j++) {
-			if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(this.getNombre())) {
-				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
-                    break;
-                }
-                else {
-                    objetoPosesion=true;
-                }
-			}
+		if(pasarTurno<2) {
+			GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha saltado su Turno.\n");
+			GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta()+ this.getNombre() + " ha saltado su Turno.\n");
 		}
 		
-		for(int i=0; objetosenSala[i]!=null ;i++) {
-			if(objetosenSala[i].equalsIgnoreCase(this.objetivoObjeto)) {
-				objetoObjetivoSala=true;
-				break;
+		else {
+			for(j=0;j < GestorPartida.getContObjetosJugador();j++) {
+				if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(this.getNombre())) {
+					if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
+	                    break;
+	                }
+	                else {
+	                    objetoPosesion=true;
+	                }
+				}
 			}
-		}
-		
-		for(int i=0; i < objetosenJugadores.length && objetosenJugadores[i]!=null;i++) {
-			if(objetosenJugadores[i].equalsIgnoreCase(this.objetivoObjeto)) {
-				objetoObjetivoJugador=true;
-				break;
-			}
-		}
-		//la IA deja su objeto
-		if(objetoPosesion ==true && turno==false) {
-			for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
-				if(this == GestorPartida.getObjetoJugador()[i].getJugador()) {
-					GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + this.getSala() + ".\n");
-					GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + this.getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + this.getSala() + ".\n");
-					dejarObjeto(this.getId(), GestorPartida.getObjetoJugador()[i]);					
-					objetoPosesion=false;
-					turno=true;
+			
+			for(int i=0; objetosenSala[i]!=null ;i++) {
+				if(objetosenSala[i].equalsIgnoreCase(this.objetivoObjeto)) {
+					objetoObjetivoSala=true;
 					break;
 				}
 			}
-		}
-		//la IA coge un objeto
-		if(objetoObjetivoSala ==true && turno==false) {
-			for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
-				if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
-					GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + this.getSala() + ".\n");
-					GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + this.getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + this.getSala() + ".\n");
-					cogerObjeto(this.getId(), GestorPartida.getObjetoSala()[i]);
-					objetoObjetivoSala=false;
-					turno=true;
+			
+			for(int i=0; i < objetosenJugadores.length && objetosenJugadores[i]!=null;i++) {
+				if(objetosenJugadores[i].equalsIgnoreCase(this.objetivoObjeto)) {
+					objetoObjetivoJugador=true;
 					break;
 				}
 			}
-		}
-		
-		//la IA pide un objeto
-		if(objetoObjetivoJugador == true && turno==false) {
-			for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
-				if(GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
-					hacerPeticionIa(this,GestorPartida.getObjetoJugador()[i].getJugador().getNombre(),this.objetivoObjeto);
-					objetoObjetivoJugador=false;
-					turno=true;
-					break;
+			//la IA deja su objeto
+			if(objetoPosesion ==true && turno==false) {
+				for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
+					if(this == GestorPartida.getObjetoJugador()[i].getJugador()) {
+						GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + this.getSala() + ".\n");
+						dejarObjeto(this.getId(), GestorPartida.getObjetoJugador()[i]);					
+						objetoPosesion=false;
+						turno=true;
+						break;
+					}
 				}
 			}
-		}
-		//la IA se cambia de sala
-		if(objetoObjetivoSala==false && objetoObjetivoJugador==false && objetoPosesion==false && turno==false) {
-			cambiarSalaIa(this);
-			turno=true;
+			//la IA coge un objeto
+			if(objetoObjetivoSala ==true && turno==false) {
+				for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
+					if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
+						GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + this.getSala() + ".\n");
+						cogerObjeto(this.getId(), GestorPartida.getObjetoSala()[i]);
+						objetoObjetivoSala=false;
+						turno=true;
+						break;
+					}
+				}
+			}
+			
+			//la IA pide un objeto
+			if(objetoObjetivoJugador == true && turno==false) {
+				for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
+					if(GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
+						hacerPeticionIa(this,GestorPartida.getObjetoJugador()[i].getJugador().getNombre(),this.objetivoObjeto);
+						objetoObjetivoJugador=false;
+						turno=true;
+						break;
+					}
+				}
+			}
+			//la IA se cambia de sala
+			if(objetoObjetivoSala==false && objetoObjetivoJugador==false && objetoPosesion==false && turno==false) {
+				cambiarSalaIa(this);
+				turno=true;
+			}
 		}
 	}
 	
@@ -320,8 +326,10 @@ public class Jugador {
 		
 		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getSala().equalsIgnoreCase(jugador.getSala())) {
-				objetosenJugadores[pos]= GestorPartida.getObjetoJugador()[i].getNombreObjeto();
-				pos++;
+				if(!GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(jugador.getNombre())) {
+					objetosenJugadores[pos]= GestorPartida.getObjetoJugador()[i].getNombreObjeto();
+					pos++;
+				}
 			}
 		}
 		return objetosenJugadores;
