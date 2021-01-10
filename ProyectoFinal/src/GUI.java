@@ -710,6 +710,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].accionIa());
 			}
 		}while(GestorPartida.getJugadores()[idJugador].isIA());
+		GestorPartida.actualizarCreencias(0);
 	}
 	
 	public void cambioDeRonda() {

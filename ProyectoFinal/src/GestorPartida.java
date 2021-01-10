@@ -146,10 +146,15 @@ public class GestorPartida {
 		int i =0;
 		for(j =0; j < GestorPartida.getContJugadores();j++) {
 			
-			//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias			
-			if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
-				//Actualizamos la sala por si el jugador se acaba de mover
-				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), i);
+			
+			if(GestorPartida.getJugadores()[j].getId() != id) {
+				//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias			
+				if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
+					//Actualizamos la sala por si el jugador se acaba de mover
+					GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), i);
+					
+					
+				}
 				i++;
 			}
 		}
@@ -421,27 +426,17 @@ public class GestorPartida {
 	
 
 }
-/*for(int i =0; i < GestorPartida.getContJugadores();i++) {
-
-//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias
-
-if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[i].getId() != id) {
-	//Actualizamos la sala por si el jugador se acaba de mover
-	GestorPartida.getJugadores()[i].getCreencias().setSalaPersona(GestorPartida.getJugadores()[id].getSala(), id);
-	
-	//Actualizamos la creencis de los objetos jugador por si el jugador se ha movido con un objeto/ ha dejadado un objeto o ha dado un objeto
-	for(j = 0;  j < GestorPartida.getContObjetosJugador();j++) {
-		//Comprobamos que el jugador coincida con un poseedor de un objeto
-		if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
-			for(int x =0; GestorPartida.getJugadores()[i].getCreencias().getNombreObjeto()[x]!=null ; x++) {
-				//Cogemos la posicion del objeto donde esta el objeto dentro de las creencias
-				if(GestorPartida.getJugadores()[i].getCreencias().getNombreObjeto()[x].equalsIgnoreCase(GestorPartida.getObjetoJugador()[j].getNombreObjeto())) {
-					GestorPartida.getJugadores()[i].getCreencias().setLugarObjeto(GestorPartida.getObjetoJugador()[j].getJugador().getNombre(), x);
-				}
+/*
+if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
+				//Actualizamos la sala por si el jugador se acaba de mover
+				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), i);
+				
 				
 			}
-		}
-	}
-}
-}
+			if(GestorPartida.getJugadores()[j].getId() != id) {
+				i++;
+			}
+
+
+
 */

@@ -312,6 +312,7 @@ public class Jugador {
 		
 		if(objetoObjetivoSala==0 && salaObjetivo==0 && objetoObjetivoJugador==0 && objetoPosesion==0) {
 			cambiarSalaIa(this);
+			System.out.println(GestorPartida.getJugadores()[id].getNombre()+ "   " + GestorPartida.getJugadores()[id].getSala() + "\n");
 		}
 		return "Hola";
 	}
