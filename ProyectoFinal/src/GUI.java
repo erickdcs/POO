@@ -8,6 +8,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	int action = 0;
 	int numeroDeEntrada = 0;
 	
+	String historiaCompleta = "";
+	
 	String nombre;
 	JPanel container;
     JPanel panel1;
@@ -207,7 +209,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	        	boolean entradaValida = false;
 	        	for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())&& i != idJugador){
-		    			entradaValida = true;		   				
+		    			entradaValida = true;
+		    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n";
 		   				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);
 		   				respuesta.setText(null);
@@ -226,7 +229,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       	if(action == 3) {
 	       	   if(respuesta.getText().equalsIgnoreCase("Si")) {
 	       		   for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
-	       				if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == idJugador) {       					
+	       				if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == idJugador) {       
+	       					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n";
 	       					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 	       					Jugador.dejarObjeto(idJugador, GestorPartida.getObjetoJugador()[i]);
 	       					respuesta.setText(null);
@@ -290,6 +294,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					
 	    					objeto = true;
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
+	    					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el Objeto " + respuesta.getText()  + " a " + nombre + "\n";
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el Objeto " + respuesta.getText()  + " a " + nombre + "\n");
 	    					idJugador = 0;
 	    					numeroDeEntrada =0;
@@ -372,6 +377,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					objeto = true;
 	    					
 	    					GestorPartida.getJugadores()[idJugador].darObjeto(nombre, respuesta.getText());
+	    					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha dado el Objeto " +respuesta.getText()  + " a " + nombre + "\n";
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dado el Objeto " +respuesta.getText()  + " a " + nombre + "\n");
 	    					idJugador = 0;
 	    					respuesta.setText(null);
