@@ -1,18 +1,15 @@
 import java.util.Scanner;
 public class Jugador {
-
 	
 	private String nombre;
 	private static int contId;
 	private String sala;
 	private int id;
+	private boolean IA = true;
 	private String objetivoObjeto;
 	private String objetivoSala;
 	private Peticiones peticiones[] =  new Peticiones[10];
 	private Creencias creencias;
-	//private String memoriaPosiciones[];
-	// String memoriaObjetos[];
-	
 	
 	public Jugador(String nombre, String sala) {
 		setNombre(nombre);
@@ -22,12 +19,6 @@ public class Jugador {
 		contId++;
 		GestorPartida.instanciarJugador(this);
 	}
-	
-				
-	
-	
-	
-	
 	
 	public void hacerPeticion(String jugadorSeleccionado, String objetoSeleccionado) {
 		int jugador = posJugadorObjetivo(jugadorSeleccionado);//COnseguimos la posicion del jugador seleccionado dentro del array de GestorPartida
@@ -74,55 +65,6 @@ public class Jugador {
 			this.peticiones[i] = this.peticiones[i-1];
 		}
 	}
-	/*
-	public void darObjeto(int id, String objeto) {
-		GestorPartida.getObjetoJugador()[i].getJugador().setNombre(jugadorSeleccionado);
-		String jugadorSeleccionado = jugadorObjetivo();//Pedimos el nombre del jugador al que vamos a realizar la peticion
-		String objetoSeleccionado = objetoObjetivo();
-		boolean existePeticion = false;
-		boolean poseeObjeto =false;
-		for(int i =0; GestorPartida.getObjetoJugador()[i] !=null ;i++) {
-			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(this.nombre) && GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(objetoSeleccionado)) {
-				poseeObjeto =true;
-				break;
-			}
-		}
-		
-		if(poseeObjeto == true) {
-			for(int i =0; this.peticiones[i] !=null; i++) {
-				if(this.peticiones[i].getJugadorPide().equalsIgnoreCase(jugadorSeleccionado) && this.peticiones[i].getObjeto().equalsIgnoreCase(objetoSeleccionado)) {
-					existePeticion = true;
-					if(GestorPartida.getObjetoJugador()[i].getJugador().getSala().equalsIgnoreCase(this.sala)) {
-						GestorPartida.getObjetoJugador()[i].getJugador().setNombre(jugadorSeleccionado);
-						break;
-					}
-					else {
-						System.out.println("Accion imposible, no estais en la misma sala");
-					}
-				}
-				
-			}
-			
-			if(existePeticion == false ) {
-				System.out.printf("Accion imposible, no existe una peticion de %s del jugador %/n",jugadorSeleccionado,objetoSeleccionado );
-			}
-		}
-		else{
-			System.out.println("Accion imposible, no posees el objeto que quieres dar");
-		}
-		
-		
-		
-	}
-	*/
-	/*
-	public int comprobarObjetoOtroJugador(Jugador jugador) {
-        for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
-            if(GestorPartida.getObjetoJugador()[i].getSala().equals(/*Sala del Jugador)) {
-                if()
-            }
-        }
-    } */
     
     public static void cogerObjeto(int id, ObjetoSala objeto){
     	
@@ -140,6 +82,7 @@ public class Jugador {
             }
         }
     }
+    
     public static void dejarObjeto(int id, ObjetoJugador objeto) {
     	
 	  	for(int i = 0; i < GestorPartida.getContSalas(); i++) {
@@ -163,27 +106,6 @@ public class Jugador {
         }
     }
     
-    
-	/*public void cambiarSala(Jugador jugador) {
-		String[] salasVecinas;
-		Scanner entrada = new Scanner(System.in);
-		
-		
-		salasVecinas= GestorPartida.verSalasVecinas(jugador.getId());
-		int contVecinas;
-		contVecinas=salasVecinas.length;
-		//System.out.printf("Sus salas vecinas son:\n");
-		for(int i=0;i<contVecinas;i++) {
-			System.out.println(i+1+" " + salasVecinas[i]);
-		}
-		int menu1 =0;
-		//System.out.println("Escriba el numero de la sala destino ");
-		menu1 = entrada.nextInt()-1;
-		
-		entrada.close();
-		GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[menu1]);
-		System.out.println("Ahora " +GestorPartida.getJugadores()[jugador.getId()].getNombre()+" está en "+ GestorPartida.getJugadores()[jugador.getId()].getSala());
-	}*/
 	public void cambiarSala(String salaVecina) {
 		this.setSala(salaVecina);
 	}
@@ -208,7 +130,6 @@ public class Jugador {
 	}
 	
 	public void verObjetosEnSala() {
-		int sala;
 		System.out.println("Los objetos disponibles de la sala son: ");
 		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(this.sala)) {
@@ -233,6 +154,7 @@ public class Jugador {
 		}
 		return objetoenSala;
 	}
+	
 	public boolean comprobarObjetoenJugador(String objeto) {
 		boolean objetoenJugador = false;
 		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
@@ -244,9 +166,6 @@ public class Jugador {
 		return objetoenJugador;
 	}
 
-	
-	
-	
 	//Funcion que pide un nombre para que sea objetivo de una accion,y ademas comprueba que existe un juador con ese nombre
 	private String jugadorObjetivo() {
 		Scanner nombre = new Scanner(System.in);
@@ -281,6 +200,7 @@ public class Jugador {
 		}
 		return nombreJugador;
 	}
+	
 	//Funcion que retorna la posion del array de GestorPartida en la que se encuentra el jugador seleccionado
 	private int posJugadorObjetivo(String jugadorSeleccionado) {
 		int jugador = 0;
@@ -294,7 +214,7 @@ public class Jugador {
 	}
 	
 	//Con esto seleccionas un objeto, y ademas comprueba que existe un objeto con ese nombre
-	private String objetoObjetivo() {
+	/*private String objetoObjetivo() {
 		Scanner objetos = new Scanner(System.in);
 		System.out.println("Indica el nombre del objeto que quieres seleccionar");
 		String nombreObjeto = objetos.nextLine();
@@ -325,8 +245,141 @@ public class Jugador {
 			
 		}
 		return nombreObjeto;
+	}*/
+	
+	
+	public String accionIa(Jugador this) {
+		int objetoPosesion=0;
+		int objetoObjetivoSala=0;
+		int objetoObjetivoJugador=0;
+		int salaObjetivo=0;
+		int j;
+		String[] objetosenSala;
+		String[] objetosenJugadores;
+		objetosenSala=verObjetosEnSalaIa(this);
+		objetosenJugadores=verObjetosEnJugadoresIa(this);
+		
+		for(j=0;j < GestorPartida.getContObjetosJugador();j++) {
+			if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(this.getNombre())) {
+				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
+                    break;
+                }
+                else {
+                    objetoPosesion++;
+                }
+			}
+		}
+		
+		for(int i=0; objetosenSala[i]!=null ;i++) {
+			if(objetosenSala[i].equalsIgnoreCase(this.objetivoObjeto)) {
+				objetoObjetivoSala++;
+			}
+		}
+		
+		for(int i=0; i < objetosenJugadores.length && objetosenJugadores[i]!=null;i++) {
+			if(objetosenJugadores[i].equalsIgnoreCase(this.objetivoObjeto)) {
+				objetoObjetivoJugador++;
+			}
+		}
+		
+		if(objetoPosesion!=0) {
+			for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
+				if(this == GestorPartida.getObjetoJugador()[i].getJugador()) {
+					dejarObjeto(this.getId() ,GestorPartida.getObjetoJugador()[i]);
+				}
+			}
+		}
+		
+		if(objetoObjetivoSala !=0) {
+			for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
+				if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
+					cogerObjeto(this.getId(), GestorPartida.getObjetoSala()[i]);
+				}
+			}
+		}
+		
+		if (this.getSala().equalsIgnoreCase(this.getObjetivoSala())) {
+			salaObjetivo++;
+		}
+		
+		if(objetoObjetivoJugador !=0) {
+			for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
+				if(GestorPartida.getObjetoJugador()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
+					hacerPeticionIa(this,GestorPartida.getObjetoJugador()[i].getJugador().getNombre(),this.objetivoObjeto);
+				}
+			}
+		}
+		
+		if(objetoObjetivoSala==0 && salaObjetivo==0 && objetoObjetivoJugador==0 && objetoPosesion==0) {
+			cambiarSalaIa(this);
+		}
+		return "Hola";
 	}
 	
+	private String[] verObjetosEnSalaIa(Jugador jugador) {
+		int contObjetos;
+		contObjetos=GestorPartida.getContObjetosSala();
+		int pos =0;
+		String objetosenSala[] = new String[contObjetos];
+		for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
+			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(jugador.getSala())) {
+				objetosenSala[pos]=GestorPartida.getObjetoSala()[i].getNombreObjeto();
+				pos++;
+			}
+		}
+		return objetosenSala;
+	}
+	
+	private String[] verObjetosEnJugadoresIa(Jugador jugador) {
+		int contObjetos;
+		contObjetos=GestorPartida.getContObjetosJugador();
+		int pos =0;
+		String objetosenJugadores[] = new String[contObjetos];
+		for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
+			if(GestorPartida.getObjetoJugador()[i].getJugador().getSala().equalsIgnoreCase(jugador.getSala())) {
+				objetosenJugadores[pos]= GestorPartida.getObjetoJugador()[i].getNombreObjeto();
+				pos++;
+			}
+		}
+		return objetosenJugadores;
+	}
+	
+	private void hacerPeticionIa(Jugador jugadorHace, String jugadorRecibe, String objeto ) {
+		int jugador = posJugadorObjetivo(jugadorRecibe);
+		int posPeticion = 0;
+		
+		
+		for(posPeticion = 0; GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion] != null; posPeticion++) {
+			if(GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion].getJugadorPide().equalsIgnoreCase(jugadorHace.getNombre()) ) {
+				break;
+			}
+			if(posPeticion == 9) {
+				posPeticion =0;
+				break;
+			}
+		}
+		GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion] =  new Peticiones(objeto,jugadorHace.getNombre());
+		
+	}
+	
+	private void cambiarSalaIa(Jugador jugador) {
+		String[] salasVecinas;
+		salasVecinas= GestorPartida.verSalasVecinas(jugador.getId());
+		int contVecinas;
+		int salaObjetivo=0;
+		contVecinas=salasVecinas.length;
+		int numeroAleatorio = (int) (Math.random()*contVecinas);
+		for(int i=0;i<contVecinas;i++) {
+			if(salasVecinas[i].equalsIgnoreCase(jugador.getObjetivoSala())) {
+				GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[i]);
+				salaObjetivo++;
+				break;
+			}
+		}
+		if(salaObjetivo==0) {
+			GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[numeroAleatorio]);
+		}
+	}
 	
 	public String getNombre() {
 		return nombre;
@@ -387,5 +440,13 @@ public class Jugador {
 
 	public void setCreencias(Creencias creencias) {
 		this.creencias = creencias;
+	}
+
+	public boolean isIA() {
+		return IA;
+	}
+
+	public void setIA(boolean iA) {
+		IA = iA;
 	}
 }

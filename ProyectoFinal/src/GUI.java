@@ -643,7 +643,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			
 		}
 		if(hayJugadores == false) {
-			rondaActual.append("Ninguno");
+			rondaActual.append("Ninguno\n");
 		}
 	}
 	
@@ -691,18 +691,25 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	}
 	
 	public void cambioDeJugador() {		
-		if(idJugador == GestorPartida.getContJugadores()-1) {
-			idJugador = 0;
-		}
-		
-		else {
-			idJugador++;
-		}
-		
-		for(int i =0; i < GestorPartida.getContJugadores(); i++) {
-			GestorPartida.actualizarCreencias(i);
-		}
-		cambioDeRonda();
+		do{
+			if(idJugador == GestorPartida.getContJugadores()-1) {
+				idJugador = 0;
+			}
+			
+			else {
+				idJugador++;
+			}
+			
+			for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
+				GestorPartida.actualizarCreencias(i);
+			}
+			
+			cambioDeRonda();
+			
+			if(GestorPartida.getJugadores()[idJugador].isIA()) {	
+				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].accionIa());
+			}
+		}while(GestorPartida.getJugadores()[idJugador].isIA());
 	}
 	
 	public void cambioDeRonda() {
@@ -739,7 +746,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		respuesta.setEditable(false);
 		accion = -1;
 	}
-	
+		
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub

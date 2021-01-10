@@ -146,17 +146,14 @@ public class GestorPartida {
 		int i =0;
 		for(j =0; j < GestorPartida.getContJugadores();j++) {
 			
-			//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias
-			
+			//Filtramos que los jugadores que vayan a actualizar sus creencias sean los de la sala del jugador que acaba de realizar una accion, excepto las suyas propias			
 			if(GestorPartida.getJugadores()[j].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) &&  GestorPartida.getJugadores()[j].getId() != id) {
 				//Actualizamos la sala por si el jugador se acaba de mover
 				GestorPartida.getJugadores()[id].getCreencias().setSalaPersona(GestorPartida.getJugadores()[j].getSala(), i);
 				i++;
 			}
 		}
-		
-		
-		
+			
 		for(j = 0;  j < GestorPartida.getContObjetosJugador();j++) {
 			//Comprobamos que el jugador coincida con un poseedor de un objeto
 			if(GestorPartida.getObjetoJugador()[j].getJugador().getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
@@ -332,9 +329,6 @@ public class GestorPartida {
 	public static String[] verSalasVecinas(int a) {
 		int sala =0;
 		String[] salasVecinas;
-		//System.out.println(GestorPartida.getJugadores()[b].getNombre());
-		//System.out.printf("Esta en:\n");
-		//System.out.println(GestorPartida.getJugadores()[b].getSala());
 		for( sala = 0;sala< GestorPartida.getContSalas(); sala++) {
 			if(GestorPartida.getJugadores()[a].getSala().equalsIgnoreCase(GestorPartida.getSalas()[sala].getNombre() )) {
 				break;
