@@ -126,12 +126,14 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
     }
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==boton1) {
+		
+		if(e.getSource() == boton1) {
 			cambioDeJugador();
     		estadoJugador(idJugador);
     		action = 0;
 		}
-		if(e.getSource()==boton2) {
+		
+		if(e.getSource() == boton2) {
 			rondaActual.setText(null);
 			if(comprobarSiHayObjetoEnSala(idJugador) && !comprobarSiJugadorTieneObjeto(idJugador)) {
 				action = 2;
@@ -144,7 +146,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				rondaActual.append("No hay ningun Objeto en la Sala para coger.");
 			}
 		}
-		if(e.getSource()==boton3) {
+		
+		if(e.getSource() == boton3) {
 			rondaActual.setText(null);
 			if(comprobarSiJugadorTieneObjeto(idJugador)) {
 				action = 3;
@@ -154,7 +157,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				rondaActual.append("No posees ningun Objeto.");
 			}
 		}
-		if(e.getSource()==boton4) {
+		
+		if(e.getSource() == boton4) {
 			rondaActual.setText(null);
 			if(comprobarJugadoresConObjetosEnSala(idJugador)) {
 				action = 4;
@@ -170,7 +174,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 			
 		}
-		if(e.getSource()==boton5) {
+		
+		if(e.getSource() == boton5) {
 			rondaActual.setText(null);
 			if(comprobarSiJugadorTieneObjeto(idJugador)) {
 				if(comprobarSiExistePeticionJugadorEnSala(idJugador)) {
@@ -196,28 +201,32 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 			
 		}
-		if(e.getSource()==boton6) {
+		
+		if(e.getSource() == boton6) {
 			action = 0;
 			rondaActual.setText(null);
 			estadoJugador(idJugador);
 		}
-		if(e.getSource()==boton7) {
-			cambioDeJugador();
-			action = 0;
-			estadoJugador(idJugador);
+		
+		if(e.getSource( )== boton7) {
+			action = 7;
+			rondaActual.setText("¿Seguro que deseas saltar tu Turno?");
+			rondaActual.append("\n\nEscribe Si para continuar.");
 		}	
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		 int key = e.getKeyCode();
 	     if (key == KeyEvent.VK_ENTER) {
-	    	if(action == 1 ) {
+	    	 
+	    	if(action == 1) {
 	    		
 	    	}
+	    	
 	       	if(action == 2) {
 	        	boolean entradaValida = false;
 	        	for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
-	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())&& i != idJugador){
+	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
 		    			entradaValida = true;
 		    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n";
 		   				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
@@ -237,6 +246,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		       		
 		       	}
 	       	}
+	       	
 	       	if(action == 3) {
 	       	   if(respuesta.getText().equalsIgnoreCase("Si")) {
 	       		   for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
@@ -258,6 +268,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       		   respuesta.setText(null);
 	       	   }
 	       	}
+	       	
 	    	if(action == 4) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
@@ -265,9 +276,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		if(numeroDeEntrada == 0) {
 	    			for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText())&& GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala()) && i != idJugador){
-		        			entradaValida = true;
-		        			rondaActual.append("\nNombre valido");
-		        			
+		        			entradaValida = true;	        			
 		        			nombre = respuesta.getText();
 		        			respuesta.setText(null);
 		        			numeroDeEntrada = 1;
@@ -287,13 +296,12 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    		}
 	    		}
 	    		
-	    		else if(numeroDeEntrada == 1 ) {	    		   			
+	    		else if(numeroDeEntrada == 1) {	    		   			
 	    			rondaActual.setText(nombre);
 	    			
 	    			for(int j = 0; j < GestorPartida.getContObjetosSala(); j++) {
 	    				if(GestorPartida.getObjetoSala()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
-	    					objeto = true;
-	    					
+	    					objeto = true;	    					
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
@@ -304,8 +312,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    				}
 	    			}
 	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
-	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {
-	    					
+	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText())) {	    					
 	    					objeto = true;
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
 	    					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el Objeto " + respuesta.getText()  + " a " + nombre + "\n";
@@ -318,18 +325,15 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					break;
 	    				}
 	    			}
-	    			if(!objeto) {
-	    				
+	    			if(!objeto) {	    				
 			       		rondaActual.setText("**Por favor, escriba una entrada valida**\n");
 			       		objetosEnJugador(idJugador);
 			       		rondaActual.append("\nIndica el nombre del Objeto que deseas pedir:");
-			       		respuesta.setText(null);
-			       		
-			       	}
-	    			
-	    		}
-	    		
+			       		respuesta.setText(null);			       		
+			       	}	    			
+	    		}	    		
 	    	}
+	    	
 	    	if(action == 5) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
@@ -352,9 +356,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			    				}
 			    			}
 		        			if(peticionValida) {
-		        				entradaValida = true;
-				        		rondaActual.append("\nNombre valido");
-				        		
+		        				entradaValida = true;	
 				       			nombre = respuesta.getText();
 				       			
 				       			respuesta.setText(null);
@@ -362,7 +364,6 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				       			rondaActual.setText(null);
 				       			mostrarPeticiones(idJugador);
 				       			rondaActual.append("\n\nIndica el nombre del Objeto que deseas dar:");
-				       			//action = 0;
 				       			break;	
 		        			}		        			
 				        }		        		
@@ -384,11 +385,10 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    			}
 	    		}
 	    		
-	    		else if(numeroDeEntrada == 1 ) {
+	    		else if(numeroDeEntrada == 1) {
 	    			
 	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
 	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getNombre())) {
-	    					rondaActual.append("\nObjeto valido");
 	    					objeto = true;
 	    					
 	    					GestorPartida.getJugadores()[idJugador].darObjeto(nombre, respuesta.getText());
@@ -414,12 +414,25 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		}
 	    		
 	    	}
-	       	if(action == 0) {
-	       		
+	    	if(action == 7) {
+	    		if(respuesta.getText().equalsIgnoreCase("si")) {
+	    			cambioDeJugador();			
+					estadoJugador(idJugador);
+					action = 0;
+	    		}
+	    		else {
+	    			rondaActual.setText("**Por favor, escriba una entrada valida**\n");
+	    			rondaActual.append("¿Seguro que deseas saltar tu Turno?");
+	    			rondaActual.append("\n\nEscribe Si para continuar.");
+		       		respuesta.setText(null);
+	    		}
+	    	}
+	       	if(action == 0) {	       		
         		respuesta.setText(null);
 	       	}
 	     }
 	}
+	
 	public boolean comprobarSiExistePeticionJugadorEnSala(int id) {
 		String nombreObjeto = null;
 		if(GestorPartida.getJugadores()[id].getPeticiones()[0] ==null) {
@@ -443,6 +456,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
+	
 	public boolean comprobarSiJugadorTieneObjeto(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
@@ -451,6 +465,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
+	
 	public boolean comprobarJugadoresConObjetosEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
@@ -461,6 +476,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
+	
 	public boolean comprobarJugadoresSinObjetosEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
@@ -473,6 +489,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return true;
 	}
+	
 	public boolean comprobarSiHayObjetoEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
@@ -481,6 +498,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return false;
 	}
+	
 	public String nombreDelObjetoQuePosee(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
@@ -489,11 +507,12 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		return null;
 	}
+	
 	public void cogerObjetoEnSalaImprimir(int id) {
-		rondaActual.append("Escribe el Objeto que deseas coger:");
+		rondaActual.append("Escribe el nombre del Objeto que deseas coger:");
 		for(int i =0; i< GestorPartida.getContObjetosSala(); i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
-				rondaActual.append("\n- " + GestorPartida.getObjetoSala()[i].getNombreObjeto());
+				rondaActual.append("\n" + GestorPartida.getObjetoSala()[i].getNombreObjeto());
 			}
 		}
 	}
@@ -502,12 +521,11 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		for(int i =0; i< GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
 				rondaActual.append("¿Estas seguro de querer dejar el Objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + "?");
-				rondaActual.append("\nEscribe Si para dejarlo.");
+				rondaActual.append("\n\nEscribe Si para dejarlo.");
 			}
 		}
 	}
 	
-
 	public void estadoJugador(int id) {
 		rondaActual.setText(null);
 		rondaActual.append("Ronda: " + GestorPartida.getRondas() + "\n\n");
@@ -525,27 +543,18 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		rondaActual.setCaretPosition(0);
 		rondasAnteriores.setCaretPosition(0);
 	}
-	public void mostrarPeticiones(int id) {
-		rondaActual.append("Peticiones: ");
-		for(int i =0; i < 10 && GestorPartida.getJugadores()[id].getPeticiones()[i]!= null; i++) {
-			rondaActual.append("\n"+GestorPartida.getJugadores()[id].getPeticiones()[i].getJugadorPide() + " te ha pedido el Objeto " + GestorPartida.getJugadores()[id].getPeticiones()[i].getObjeto() );
-		}
-		if(GestorPartida.getJugadores()[id].getPeticiones()[0] == null) {
-			rondaActual.append("Ninguna");
-		}
-	}
 	
 	public void salasVecinas(int id) {
 		rondaActual.append("\n\nSalas vecinas: ");
 		String salas[] =  GestorPartida.verSalasVecinas(GestorPartida.getJugadores()[id].getId());
-		for(int i =0; i< salas.length; i++) {
+		for(int i = 0; i < salas.length; i++) {
 			rondaActual.append(salas[i] + " ");
 		}
 	}
 	
 	public void objetoJugador(int id) {
 		rondaActual.append("\n\nObjeto: ");
-		for(int i =0; i< GestorPartida.getContObjetosJugador(); i++) {
+		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
 				rondaActual.append(GestorPartida.getObjetoJugador()[i].getNombreObjeto());
 			}
@@ -557,7 +566,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	
 	public void objetosEnSala(int id) {
 		rondaActual.append("\n\nObjeto en Sala: ");
-		for(int i =0; i< GestorPartida.getContObjetosSala(); i++) {
+		for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
 				rondaActual.append(GestorPartida.getObjetoSala()[i].getNombreObjeto() + " ");
 			}
@@ -572,12 +581,12 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		rondaActual.append("Jugadores en la misma Sala:\n");
 		boolean tiene = false;
 		boolean hayJugadores = false;
-		for (int i =0; i < GestorPartida.getContJugadores(); i++) {
+		for (int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			tiene = false;
 			if(GestorPartida.getJugadores()[i].getId() != id && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
 				rondaActual.append(GestorPartida.getJugadores()[i].getNombre() + " : ");
 				hayJugadores = true;
-				for(int j =0; j< GestorPartida.getContObjetosJugador();j++) {
+				for(int j = 0; j < GestorPartida.getContObjetosJugador();j++) {
 					if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre())) {
 						rondaActual.append(GestorPartida.getObjetoJugador()[j].getNombreObjeto());
 						tiene = true;
@@ -600,6 +609,16 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	public void objetivosJugador(int id) {
 		rondaActual.append("\nObjeto objetivo: " + GestorPartida.getJugadores()[id].getObjetivoObjeto());
 		rondaActual.append("\nSala objetivo: " + GestorPartida.getJugadores()[id].getObjetivoSala());
+	}
+	
+	public void mostrarPeticiones(int id) {
+		rondaActual.append("Peticiones: ");
+		for(int i =0; i < 10 && GestorPartida.getJugadores()[id].getPeticiones()[i]!= null; i++) {
+			rondaActual.append("\n"+GestorPartida.getJugadores()[id].getPeticiones()[i].getJugadorPide() + " te ha pedido el Objeto " + GestorPartida.getJugadores()[id].getPeticiones()[i].getObjeto() );
+		}
+		if(GestorPartida.getJugadores()[id].getPeticiones()[0] == null) {
+			rondaActual.append("Ninguna");
+		}
 	}
 	
 	public void creenciasJugador(int id) {
@@ -634,6 +653,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		cambioDeRonda();
 		
 	}
+	
 	public void cambioDeRonda() {
 		if(GestorPartida.getJugadorActivo() == GestorPartida.getContJugadores()-1) {
 			GestorPartida.setJugadorActivo(0);
@@ -644,6 +664,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 		
 	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
