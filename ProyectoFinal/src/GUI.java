@@ -408,6 +408,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    	if(accion == 7) {
 	    		if(respuesta.getText().equalsIgnoreCase("si")) {
 	    			rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n");
+	    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n" ;
 	    			cambioDeJugador();			
 					estadoJugador(idJugador);
 					turnosSaltados++;
@@ -745,6 +746,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		respuesta.setText(null);
 		rondaActual.append("**Partida Finalizada**");
 		respuesta.setEditable(false);
+		System.out.println(historiaCompleta);
 		accion = -1;
 	}	
 	
@@ -763,7 +765,14 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	public void setRondasAnteriores(JTextArea rondasAnteriores) {
 		this.rondasAnteriores = rondasAnteriores;
 	}
-
+	
+	public String getHistoriaCompleta() {
+		return historiaCompleta;
+	}
+	public void setHistoriaCompleta(String historiaCompleta) {
+		this.historiaCompleta = historiaCompleta;
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -775,4 +784,5 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

@@ -213,39 +213,6 @@ public class Jugador {
 		return jugador;
 	}
 	
-	//Con esto seleccionas un objeto, y ademas comprueba que existe un objeto con ese nombre
-	/*private String objetoObjetivo() {
-		Scanner objetos = new Scanner(System.in);
-		System.out.println("Indica el nombre del objeto que quieres seleccionar");
-		String nombreObjeto = objetos.nextLine();
-		int objeto =0;
-		
-		for( int salida = 0; salida == 0;) {
-			for(objeto=0; objeto < GestorPartida.getContObjetosJugador(); objeto++)
-			{
-				if(GestorPartida.getObjetoJugador()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
-					salida = 1;
-					break;
-				}
-			}
-			if(salida == 0) {
-				for(objeto=0; objeto < GestorPartida.getContObjetosSala(); objeto++)
-				{
-					if(GestorPartida.getObjetoSala()[objeto].getNombreObjeto().equalsIgnoreCase(nombreObjeto)) {
-						salida = 1;
-						System.out.println("hola1");
-						break;
-					}
-				}
-			}
-			if(salida ==0) {
-				System.out.println("No existe un objeto con ese nombre, elige uno nuevo");
-				nombreObjeto = objetos.nextLine();
-			}
-			
-		}
-		return nombreObjeto;
-	}*/
 	
 	
 	public void accionIa(Jugador this){
@@ -290,6 +257,7 @@ public class Jugador {
 			for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 				if(this == GestorPartida.getObjetoJugador()[i].getJugador()) {
 					GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + this.getSala() + ".\n");
+					GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + this.getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + this.getSala() + ".\n");
 					dejarObjeto(this.getId(), GestorPartida.getObjetoJugador()[i]);					
 					objetoPosesion=false;
 					turno=true;
@@ -302,6 +270,7 @@ public class Jugador {
 			for(int i =0; i < GestorPartida.getContObjetosSala();i++) {
 				if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {
 					GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + this.getSala() + ".\n");
+					GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + this.getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + this.getSala() + ".\n");
 					cogerObjeto(this.getId(), GestorPartida.getObjetoSala()[i]);
 					objetoObjetivoSala=false;
 					turno=true;
@@ -373,6 +342,7 @@ public class Jugador {
 		}
 		GestorPartida.getJugadores()[jugador].getPeticiones()[posPeticion] =  new Peticiones(objeto,jugadorHace.getNombre());
 		GestorPartida.getInterfaz().getRondasAnteriores().append(jugadorHace.getNombre() + " ha pedido el Objeto " + objeto  + " a " + GestorPartida.getJugadores()[jugador].getNombre() + ".\n");
+		GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + jugadorHace.getNombre() + " ha pedido el Objeto " + objeto  + " a " + GestorPartida.getJugadores()[jugador].getNombre() + ".\n");
 	}
 	
 	private void cambiarSalaIa(Jugador jugador) {
@@ -387,6 +357,7 @@ public class Jugador {
 			if(salasVecinas[i].equalsIgnoreCase(jugador.getObjetivoSala())) {
 				GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[i]);
 				GestorPartida.getInterfaz().getRondasAnteriores().append(jugador.getNombre()+" se ha desplazado a la Sala "+ jugador.getSala()+".\n");
+				GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + jugador.getNombre()+" se ha desplazado a la Sala "+ jugador.getSala()+".\n");
 				salaObjetivo = true;
 				break;
 			}
@@ -394,6 +365,7 @@ public class Jugador {
 		if(!salaObjetivo) {
 			GestorPartida.getJugadores()[jugador.getId()].setSala(salasVecinas[numeroAleatorio]);
 			GestorPartida.getInterfaz().getRondasAnteriores().append(jugador.getNombre()+" se ha desplazado a la Sala "+ jugador.getSala()+".\n");
+			GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + jugador.getNombre()+" se ha desplazado a la Sala "+ jugador.getSala()+".\n");
 		}
 	}
 	

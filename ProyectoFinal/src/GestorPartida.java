@@ -21,7 +21,7 @@ public class GestorPartida {
 	private static GUI interfaz;
 	
 	public static void crearPartida() throws FileNotFoundException, IOException {
-		LecturaFicheros.AllLecture("C:\\Users\\jorge\\pruebaPOO.txt");
+		LecturaFicheros.AllLecture("C:\\Users\\erick\\pruebaPOO.txt");
 		int jugadorPersona = 0;
 				//(int) (Math.random()*GestorPartida.getContJugadores());		
 		GestorPartida.getJugadores()[jugadorPersona].setIA(false);	
