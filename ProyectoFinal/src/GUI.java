@@ -171,7 +171,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 					rondaActual.append("No hay ningun Jugador en la misma Sala que tu.");
 				}
 				else {
-					rondaActual.append("Ningun Jugador de la sala tiene un Objeto.");
+					rondaActual.append("Ningun Jugador de la Sala tiene un Objeto.");
 				}
 				
 			}
@@ -233,12 +233,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n";
 		   				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);
-		   				respuesta.setText(null);
-		        		
-		        		cambioDeJugador();
-		        		estadoJugador(idJugador);
-		        		accion = 0;
-		        		turnosSaltados = 0;
+		   				respuesta.setText(null);		        		
+		   				finalDeTurno();
 		        		break;		    			
 		        	}
 		    	}
@@ -257,12 +253,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n";
 	       					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + "\n");
 	       					Jugador.dejarObjeto(idJugador, GestorPartida.getObjetoJugador()[i]);
-	       					respuesta.setText(null);	
-	       					
-			        		cambioDeJugador();
-			        		estadoJugador(idJugador);
-			        		accion = 0;
-			        		turnosSaltados = 0;
+	       					respuesta.setText(null);		       					
+	       					finalDeTurno();
 			        		break;
 	        			}
 	        		}
@@ -310,10 +302,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
-	    					cambioDeJugador();	    					
-	    					accion = 0;
-	    					turnosSaltados = 0;
-				       		estadoJugador(idJugador);
+	    					finalDeTurno();
 	    					break;
 	    				}
 	    			}
@@ -325,10 +314,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el Objeto " + respuesta.getText()  + " a " + nombre + "\n");
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
-	    					cambioDeJugador();	    					
-	    					accion = 0;
-	    					turnosSaltados = 0;
-				       		estadoJugador(idJugador);
+	    					finalDeTurno();
 	    					break;
 	    				}
 	    			}
@@ -403,10 +389,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dado el Objeto " +respuesta.getText()  + " a " + nombre + "\n");
 	    					respuesta.setText(null);
 	    					numeroDeEntrada = 0;
-	    					cambioDeJugador();
-	    					accion = 0;
-	    					turnosSaltados = 0;
-	    					estadoJugador(idJugador);
+	    					finalDeTurno();
 	    					break;
 	    				}
 	    			}
@@ -424,6 +407,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    	}
 	    	if(accion == 7) {
 	    		if(respuesta.getText().equalsIgnoreCase("si")) {
+	    			rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n");
 	    			cambioDeJugador();			
 					estadoJugador(idJugador);
 					turnosSaltados++;
@@ -549,10 +533,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			GestorPartida.getJugadores()[id].setSala(salasVecinas[i]);
 			rondasAnteriores.append(GestorPartida.getJugadores()[id].getNombre()+" se ha desplazado a la Sala "+ GestorPartida.getJugadores()[id].getSala()+"\n");
 			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[id].getNombre()+" se ha desplazado a la Sala "+ GestorPartida.getJugadores()[id].getSala()+"\n";
-			cambioDeJugador();
-			accion = 0;
-			turnosSaltados = 0;
-			estadoJugador(idJugador);
+			finalDeTurno();
 		}
 		else {
 			rondaActual.setText("**Por favor, escriba una entrada valida**\n");
@@ -649,16 +630,15 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				hayJugadores = true;
 				for(int j = 0; j < GestorPartida.getContObjetosJugador();j++) {
 					if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre())) {
-						rondaActual.append(GestorPartida.getObjetoJugador()[j].getNombreObjeto());
+						rondaActual.append(GestorPartida.getObjetoJugador()[j].getNombreObjeto() + "\n");
 						tiene = true;
 					}
 				}
 				
 				if(tiene ==false) {
-					rondaActual.append("Ninguno");
+					rondaActual.append("Ninguno\n");
 					
 				}
-				rondaActual.append("\n");
 			}
 			
 		}
@@ -702,17 +682,27 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
-	public void cambioDeJugador() {
+	public void finalDeTurno() {
+		accion = 0;
+		turnosSaltados = 0;
+		cambioDeJugador();		
+		estadoJugador(idJugador);
+		objetivosCumplidos();
+	}
+	
+	public void cambioDeJugador() {		
 		if(idJugador == GestorPartida.getContJugadores()-1) {
 			idJugador = 0;
-		}else {
+		}
+		
+		else {
 			idJugador++;
 		}
+		
 		for(int i =0; i < GestorPartida.getContJugadores(); i++) {
 			GestorPartida.actualizarCreencias(i);
 		}
 		cambioDeRonda();
-		
 	}
 	
 	public void cambioDeRonda() {
@@ -724,6 +714,22 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			GestorPartida.setJugadorActivo(GestorPartida.getJugadorActivo()+1);
 		}
 		
+	}
+	
+	public void objetivosCumplidos() {
+		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
+			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoSala())) {
+				for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
+					if(GestorPartida.getJugadores()[i] == GestorPartida.getObjetoJugador()[j].getJugador()) {
+						if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoObjeto())) {
+							rondaActual.setText("**" + GestorPartida.getJugadores()[i].getNombre() + " posee el Objeto " + GestorPartida.getJugadores()[i].getObjetivoObjeto() + 
+									" y se encuentra en la Sala " + GestorPartida.getJugadores()[i].getObjetivoSala() + "**\n\n");
+							finDePartida();
+						}
+					}
+				}
+			}
+		}	
 	}
 	
 	public void finDePartida() {
