@@ -23,43 +23,8 @@ public class Jugador {
 		GestorPartida.instanciarJugador(this);
 	}
 	
-	public void darAccion() {
-		Scanner eleccion = new Scanner(System.in);
-		int opcion = 0;
-		int seguridad = 0;
-		boolean pasarTurno = false;
-		while(true) {
-			for(int i =0; i < GestorPartida.getContJugadores(); i++) {
-				pasarTurno = false;
-				while (pasarTurno = false) {
-					eleccion = new Scanner(System.in);
-					System.out.println("Turno del jugador: " + GestorPartida.getJugadores()[i].getNombre());
-					
-					System.out.println("Elige una accion: ");
-					//Moverse
-					System.out.println("1- Cambiar de Sala");
-					
-					//Coger objeto
-					
-					System.out.println("2- Coger un objeto");
-						
-					//Dejar objeto
-					
-					System.out.println("3- Dejar un objeto");
-					
-					//Pedir objeto
-					
-					System.out.println("4- Pedir un objeto");
-					//Dar objeto
-					System.out.println("5- Dar un objeto");
-					
-					System.out.println("6- Mostrar toda la informacion actual");
-					
-					System.out.println("7- Pasar turno");
-				}
-			}
-		}			
-	}
+				
+	
 	
 	
 	

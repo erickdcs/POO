@@ -128,9 +128,19 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == boton1) {
-			cambioDeJugador();
-    		estadoJugador(idJugador);
-    		action = 0;
+			String[] salasVecinas;
+			action = 1;
+			
+			rondaActual.setText(null);
+			salasVecinas= GestorPartida.verSalasVecinas(idJugador);
+			int contVecinas;
+			contVecinas=salasVecinas.length;
+			rondaActual.append("Sus salas vecinas son:\n");
+			for(int j=0;j<contVecinas;j++) {
+				rondaActual.append(j+1+" " + salasVecinas[j] + "\n");
+			}
+
+			rondaActual.append("Escriba el nombre de la sala destino:\n");
 		}
 		
 		if(e.getSource() == boton2) {
@@ -220,6 +230,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	     if (key == KeyEvent.VK_ENTER) {
 	    	 
 	    	if(action == 1) {
+	    		cambiarSala(idJugador);
 	    		
 	    	}
 	    	
@@ -497,6 +508,35 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 		}
 		return false;
+	}
+	public void cambiarSala(int id) {
+		String[] salasVecinas;
+		String menu=new String();
+		int i=0;
+		int opcion=0;
+		
+		salasVecinas= GestorPartida.verSalasVecinas(id);
+		int contVecinas;
+		contVecinas=salasVecinas.length;
+		menu =respuesta.getText();
+		respuesta.setText(null);
+		for(i=0;i<contVecinas;i++) {
+			if(menu.equalsIgnoreCase(salasVecinas[i])) {
+				opcion++;
+				break;
+			}
+		}
+		if (opcion!=0) {
+			GestorPartida.getJugadores()[id].setSala(salasVecinas[i]);
+			rondasAnteriores.append("Ahora " +GestorPartida.getJugadores()[id].getNombre()+" está en "+ GestorPartida.getJugadores()[id].getSala()+"\n");
+			historiaCompleta = historiaCompleta + "Ahora " +GestorPartida.getJugadores()[id].getNombre()+" está en "+ GestorPartida.getJugadores()[id].getSala()+"\n";
+			cambioDeJugador();
+			action = 0;
+			estadoJugador(idJugador);
+		}
+		else {
+			rondaActual.append("Nombre no valido\n");
+		}
 	}
 	
 	public String nombreDelObjetoQuePosee(int id) {
