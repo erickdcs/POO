@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class GUI extends JFrame implements ActionListener,  KeyListener{
 	
+	//Definición de las variables para la acción de un jugador en la interfaz gráfica.
 	private int idJugador = 0;
 	private int accion = 0;
 	private int numeroDeEntrada = 0;
@@ -11,12 +12,13 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	
 	private String historiaCompleta = "";
 	
+	//Definición de las variables que conforman la interfaz gráfica.
 	private String nombre;
 	private JPanel container;
 	private JPanel panel1;
 	private JPanel panel1_1;
 	private JPanel panel1_2;
-	private  JPanel panel2;
+	private JPanel panel2;
 	private JPanel panel2_1;
    
 	private JTextArea rondaActual;
@@ -33,6 +35,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	private JButton boton6;
 	private JButton boton7;
     
+	//Creación y definición de las características de la interfaz gráfica.
     public GUI(int id){
     	idJugador = id;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,8 +94,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         
         respuesta.setPreferredSize(new Dimension(323, 20));
         respuesta.addKeyListener(this);     
-        
-        
+                
         panel1_1.add(rondaActualScroll);
         panel1_2.add(rondasAnterioresScroll);
         panel1_1.add(respuesta);     
@@ -115,7 +117,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         boton5.addActionListener(this);
         boton6.addActionListener(this);
         boton7.addActionListener(this);
-        
+         
         GestorPartida.instanciarCreencias();
 		GestorPartida.actualizarCreencias(idJugador);
 		GestorPartida.setRondas(1);
@@ -126,14 +128,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
         
     }
 	
+    //Definición de las acciones según el botón pulsado.
 	public void actionPerformed(ActionEvent e) {
+		//Este if permite accionar los botones cuando la partida no se haya finalizado.
 		if(accion != -1) {
+			//Acción para cambiar de sala.
 			if(e.getSource() == boton1) {
 				rondaActual.setText(null);
 				cambiarSalaImprimir(idJugador);
 				accion = 1;
 			}
-			
+			//Acción para coger un objeto.
 			if(e.getSource() == boton2) {
 				rondaActual.setText(null);
 				if(comprobarSiHayObjetoEnSala(idJugador) && !comprobarSiJugadorTieneObjeto(idJugador)) {
@@ -147,7 +152,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 					rondaActual.append("No hay ningun Objeto en la Sala para coger.");
 				}
 			}
-			
+			//Acción para dejar un objeto.
 			if(e.getSource() == boton3) {
 				rondaActual.setText(null);
 				if(comprobarSiJugadorTieneObjeto(idJugador)) {
@@ -158,7 +163,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 					rondaActual.append("No posees ningun Objeto.");
 				}
 			}
-			
+			//Acción para pedir un objeto a otro jugador.
 			if(e.getSource() == boton4) {
 				rondaActual.setText(null);
 				if(comprobarJugadoresConObjetosEnSala(idJugador)) {
@@ -175,7 +180,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				}
 				
 			}
-			
+			//Acción para dar el objeto que haya pedido otro jugador.
 			if(e.getSource() == boton5) {
 				rondaActual.setText(null);
 				if(comprobarSiJugadorTieneObjeto(idJugador)) {
@@ -202,13 +207,13 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				}
 				
 			}
-			
+			//Acción para imprimir toda la información actual de la ronda.
 			if(e.getSource() == boton6) {
 				accion = 0;
 				rondaActual.setText(null);
 				estadoJugador(idJugador);
 			}
-			
+			//Acción para pasar el turno
 			if(e.getSource( )== boton7) {
 				accion = 7;
 				rondaActual.setText("¿Seguro que deseas saltar tu Turno?");
@@ -217,23 +222,29 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Lectura de las entradas escritas por el jugador para interactuar con las diferentes acciones, tras haber presionado la tecla ENTER.
 	public void keyPressed(KeyEvent e) {
 		 int key = e.getKeyCode();
 	     if (key == KeyEvent.VK_ENTER) {
+	    	 //Toda entrada del usuario es revisada para comprobar que esta sea correcta, en caso de que no lo sea se muestra un mesaje de error y se vuelte a pedir la entrada.
 	    	 
+	    	 //Desplazamiento del jugador a la sala introducida.
 	    	if(accion == 1) {
 	    		cambiarSala(idJugador);	    		
 	    	}
 	    	
+	    	//Transformación del objeto de sala introducido por el jugador a un objeto de su jugador.
 	       	if(accion == 2) {
 	        	boolean entradaValida = false;
+	        	
 	        	for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 	        		if(GestorPartida.getObjetoSala()[i].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
 		    			entradaValida = true;
 		    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + ".\n";
 		   				rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha cogido " + GestorPartida.getObjetoSala()[i].getNombreObjeto() + " de " + GestorPartida.getJugadores()[idJugador].getSala() + ".\n");
 		   				Jugador.cogerObjeto(idJugador, GestorPartida.getObjetoSala()[i]);
-		   				respuesta.setText(null);		        		
+		   				respuesta.setText(null);	
+		   				turnosSaltados = 0;
 		   				finalDeTurno();
 		        		break;		    			
 		        	}
@@ -246,6 +257,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		       	}
 	       	}
 	       	
+	      //Transformación del objeto del jugador en un objeto de la sala en la que se encuentra.
 	       	if(accion == 3) {
 	       	   if(respuesta.getText().equalsIgnoreCase("Si")) {
 	       		   for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
@@ -253,7 +265,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       					historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + ".\n";
 	       					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dejado " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + " en " + GestorPartida.getJugadores()[idJugador].getSala() + ".\n");
 	       					Jugador.dejarObjeto(idJugador, GestorPartida.getObjetoJugador()[i]);
-	       					respuesta.setText(null);		       					
+	       					respuesta.setText(null);	
+	       					turnosSaltados = 0;
 	       					finalDeTurno();
 			        		break;
 	        			}
@@ -266,13 +279,15 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	       	   }
 	       	}
 	       	
+	       	//Creación de una petición de un objeto a otro jugador, ambos datos son introducidos por el usuario
 	    	if(accion == 4) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
-	    		  		
+	    		
+	    		//En esta primera parte, se pide al usuario el jugador al que desea realizar la petición.
 	    		if(numeroDeEntrada == 0) {
 	    			for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
-		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText())&& GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala()) && i != idJugador){
+		        		if(GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala()) && i != idJugador){
 		        			entradaValida = true;	        			
 		        			nombre = respuesta.getText();
 		        			respuesta.setText(null);
@@ -293,6 +308,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		    		}
 	    		}
 	    		
+	    		//En esta segunda parte, se pide al usuario el objeto que desea pedir.
 	    		else if(numeroDeEntrada == 1) {	    		   			
 	    			rondaActual.setText(nombre);
 	    			
@@ -302,6 +318,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					GestorPartida.getJugadores()[idJugador].hacerPeticion(nombre, respuesta.getText());
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
+	    					turnosSaltados = 0;
 	    					finalDeTurno();
 	    					break;
 	    				}
@@ -314,6 +331,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha pedido el Objeto " + respuesta.getText()  + " a " + nombre + ".\n");
 	    					numeroDeEntrada = 0;
 	    					respuesta.setText(null);
+	    					turnosSaltados = 0;
 	    					finalDeTurno();
 	    					break;
 	    				}
@@ -327,6 +345,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		}	    		
 	    	}
 	    	
+	    	//Tratamiento de una petición realizada por otro jugador para aceptarla, introduciendo el jugador y el objeto que se desea dar.
 	    	if(accion == 5) {
 	    		boolean entradaValida = false;
 	    		boolean objeto = false;
@@ -335,10 +354,11 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		rondaActual.append(objetoPosee + "\n");
 	    		int i = 0;
 	    		int peticion = 0;
+	    		
+	    		//En esta primera parte, se pide al usuario el jugador al que desea entregar el objeto pedido.
 	    		if(numeroDeEntrada == 0) {
 	    			peticionValida = false;
-	    			
-	    			
+	    				    			
 	    			for(i = 0; i < GestorPartida.getContJugadores(); i++) {
 			        	if(!GestorPartida.getJugadores()[idJugador].getNombre().equalsIgnoreCase(respuesta.getText()) &&GestorPartida.getJugadores()[i].getNombre().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getSala())){
 			        		
@@ -378,8 +398,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    			}
 	    		}
 	    		
-	    		else if(numeroDeEntrada == 1) {
-	    			
+	    		//En esta segunda parte, se pide al usuario el objeto que desea dar.
+	    		else if(numeroDeEntrada == 1) {	    			
 	    			for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
 	    				if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(respuesta.getText()) && GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[idJugador].getNombre())) {
 	    					objeto = true;
@@ -389,6 +409,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    					rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha dado el Objeto " +respuesta.getText()  + " a " + nombre + ".\n");
 	    					respuesta.setText(null);
 	    					numeroDeEntrada = 0;
+	    					turnosSaltados = 0;
 	    					finalDeTurno();
 	    					break;
 	    				}
@@ -405,21 +426,21 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		}
 	    		
 	    	}
+	    	
+	    	//Salto del turno cuando el usuario introduce 'Si' a la pregunta mostrada por pantalla.
 	    	if(accion == 7) {
 	    		if(respuesta.getText().equalsIgnoreCase("si")) {
 	    			rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n");
 	    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n" ;
-	    			//cambioDeJugador();
-					//estadoJugador(idJugador);
 					turnosSaltados++;
+					//En el caso de que todos los jugadores hayan pasado su turno, se finaliza automaticamente la partida.
 					if(turnosSaltados == GestorPartida.getContJugadores()) {
 						rondaActual.setText("**Todos los Jugadores han saltado su Turno**\n\n");
 						finDePartida();
 					}
 					else {
 						finalDeTurno();
-						accion = 0;
-						
+						accion = 0;						
 					}
 	    		}
 	    		else {
@@ -429,14 +450,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		       		respuesta.setText(null);
 	    		}
 	    	}
+	    	//Esta acción impide que el jugador escriba entradas que puedan afectar al funcionamiento del videojuego cuando estas no se piden.
 	       	if(accion == 0) {	       		
         		respuesta.setText(null);
 	       	}
 	     }
 	}
 	
+	//Método que devuelve true si existe alguna pedicion de un jugador en la misma sala.
 	public boolean comprobarSiExistePeticionJugadorEnSala(int id) {
 		String nombreObjeto = null;
+		
 		if(GestorPartida.getJugadores()[id].getPeticiones()[0] ==null) {
 			return false;
 		}
@@ -448,7 +472,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		
 		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
-				for(int j =0;GestorPartida.getJugadores()[id].getPeticiones()[j]!=null && j < 10; j++) {
+				for(int j = 0; GestorPartida.getJugadores()[id].getPeticiones()[j]!=null && j < 10; j++) {
 					if(GestorPartida.getJugadores()[id].getPeticiones()[j].getJugadorPide().equalsIgnoreCase(GestorPartida.getJugadores()[i].getNombre()) && GestorPartida.getJugadores()[id].getPeticiones()[j].getObjeto().equalsIgnoreCase(nombreObjeto)) {
 						
 						return true;
@@ -459,6 +483,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		return false;
 	}
 	
+	//Método que devuelve true si el jugador posee un objeto.
 	public boolean comprobarSiJugadorTieneObjeto(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
@@ -468,6 +493,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		return false;
 	}
 	
+	//Método que devuelve true si existen otros jugador con objetos en la misma sala.
 	public boolean comprobarJugadoresConObjetosEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
@@ -479,6 +505,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		return false;
 	}
 	
+	//Preguntar
 	public boolean comprobarJugadoresSinObjetosEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala()) && i != id) {
@@ -492,6 +519,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		return true;
 	}
 	
+	//Método que devuelve true si hay objetos en la misma sala en la que se encuentra el jugador.
 	public boolean comprobarSiHayObjetoEnSala(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
@@ -501,6 +529,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		return false;
 	}
 	
+	//Método que imprime por pantalla los datos necesarios para llevar a cabo la acción de desplazarse de sala.
 	public void cambiarSalaImprimir(int id) {
 		String[] salasVecinas;
 					
@@ -515,6 +544,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		rondaActual.append("\nEscribe el nombre de la Sala a la que deseas desplazarte:\n");
 	}
 	
+	//Método que lleva a cabo la acción de desplazarse de sala.
 	public void cambiarSala(int id) {
 		String[] salasVecinas;
 		String menu=new String();
@@ -523,9 +553,10 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		
 		salasVecinas= GestorPartida.verSalasVecinas(id);
 		int contVecinas;
-		contVecinas=salasVecinas.length;
-		menu =respuesta.getText();
+		contVecinas = salasVecinas.length;
+		menu = respuesta.getText();
 		respuesta.setText(null);
+		
 		for(i=0;i<contVecinas;i++) {
 			if(menu.equalsIgnoreCase(salasVecinas[i])) {
 				opcion++;
@@ -536,6 +567,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			GestorPartida.getJugadores()[id].setSala(salasVecinas[i]);
 			rondasAnteriores.append(GestorPartida.getJugadores()[id].getNombre()+" se ha desplazado a la Sala "+ GestorPartida.getJugadores()[id].getSala()+".\n");
 			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[id].getNombre()+" se ha desplazado a la Sala "+ GestorPartida.getJugadores()[id].getSala()+".\n";
+			turnosSaltados = 0;
 			finalDeTurno();
 		}
 		else {
@@ -544,6 +576,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método que devuelve el nombre del objeto que posee un jugador, si no posee ninguno se devuelve null.
 	public String nombreDelObjetoQuePosee(int id) {
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getNombre())) {
@@ -553,17 +586,20 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		return null;
 	}
 	
+	//Método que imprime por pantalla los datos necesarios para llevar a cabo la acción de coger un objeto.
 	public void cogerObjetoEnSalaImprimir(int id) {
-		rondaActual.append("Escribe el nombre del Objeto que deseas coger:");
-		for(int i =0; i< GestorPartida.getContObjetosSala(); i++) {
+		rondaActual.append("Objetos en tu Sala:");
+		for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
 			if(GestorPartida.getObjetoSala()[i].getSala().getNombre().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
 				rondaActual.append("\n" + GestorPartida.getObjetoSala()[i].getNombreObjeto());
 			}
 		}
+		rondaActual.append("\n\nEscribe el nombre del Objeto que deseas coger:");
 	}
 	
+	//Método que imprime por pantalla los datos necesarios para llevar a cabo la acción de dejar un objeto.
 	public void dejarObjetoEnSalaImprimir(int id) {
-		for(int i =0; i< GestorPartida.getContObjetosJugador(); i++) {
+		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
 			if(GestorPartida.getObjetoJugador()[i].getJugador().getId() == id) {
 				rondaActual.append("¿Estas seguro de querer dejar el Objeto " + GestorPartida.getObjetoJugador()[i].getNombreObjeto() + "?");
 				rondaActual.append("\n\nEscribe Si para dejarlo.");
@@ -571,8 +607,10 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método que imprime toda la información de la ronda actual.
 	public void estadoJugador(int id) {
 		rondaActual.setText(null);
+		
 		rondaActual.append("Ronda: " + GestorPartida.getRondas() + "\n\n");
 		rondaActual.append("Nombre del Jugador: " + GestorPartida.getJugadores()[id].getNombre());
 		objetoJugador(id);
@@ -589,6 +627,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		rondasAnteriores.setCaretPosition(0);
 	}
 	
+	//Método que imprime las salas vecinas.
 	public void salasVecinas(int id) {
 		rondaActual.append("\n\nSalas vecinas: ");
 		String salas[] =  GestorPartida.verSalasVecinas(GestorPartida.getJugadores()[id].getId());
@@ -597,6 +636,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método que imprime el objeto que posee el jugador.
 	public void objetoJugador(int id) {
 		rondaActual.append("\n\nObjeto: ");
 		for(int i = 0; i < GestorPartida.getContObjetosJugador(); i++) {
@@ -609,6 +649,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método que imprime los objeto que se encuentran en la misma sala que el jugador.
 	public void objetosEnSala(int id) {
 		rondaActual.append("\n\nObjeto en Sala: ");
 		for(int i = 0; i < GestorPartida.getContObjetosSala(); i++) {
@@ -622,10 +663,12 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		rondaActual.append("\n\n");
 	}
 	
+	//Método que imprime el resto de jugadores que se encuentran en la misma sala y el objeto que poseen actualmente.
 	public void objetosEnJugador(int id) {
 		rondaActual.append("Jugadores en la misma Sala:\n");
 		boolean tiene = false;
 		boolean hayJugadores = false;
+		
 		for (int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			tiene = false;
 			if(GestorPartida.getJugadores()[i].getId() != id && GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[id].getSala())) {
@@ -638,7 +681,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 					}
 				}
 				
-				if(tiene ==false) {
+				if(tiene == false) {
 					rondaActual.append("Ninguno\n");
 					
 				}
@@ -650,11 +693,13 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método que imprime los objetivos del jugador.
 	public void objetivosJugador(int id) {
 		rondaActual.append("\nObjeto objetivo: " + GestorPartida.getJugadores()[id].getObjetivoObjeto());
 		rondaActual.append("\nSala objetivo: " + GestorPartida.getJugadores()[id].getObjetivoSala());
 	}
 	
+	//Método que imprime las peticiones de objeto recibidas por el jugador.
 	public void mostrarPeticiones(int id) {
 		rondaActual.append("Peticiones: ");
 		for(int i =0; i < 10 && GestorPartida.getJugadores()[id].getPeticiones()[i]!= null; i++) {
@@ -665,6 +710,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método que imprime las creencias del jugador respecto a la localizacion del resto de jugadores y objetos.
 	public void creenciasJugador(int id) {
 		rondaActual.append("\n\nCreencias:");
 		for(int i = 0; i < GestorPartida.getContJugadores()-1; i++) {
@@ -685,14 +731,19 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}
 	}
 	
+	//Método encargado de realizar el final de un turno.
 	public void finalDeTurno() {
 		accion = 0;
-		turnosSaltados = 0;
-		cambioDeJugador();		
-		estadoJugador(idJugador);
-		objetivosCumplidos();
+		cambioDeJugador();	
+		//Permitimos unicamente que se procesen las siguientes acciones siempre y cuando la partida no se haya acabado.
+		if(accion != -1) {
+			estadoJugador(idJugador);
+			objetivosCumplidos();
+		}
 	}
 	
+	//Método encargado de realizar el cambio entre los turnos de distintos jugadores, si este es una inteligencia artificial, la acción se 
+	//realizara automaticamente, si no, el usuario deberá de encargarse de desarrollar su turno a traves de la interfaz gráfica.
 	public void cambioDeJugador() {		
 		do{
 			if(idJugador == GestorPartida.getContJugadores()-1) {
@@ -712,11 +763,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			if(idJugador > GestorPartida.getContUsuarios()-1) {	
 				((IA)GestorPartida.getJugadores()[idJugador]).accionIa();
 				finalDeTurno();
+				//Volvemos a comprobar si todos los jugadores han pasado turno y, si se da el caso, terminar la partida.
+				if(turnosSaltados == GestorPartida.getContJugadores()) {
+					rondaActual.setText("**Todos los Jugadores han saltado su Turno**\n\n");
+					finDePartida();
+				}
 			}
 		}while(idJugador > GestorPartida.getContUsuarios()-1);
 		GestorPartida.actualizarCreencias(0);
 	}
 	
+	//Método encargado de comprobar si todos los jugadores han llevado su turno y, si se da el caso, pasar a la siguiente ronda.
 	public void cambioDeRonda() {
 		if(GestorPartida.getJugadorActivo() == GestorPartida.getContJugadores()-1) {
 			GestorPartida.setJugadorActivo(0);
@@ -728,14 +785,14 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		
 	}
 	
+	//Método encargado de comprobar si al finalizar un turno, alguno de los jugadores ha cumplido todos sus objetivos, para asi finalizar la partida.
 	public void objetivosCumplidos() {
 		for(int i = 0; i < GestorPartida.getContJugadores(); i++) {
 			if(GestorPartida.getJugadores()[i].getSala().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoSala())) {
 				for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
 					if(GestorPartida.getJugadores()[i] == GestorPartida.getObjetoJugador()[j].getJugador()) {
 						if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoObjeto())) {
-							rondaActual.setText(null);
-							rondaActual.append("**" + GestorPartida.getJugadores()[i].getNombre() + " posee el Objeto " + GestorPartida.getJugadores()[i].getObjetivoObjeto() + 
+							rondaActual.setText("**" + GestorPartida.getJugadores()[i].getNombre() + " posee el Objeto " + GestorPartida.getJugadores()[i].getObjetivoObjeto() + 
 									" y se encuentra en la Sala " + GestorPartida.getJugadores()[i].getObjetivoSala() + "**\n\n");
 							finDePartida();
 							break;
@@ -746,6 +803,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		}	
 	}
 	
+	//Método encargado de finalizar la partida, impidiento que el usuario pueda realizar ninguna acción más.
 	public void finDePartida() {
 		respuesta.setText(null);
 		rondaActual.append("**Partida Finalizada**");
@@ -769,7 +827,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	public void setRondasAnteriores(JTextArea rondasAnteriores) {
 		this.rondasAnteriores = rondasAnteriores;
 	}
-	
+
 	public String getHistoriaCompleta() {
 		return historiaCompleta;
 	}
@@ -777,15 +835,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		this.historiaCompleta = historiaCompleta;
 	}
 	
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 }

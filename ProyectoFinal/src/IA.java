@@ -24,9 +24,11 @@ public class IA extends Jugador{
 			if(pasarTurno<2) {
 				GestorPartida.getInterfaz().getRondasAnteriores().append(this.getNombre() + " ha saltado su Turno.\n");
 				GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta()+ this.getNombre() + " ha saltado su Turno.\n");
+				GestorPartida.getInterfaz().setTurnosSaltados(GestorPartida.getInterfaz().getTurnosSaltados() + 1);
 			}
 			
 			else {
+				GestorPartida.getInterfaz().setTurnosSaltados(0);
 				for(j=0;j < GestorPartida.getContObjetosJugador();j++) {
 					if(GestorPartida.getObjetoJugador()[j].getJugador().getNombre().equalsIgnoreCase(this.getNombre())) {
 						if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(this.objetivoObjeto)) {

@@ -22,7 +22,7 @@ public class GestorPartida {
 	private static GUI interfaz;
 	//Esta funcion lee el fichero, inicia el jugador seleccionandolo de forma aleatoria, e instancia la interfaz de usario
 	public static void crearPartida() throws FileNotFoundException, IOException {
-		LecturaFicheros.AllLecture("C:\\Users\\erick\\pruebaPOO.txt");
+		LecturaFicheros.AllLecture("C:\\Users\\jorge\\pruebaPOO.txt");
 		for(int i =0; i < contJugadores ; i++) {
 			System.out.println(GestorPartida.getJugadores()[i].getId());
 		}
