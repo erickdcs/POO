@@ -117,10 +117,10 @@ public class IA extends Jugador{
 		private String[] verObjetosEnJugadoresIa(Jugador jugador) {
 			int contObjetos;
 			contObjetos=GestorPartida.getContObjetosJugador();
-			int pos =0;
+			int pos = 0;
 			String objetosenJugadores[] = new String[contObjetos];
 			
-			for(int i =0; i < GestorPartida.getContObjetosJugador();i++) {
+			for(int i = 0; i < GestorPartida.getContObjetosJugador();i++) {
 				if(GestorPartida.getObjetoJugador()[i].getJugador().getSala().equalsIgnoreCase(jugador.getSala())) {
 					if(!GestorPartida.getObjetoJugador()[i].getJugador().getNombre().equalsIgnoreCase(jugador.getNombre())) {
 						objetosenJugadores[pos]= GestorPartida.getObjetoJugador()[i].getNombreObjeto();
