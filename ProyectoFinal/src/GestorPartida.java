@@ -14,33 +14,49 @@ public class GestorPartida {
 	
 	private static int jugadorActivo;
 	private static int rondas;
+	private static int contUsuarios;
+	private static int contIAs;
+	
 	
 	private static GUI interfaz;
-	
+	//Esta funcion lee el fichero, inicia el jugador seleccionandolo de forma aleatoria, e instancia la interfaz de usario
 	public static void crearPartida() throws FileNotFoundException, IOException {
 		LecturaFicheros.AllLecture("C:\\Users\\erick\\pruebaPOO.txt");
-		
-		int jugadorPersona = (int) (Math.random()*GestorPartida.getContJugadores());	
-		GestorPartida.getJugadores()[jugadorPersona].setIA(false);	
-		interfaz = new GUI(jugadorPersona);		
+		for(int i =0; i < contJugadores ; i++) {
+			System.out.println(GestorPartida.getJugadores()[i].getId());
+		}
+		//int jugadorPersona = (int) (Math.random()*GestorPartida.getContJugadores());	
+		//GestorPartida.getJugadores()[jugadorPersona].setIA(false);	
+		interfaz = new GUI(0);		
 	}
-	
+	//Almacena las salas que se van creando en un array de salas
 	public static void instanciarSala(Sala sala) {
 		salas[contSalas] = sala;
 		contSalas++;
 	}
-	
+	//Almacena los jugadores que se van creando en un array de jugadores
 	public static void instanciarJugador(Jugador jugador) {
 		jugadores[contSalas] = jugador;
 		contJugadores++;
 	}
+	public static void instanciarPersona(Usuario jugador) {
+		jugadores[contSalas] = jugador;
+		setContUsuarios(getContUsuarios() + 1);	
+	}
+	public static void instanciarIA(IA ia) {
+		jugadores[contSalas] = ia;
+		setContIAs(getContIAs() + 1);
+	}
 	
+	
+	//Esta funcion instancia las creencias de todos;
 	public static void instanciarCreencias() {
 		for(int i =0; i < GestorPartida.getContJugadores(); i++) {
+			
 			GestorPartida.jugadores[i].setCreencias(new  Creencias(GestorPartida.jugadores,  GestorPartida.objetoJugador, GestorPartida.objetoSala, i)); 
 		}
 	}
-	
+	//Esta funcion actualiza las creencias del jugador que se le pase
 	public static void actualizarCreencias(int id) {
 		int j =0;		
 		//Actualizamos las creecias del jugador 
@@ -88,7 +104,7 @@ public class GestorPartida {
 		
 		
 	}
-
+	//Esta funcion es un booleano que mira si hay un jugador en la misma sala, y devuelve true en caso de que lo haya
 	public static boolean jugadorEnSala(int id) {
 		boolean hayJugador = false;
 		for (int i =0; i < GestorPartida.getContJugadores(); i++) {
@@ -99,7 +115,7 @@ public class GestorPartida {
 		}
 		return hayJugador;
 	}
-
+	//Esta funcion devuelve un array de strings donde se almacenan las salas vecinas de la sala donde se encuentre el jugador cuyo id se le pasa a la funcion
 	public static String[] verSalasVecinas(int a) {
 		int sala =0;
 		String[] salasVecinas;
@@ -198,5 +214,17 @@ public class GestorPartida {
 
 	public void setInterfaz(GUI interfaz) {
 		GestorPartida.interfaz = interfaz;
+	}
+	public static int getContUsuarios() {
+		return contUsuarios;
+	}
+	public static void setContUsuarios(int contUsuarios) {
+		GestorPartida.contUsuarios = contUsuarios;
+	}
+	public static int getContIAs() {
+		return contIAs;
+	}
+	public static void setContIAs(int contIAs) {
+		GestorPartida.contIAs = contIAs;
 	}
 }

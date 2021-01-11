@@ -409,15 +409,17 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 	    		if(respuesta.getText().equalsIgnoreCase("si")) {
 	    			rondasAnteriores.append(GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n");
 	    			historiaCompleta = historiaCompleta + GestorPartida.getJugadores()[idJugador].getNombre() + " ha saltado su Turno.\n" ;
-	    			cambioDeJugador();			
-					estadoJugador(idJugador);
+	    			//cambioDeJugador();
+					//estadoJugador(idJugador);
 					turnosSaltados++;
 					if(turnosSaltados == GestorPartida.getContJugadores()) {
 						rondaActual.setText("**Todos los Jugadores han saltado su Turno**\n\n");
 						finDePartida();
 					}
 					else {
+						finalDeTurno();
 						accion = 0;
+						
 					}
 	    		}
 	    		else {
@@ -707,10 +709,11 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			
 			cambioDeRonda();
 			
-			if(GestorPartida.getJugadores()[idJugador].isIA()) {	
-				GestorPartida.getJugadores()[idJugador].accionIa();
+			if(idJugador > GestorPartida.getContUsuarios()-1) {	
+				((IA)GestorPartida.getJugadores()[idJugador]).accionIa();
+				finalDeTurno();
 			}
-		}while(GestorPartida.getJugadores()[idJugador].isIA());
+		}while(idJugador > GestorPartida.getContUsuarios()-1);
 		GestorPartida.actualizarCreencias(0);
 	}
 	
@@ -731,7 +734,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				for(int j = 0; j < GestorPartida.getContObjetosJugador(); j++) {
 					if(GestorPartida.getJugadores()[i] == GestorPartida.getObjetoJugador()[j].getJugador()) {
 						if(GestorPartida.getObjetoJugador()[j].getNombreObjeto().equalsIgnoreCase(GestorPartida.getJugadores()[i].getObjetivoObjeto())) {
-							rondaActual.setText("**" + GestorPartida.getJugadores()[i].getNombre() + " posee el Objeto " + GestorPartida.getJugadores()[i].getObjetivoObjeto() + 
+							rondaActual.setText(null);
+							rondaActual.append("**" + GestorPartida.getJugadores()[i].getNombre() + " posee el Objeto " + GestorPartida.getJugadores()[i].getObjetivoObjeto() + 
 									" y se encuentra en la Sala " + GestorPartida.getJugadores()[i].getObjetivoSala() + "**\n\n");
 							finDePartida();
 							break;

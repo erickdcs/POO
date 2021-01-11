@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LecturaFicheros {
-
+	
 	//AQUI SEPARAMOS LAS STRING DE LAS LOCALIZACIONES, Y DE SUS VECINAS, Y LAS ALMACENAMOS EN LAS LOCALIZACIONES
 	public static void creadorLocalizaciones(String Localizacion) {
 		String nombre = Localizacion.substring(0, Localizacion.indexOf("("));	//Saco el nombre de la localizacion, leyendo solo hasta el (
@@ -20,7 +20,14 @@ public class LecturaFicheros {
 		String nombre = Personaje.substring(0, Personaje.indexOf("("));	
 		String sala = Personaje.substring(Personaje.indexOf("(")+1,Personaje.indexOf(")"));
 		//Jugador persona = new Jugador(nombre, sala);
-		GestorPartida.getJugadores()[GestorPartida.getContJugadores()] = new Jugador(nombre, sala);
+		if(GestorPartida.getContJugadores() <1) {
+			GestorPartida.getJugadores()[GestorPartida.getContJugadores()] = new Usuario(nombre, sala);
+			
+		}else {
+			GestorPartida.getJugadores()[GestorPartida.getContJugadores()] = new IA(nombre, sala);
+			
+		}
+		
 	}
 	
 

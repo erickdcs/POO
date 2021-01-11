@@ -6,7 +6,7 @@ public class Jugador {
 	private String sala;
 	private int id;
 	private boolean IA = true;
-	private String objetivoObjeto;
+	protected String objetivoObjeto;
 	private String objetivoSala;
 	private Peticiones peticiones[] =  new Peticiones[10];
 	private Creencias creencias;
@@ -112,7 +112,7 @@ public class Jugador {
     }
  
 	//Funcion que retorna la posion del array de GestorPartida en la que se encuentra el jugador seleccionado
-	private int posJugadorObjetivo(String jugadorSeleccionado) {
+	protected int posJugadorObjetivo(String jugadorSeleccionado) {
 		int jugador = 0;
 		
 		for(jugador =0; jugador < GestorPartida.getContJugadores(); jugador++) {
@@ -123,7 +123,7 @@ public class Jugador {
 		return jugador;
 	}
 	
-	
+	/*
 	//Se elige la acción de la IA
 	public void accionIa(Jugador this){
 		boolean objetoPosesion=false;
@@ -290,7 +290,7 @@ public class Jugador {
 			GestorPartida.getInterfaz().setHistoriaCompleta(GestorPartida.getInterfaz().getHistoriaCompleta() + jugador.getNombre()+" se ha desplazado a la Sala "+ jugador.getSala()+".\n");
 		}
 	}
-	
+	*/
 	public String getNombre() {
 		return nombre;
 	}
