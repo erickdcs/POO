@@ -6,7 +6,7 @@ public class Usuario extends Jugador{
 		GestorPartida.instanciarPersona(this);
 	}
 
-	
+	//Retorna un int que resuelve la accionn que el usuario desea realizar
 	public int dameAccion(String accion) {
 		switch(accion) {
 			case "Moverse": return 1;

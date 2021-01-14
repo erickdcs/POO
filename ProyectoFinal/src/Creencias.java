@@ -6,8 +6,7 @@ public class Creencias {
 	public String[] nombreObjeto = new String[10];
 	public String[] lugarObjeto = new String[10];
 	
-	public Creencias(Jugador[] personas, ObjetoJugador[] objetosJugador, ObjetoSala[] objetosSala, int jugadorId) {
-		
+	public Creencias(Jugador[] personas, ObjetoJugador[] objetosJugador, ObjetoSala[] objetosSala, int jugadorId) {		
 		int i =0;
 		int j = 0;
 		

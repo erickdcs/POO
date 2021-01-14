@@ -10,7 +10,7 @@ public class IA extends Jugador{
 	
 	
 	//Se elige la acción de la IA
-	public int dameAccion(){
+	public int dameAccion(String var){
 		boolean objetoPosesion=false;
 		boolean objetoObjetivoSala=false;
 		boolean objetoObjetivoJugador=false;
