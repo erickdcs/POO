@@ -134,15 +134,16 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 		if(accion != -1) {
 			//Acción para cambiar de sala.
 			if(e.getSource() == boton1) {
+				
 				rondaActual.setText(null);
 				cambiarSalaImprimir(idJugador);
-				accion = 1;
+				accion = GestorPartida.getJugadores()[idJugador].dameAccion("Moverse");
 			}
 			//Acción para coger un objeto.
 			if(e.getSource() == boton2) {
 				rondaActual.setText(null);
 				if(comprobarSiHayObjetoEnSala(idJugador) && !comprobarSiJugadorTieneObjeto(idJugador)) {
-					accion = 2;
+					accion = GestorPartida.getJugadores()[idJugador].dameAccion("Coger");;
 					cogerObjetoEnSalaImprimir(idJugador);
 				}
 				else if(comprobarSiJugadorTieneObjeto(idJugador)) {
@@ -156,7 +157,8 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			if(e.getSource() == boton3) {
 				rondaActual.setText(null);
 				if(comprobarSiJugadorTieneObjeto(idJugador)) {
-					accion = 3;
+					
+					accion = GestorPartida.getJugadores()[idJugador].dameAccion("Dejar");
 					dejarObjetoEnSalaImprimir(idJugador);
 				}
 				else {
@@ -167,7 +169,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			if(e.getSource() == boton4) {
 				rondaActual.setText(null);
 				if(comprobarJugadoresConObjetosEnSala(idJugador)) {
-					accion = 4;
+					accion = GestorPartida.getJugadores()[idJugador].dameAccion("Pedir");
 					objetosEnJugador(idJugador);
 					rondaActual.append("\nIndica el nombre del Jugador al que deseas pedir un Objeto:");
 		    		
@@ -186,7 +188,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 				if(comprobarSiJugadorTieneObjeto(idJugador)) {
 					if(comprobarSiExistePeticionJugadorEnSala(idJugador)) {
 						if(comprobarJugadoresSinObjetosEnSala(idJugador)) {
-							accion = 5;
+							accion = GestorPartida.getJugadores()[idJugador].dameAccion("Dar");
 							mostrarPeticiones(idJugador);
 							rondaActual.append("\n\nIndica el nombre del Jugador al que deseas dar un Objeto:");
 				    		
@@ -209,13 +211,13 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			}
 			//Acción para imprimir toda la información actual de la ronda.
 			if(e.getSource() == boton6) {
-				accion = 0;
+				accion = GestorPartida.getJugadores()[idJugador].dameAccion("Info");
 				rondaActual.setText(null);
 				estadoJugador(idJugador);
 			}
 			//Acción para pasar el turno
 			if(e.getSource( )== boton7) {
-				accion = 7;
+				accion = GestorPartida.getJugadores()[idJugador].dameAccion("Pasar");
 				rondaActual.setText("¿Seguro que deseas saltar tu Turno?");
 				rondaActual.append("\n\nEscribe Si para continuar.");
 			}
@@ -761,7 +763,7 @@ public class GUI extends JFrame implements ActionListener,  KeyListener{
 			cambioDeRonda();
 			
 			if(idJugador > GestorPartida.getContUsuarios()-1) {	
-				((IA)GestorPartida.getJugadores()[idJugador]).accionIa();
+				GestorPartida.getJugadores()[idJugador].dameAccion(null);
 				finalDeTurno();
 				//Volvemos a comprobar si todos los jugadores han pasado turno y, si se da el caso, terminar la partida.
 				if(turnosSaltados == GestorPartida.getContJugadores()) {
