@@ -3,9 +3,10 @@ Jorge Tesch Torres
 Enrique Sancho Ferrer
 
 Instrucciones
-- El fichero a leer debe ser como el presentado como ejemplo en la practica
+- El fichero a leer debe incluir tanto los objetivos, como la instanciacion de jugadores, localizaciones...
+  en el mismo fichero, ya que consideramos que iba a ser replicar codigo.
 
-- Introducir la ruta del fichero a leer en GestorPartida.java linea 23
+- Introducir la ruta del fichero a leer en GestorPartida.java linea 23.
 
 
 Explicaciones
